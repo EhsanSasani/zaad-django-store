@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-category{% endblock %}
+
+{% block content %}
+{% include "partials/breadcrumbs.html" %}
+
+<section class="container section-block">
+  <h1>{{ section_title }}</h1>
+  <p class="intro-text">{{ section_intro }}</p>
+  <div class="cta-row">
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">{{ category_call_text }}</a>
+    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">{{ category_whatsapp_text }}</a>
+  </div>
+</section>
+
+{% if subcategory_links %}
+<section class="container section-block">
+  <div class="section-head">
+    <h2>زیر‌دسته‌های گل</h2>
+    <a href="{% url 'mashhad_flower_delivery' %}" class="text-link">ارسال فوری گل در مشهد</a>
+  </div>
+  <div class="subcategory-grid">
+    {% for sub in subcategory_links %}
+      <a href="{{ sub.url }}" class="subcategory-card">{{ sub.label }}</a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="container section-block">
+  <h2>آیتم‌های منتخب</h2>
+  {% include "partials/product_grid.html" with products=featured_items %}
+</section>
+
+<section class="container section-block">
+  <h2>همه آیتم‌ها</h2>
+  {% include "partials/product_grid.html" with products=all_items %}
+</section>
+
+
+<section class="container section-block">
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="راهنمایی می‌خواهم" cta_position="inline" %}
+</section>
+{% endblock %}

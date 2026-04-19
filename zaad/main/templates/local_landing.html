@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-local-landing{% endblock %}
+
+{% block content %}
+{% include "partials/breadcrumbs.html" %}
+
+<section class="container section-block hero-local">
+  <h1>{{ landing_title }}</h1>
+  <p class="intro-text">{{ landing_subtitle }}</p>
+  <div class="cta-row">
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="hero">رزرو و هماهنگی</a>
+    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="hero">واتساپ برای سفارش</a>
+  </div>
+</section>
+
+<section class="container section-block">
+  <h2>بازه ارسال و پوشش</h2>
+  <div class="meta-row">
+    <span>ارسال فوری در محدوده‌های اصلی مشهد</span>
+    <span>{{ site_opening_hours_text }}</span>
+    <span>{{ site_response_time_text }}</span>
+  </div>
+</section>
+
+<section class="container section-block">
+  <h2>انتخاب‌های پیشنهادی امروز</h2>
+  {% include "partials/product_grid.html" with products=curated_items %}
+</section>
+
+<section class="container section-block">
+  <h2>چرا زاد؟</h2>
+  <div class="list-grid">
+    {% for item in why_zaad %}
+      <article class="list-card"><p>{{ item }}</p></article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container section-block">
+  <h2>مناسبت‌ها</h2>
+  <div class="inline-links">
+    {% for occasion in occasion_links %}
+      <a href="{{ occasion.url }}">{{ occasion.label }}</a>
+    {% endfor %}
+  </div>
+</section>
+
+
+<section class="container section-block">
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="درخواست سفارش / مشاوره" cta_position="inline" %}
+</section>
+
+<section class="container section-block close-cta">
+  <h2>برای هماهنگی نهایی آماده‌ایم</h2>
+  <p>{{ site_opening_hours_text }} | {{ site_response_time_text }}</p>
+  <div class="cta-row">
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="footer">تماس فوری</a>
+    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="footer">مشاوره در واتساپ</a>
+  </div>
+</section>
+{% endblock %}

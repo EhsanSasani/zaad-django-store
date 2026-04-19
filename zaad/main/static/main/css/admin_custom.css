@@ -1,0 +1,31 @@
+html[dir="rtl"] body,
+html[dir="rtl"] input,
+html[dir="rtl"] select,
+html[dir="rtl"] textarea,
+html[dir="rtl"] .button,
+html[dir="rtl"] .submit-row input {
+    font-family: "Vazirmatn", "IRANSans", Tahoma, sans-serif;
+}
+
+html[dir="rtl"] .form-row,
+html[dir="rtl"] .aligned label,
+html[dir="rtl"] .help {
+    text-align: right;
+}
+
+html[dir="rtl"] .help {
+    color: #4b5563;
+}
+
+label.required::after,
+th.required::after,
+.required > label::after {
+    content: " *";
+    color: #d63638;
+    font-weight: 700;
+}
+
+html[dir="rtl"] .inline-group .tabular td,
+html[dir="rtl"] .inline-group .tabular th {
+    text-align: right;
+}

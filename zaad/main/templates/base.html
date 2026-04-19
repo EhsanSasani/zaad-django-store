@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ meta_title|default:"زاد" }}</title>
+  <meta name="description" content="{{ meta_description|default:'زاد کاتالوگ گل، بیکری و هدیه با ارسال سریع' }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fa_IR">
+  <meta property="og:title" content="{{ meta_title|default:'زاد' }}">
+  <meta property="og:description" content="{{ meta_description|default:'زاد کاتالوگ گل، بیکری و هدیه با ارسال سریع' }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    (function () {
+      var key = "zaad-theme";
+      var root = document.documentElement;
+      var theme = null;
+
+      try {
+        theme = localStorage.getItem(key);
+      } catch (error) {
+        theme = null;
+      }
+
+      if (theme !== "dark" && theme !== "light") {
+        theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+
+      root.setAttribute("data-theme", theme);
+      root.classList.toggle("theme-dark", theme === "dark");
+    })();
+  </script>
+
+  <link rel="stylesheet" href="{% static 'main/css/site.css' %}?v=6">
+  {% block extra_head %}{% endblock %}
+
+  <script type="application/ld+json">{{ local_business_jsonld|safe }}</script>
+  {% if breadcrumbs_jsonld %}
+    <script type="application/ld+json">{{ breadcrumbs_jsonld|safe }}</script>
+  {% endif %}
+  {% if faq_jsonld %}
+    <script type="application/ld+json">{{ faq_jsonld|safe }}</script>
+  {% endif %}
+  {% for schema in extra_jsonld %}
+    <script type="application/ld+json">{{ schema|safe }}</script>
+  {% endfor %}
+</head>
+<body class="{% block body_class %}{% endblock %}" data-page-type="{{ page_type|default:'home' }}"{% if item_id %} data-item-id="{{ item_id }}"{% endif %}>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="{% url 'index' %}">زاد</a>
+
+      <nav class="main-nav" aria-label="ناوبری اصلی">
+        <a href="{% url 'index' %}" class="{% if active_nav == 'home' %}is-active{% endif %}">خانه</a>
+        <a href="{% url 'flowers' %}" class="{% if active_nav == 'flowers' %}is-active{% endif %}">گل‌ها</a>
+        <a href="{% url 'bakery' %}" class="{% if active_nav == 'bakery' %}is-active{% endif %}">بیکری</a>
+        <a href="{% url 'gifts' %}" class="{% if active_nav == 'gifts' %}is-active{% endif %}">هدایا</a>
+        <a href="{% url 'events' %}" class="{% if active_nav == 'events' %}is-active{% endif %}">رویدادها</a>
+        <a href="{% url 'mashhad_hub' %}" class="{% if active_nav == 'mashhad' %}is-active{% endif %}">سفارش در مشهد</a>
+      </nav>
+
+      <div class="header-ctas">
+        <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="header">تماس فوری</a>
+        <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="header" aria-label="واتساپ">
+          <span class="wa-icon" aria-hidden="true">&#9679;</span>
+          واتساپ
+        </a>
+        <button type="button" class="btn btn-wa theme-toggle" id="themeToggle" aria-label="تغییر به حالت تیره" aria-pressed="false" title="تغییر به حالت تیره">
+          <span class="theme-icon" aria-hidden="true">
+            <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 14.2A9 9 0 1 1 9.8 3a7 7 0 1 0 11.2 11.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M12 2.5V5M12 19V21.5M4.93 4.93 6.7 6.7M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07 6.7 17.3M17.3 6.7l1.77-1.77" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="theme-text">تیره</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  {% if messages %}
+    <div class="container alerts">
+      {% for message in messages %}
+        <div class="alert {{ message.tags }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <section class="footer-brand">
+        <h2>زاد</h2>
+        <p>کاتالوگ گل، بیکری و هدیه با ارسال سریع در مشهد.</p>
+      </section>
+
+      <section class="footer-links">
+        <div class="footer-links-grid">
+          <div class="footer-col">
+            <h3>راهنما</h3>
+            <ul class="footer-list">
+              <li><a href="{% url 'visit' %}">بازدید و آدرس</a></li>
+              <li><a href="{% url 'contact' %}">تماس با ما</a></li>
+              <li><a href="{% url 'faq' %}">سوالات متداول</a></li>
+              <li><a href="{{ site_instagram_url }}" target="_blank" rel="noopener">اینستاگرام</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="footer-contact">
+        <h3>ارتباط سریع</h3>
+        <p><a href="{{ site_call_href }}">{{ site_phone_display }}</a></p>
+        <p>{{ site_opening_hours_text }}</p>
+      </section>
+    </div>
+
+    <div class="container footer-bottom">
+      <p class="copy">© ۱۴۰۴ زاد</p>
+      <p class="microcopy">طراحی و توسعه برای زاد</p>
+    </div>
+  </footer>
+
+  <script src="{% static 'main/js/theme-toggle.js' %}?v=3"></script>
+  <script src="{% static 'main/js/analytics.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
