@@ -1,0 +1,13 @@
+{% if faq_items %}
+<section class="faq-block container">
+  <h2>{{ faq_title|default:"سوالات پرتکرار" }}</h2>
+  <div class="faq-grid">
+    {% for item in faq_items %}
+      <article>
+        <h3>{{ item.question }}</h3>
+        <p>{{ item.answer }}</p>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

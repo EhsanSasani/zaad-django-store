@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-subcategory{% endblock %}
+
+{% block content %}
+{% include "partials/breadcrumbs.html" %}
+
+<section class="container section-block">
+  <h1>{{ subcategory_label }}</h1>
+  <p class="intro-text">{{ subcategory_intro }}</p>
+  <div class="cta-row">
+    <a href="{% url 'flowers' %}" class="btn btn-light">بازگشت به دسته گل‌ها</a>
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">هماهنگی تلفنی</a>
+    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">واتساپ برای سفارش</a>
+  </div>
+</section>
+
+<section class="container section-block">
+  <h2>محصولات این زیر‌دسته</h2>
+  {% include "partials/product_grid.html" with products=items %}
+</section>
+
+<section class="container section-block">
+  <h2>مطالب مرتبط</h2>
+  <div class="list-grid">
+    {% for post in related_posts %}
+      <article class="list-card">
+        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+        <p>{{ post.excerpt|default:post.body|truncatechars:140 }}</p>
+      </article>
+    {% empty %}
+      <div class="empty-box">در حال آماده‌سازی مطالب بلاگ هستیم.</div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container section-block">
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type cta_position="inline" %}
+</section>
+{% endblock %}

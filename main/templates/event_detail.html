@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-event-detail{% endblock %}
+
+{% block content %}
+{% include "partials/breadcrumbs.html" %}
+
+<section class="container section-block">
+  <h1>{{ event.title }}</h1>
+  <p class="intro-text">{{ event.description }}</p>
+
+  <div class="meta-row">
+    <span>شروع: {{ event.start_at|date:"Y/m/d H:i" }}</span>
+    <span>پایان: {{ event.end_at|date:"Y/m/d H:i" }}</span>
+    <span>مکان: {{ event.location }}</span>
+  </div>
+
+  <div class="cta-row">
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">هماهنگی سفارش</a>
+    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">مشاوره در واتساپ</a>
+  </div>
+</section>
+
+<section class="container section-block">
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="درخواست هماهنگی رویداد" cta_position="inline" %}
+</section>
+{% endblock %}

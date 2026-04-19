@@ -1,0 +1,49 @@
+<section class="lead-box" id="lead-form">
+  <div class="lead-head">
+    <h2>{{ lead_title|default:"درخواست سفارش / مشاوره" }}</h2>
+    <p>{{ lead_subtitle|default:"فرم کوتاه را پر کنید تا سریع هماهنگ شویم." }}</p>
+  </div>
+
+  <form method="post" action="{% url 'lead_request' %}" class="lead-form" data-track-lead-form data-cta-position="{{ cta_position|default:'inline' }}" data-default-lead-type="{{ lead_default_type|default:'flower' }}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    <input type="hidden" name="source_page" value="{{ request.path }}">
+
+    <label>
+      <span>نام</span>
+      {{ lead_form.full_name }}
+    </label>
+
+    <label>
+      <span>شماره موبایل</span>
+      {{ lead_form.mobile }}
+    </label>
+
+    <label>
+      <span>نوع درخواست</span>
+      {{ lead_form.lead_type }}
+    </label>
+
+    <label>
+      <span>بازه زمانی تحویل</span>
+      {{ lead_form.delivery_window }}
+    </label>
+
+    <label class="field-optional date-only">
+      <span>تاریخ (در صورت انتخاب تاریخ انتخابی)</span>
+      {{ lead_form.preferred_date }}
+    </label>
+
+    <label class="field-optional event-only">
+      <span>مکان (برای رویداد)</span>
+      {{ lead_form.event_location }}
+    </label>
+
+    <label>
+      <span>توضیح کوتاه</span>
+      {{ lead_form.note }}
+    </label>
+
+    <button type="submit" class="btn btn-call">ثبت درخواست</button>
+  </form>
+</section>

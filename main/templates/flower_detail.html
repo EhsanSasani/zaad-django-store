@@ -1,0 +1,58 @@
+﻿{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ flower.name }} | زاد{% endblock %}
+{% block body_class %}page-flower-detail{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'main/css/flower_detail.css' %}">
+
+<section class="detail-wrap container-xxl">
+  <!-- === نوار بالایی مسیر/بازگشت === -->
+  <div class="detail-top">
+    <a href="{% url 'index' %}" class="back-link">بازگشت به کاتالوگ</a>
+    <div class="crumb">گل / {{ flower.get_category_display }}</div>
+  </div>
+
+  <div class="detail-grid">
+    <!-- === ستون تصویر محصول === -->
+    <article class="detail-media">
+      {% if flower.cover %}
+        <img src="{{ flower.cover.url }}" alt="{{ flower.name }}">
+      {% else %}
+        <div class="detail-placeholder">بدون تصویر</div>
+      {% endif %}
+    </article>
+
+    <!-- === ستون اطلاعات، قیمت و CTA === -->
+    <aside class="detail-info">
+      <h1>{{ flower.name }}</h1>
+      <div class="chips">
+        <span>{{ flower.get_pack_type_display }}</span>
+        <span>{{ flower.get_category_display }}</span>
+      </div>
+
+      <div class="price-box">
+        <small>قیمت</small>
+        <strong>{{ flower.price }} تومان</strong>
+      </div>
+
+      {% if flower.about %}
+        <p class="about">{{ flower.about }}</p>
+      {% else %}
+        <p class="about muted">توضیحی برای این محصول ثبت نشده است.</p>
+      {% endif %}
+
+      <div class="actions">
+        <a href="{% url 'index' %}" class="cta primary">دیدن محصولات دیگر</a>
+        <a href="{% url 'visit' %}" class="cta ghost">مشاهده فروشگاه</a>
+      </div>
+
+      <div class="date-meta">
+        <span>ثبت: {{ flower.created_at|date:"Y/m/d" }}</span>
+        <span>بروزرسانی: {{ flower.updated_at|date:"Y/m/d" }}</span>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

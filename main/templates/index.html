@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-home{% endblock %}
+
+{% block content %}
+<section class="hero container">
+  <p class="kicker">زاد مشهد</p>
+  <h1>سفارش گل، بیکری و هدیه با ارسال فوری</h1>
+  <p>{{ home_subtitle }}</p>
+  <div class="cta-row">
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="hero">{{ hero_call_text }}</a>
+    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="hero">{{ hero_whatsapp_text }}</a>
+  </div>
+</section>
+
+<section class="container section-block">
+  <h2>دسته‌بندی‌ها</h2>
+  <div class="category-grid">
+    <a href="{% url 'flowers' %}" class="category-card">
+      <h3>گل‌ها</h3>
+      <p>دسته‌گل، باکس، استند و گیاه</p>
+    </a>
+    <a href="{% url 'bakery' %}" class="category-card">
+      <h3>بیکری</h3>
+      <p>پیشنهادهای تازه برای پذیرایی</p>
+    </a>
+    <a href="{% url 'gifts' %}" class="category-card">
+      <h3>هدایا</h3>
+      <p>انتخاب‌های مینیمال و خاص</p>
+    </a>
+    <a href="{% url 'events' %}" class="category-card">
+      <h3>رویدادها</h3>
+      <p>هماهنگی ورکشاپ و تجربه حضوری</p>
+    </a>
+  </div>
+</section>
+
+<section class="container section-block">
+  <div class="section-head">
+    <h2>انتخاب‌های پیشنهادی امروز</h2>
+    <a href="{% url 'mashhad_flower_delivery' %}" class="text-link">ارسال فوری گل در مشهد</a>
+  </div>
+  {% include "partials/product_grid.html" with products=featured_today %}
+</section>
+
+{% endblock %}
