@@ -1,7 +1,7 @@
 <section class="lead-box" id="lead-form">
   <div class="lead-head">
     <h2>{{ lead_title|default:"درخواست سفارش / مشاوره" }}</h2>
-    <p>{{ lead_subtitle|default:"فرم کوتاه را پر کنید تا سریع هماهنگ شویم." }}</p>
+    <p>{{ lead_subtitle|default:"فرم کوتاه را پر کنید تا سریع‌تر هماهنگ شویم." }}</p>
   </div>
 
   <form method="post" action="{% url 'lead_request' %}" class="lead-form" data-track-lead-form data-cta-position="{{ cta_position|default:'inline' }}" data-default-lead-type="{{ lead_default_type|default:'flower' }}">
@@ -30,12 +30,12 @@
     </label>
 
     <label class="field-optional date-only">
-      <span>تاریخ (در صورت انتخاب تاریخ انتخابی)</span>
+      <span>تاریخ انتخابی</span>
       {{ lead_form.preferred_date }}
     </label>
 
     <label class="field-optional event-only">
-      <span>مکان (برای رویداد)</span>
+      <span>مکان رویداد</span>
       {{ lead_form.event_location }}
     </label>
 

@@ -1,0 +1,111 @@
+/* =========================
+   Layout / helpers
+   ========================= */
+
+.container {
+  width: min(var(--container), 94%);
+  margin-inline: auto;
+}
+
+.site-main {
+  min-height: 40vh;
+}
+
+.section-block {
+  margin-top: 42px;
+}
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.intro-text,
+.muted {
+  color: var(--muted);
+}
+
+.intro-text {
+  max-width: 760px;
+  line-height: 2;
+}
+
+.text-link {
+  color: var(--accent-hover);
+  font-weight: 700;
+}
+
+.text-link:hover {
+  color: var(--text);
+}
+
+.page-intro {
+  margin-top: 24px;
+}
+
+.page-intro--compact {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.meta-row span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  background: #fcfaf7;
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.breadcrumbs {
+  margin-top: 18px;
+}
+
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.breadcrumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.breadcrumbs li:not(:last-child)::after {
+  content: "/";
+  color: var(--muted);
+}
+
+.placeholder {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+}
+
+.placeholder.large {
+  min-height: 420px;
+}
+
+.cover-image {
+  width: 100%;
+  margin-top: 16px;
+}

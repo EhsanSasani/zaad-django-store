@@ -5,16 +5,25 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>بلاگ زاد</h1>
-  <p class="intro-text">نکته‌ها و ایده‌های کوتاه برای انتخاب گل، هدیه و برنامه‌ریزی مناسبت‌ها.</p>
+<section class="container section-block blog-list-intro">
+  <p class="intro-text">
+    ایده‌ها، نکته‌ها و راهنماهای کوتاه برای انتخاب بهتر گل، هدیه و برنامه‌ریزی مناسبت‌ها.
+  </p>
+</section>
 
-  <div class="list-grid">
+<section class="container section-block blog-list-section">
+  <div class="list-grid blog-list-grid">
     {% for post in posts %}
-      <article class="list-card">
-        <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-        <p>{{ post.excerpt|default:post.body|truncatechars:180 }}</p>
-        <a href="{{ post.get_absolute_url }}" class="text-link">مطالعه مطلب</a>
+      <article class="list-card blog-card">
+        <h2 class="blog-card__title">
+          <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </h2>
+
+        <p class="blog-card__excerpt">
+          {{ post.excerpt|default:post.body|truncatechars:180 }}
+        </p>
+
+        <a href="{{ post.get_absolute_url }}" class="text-link blog-card__link">مطالعه مطلب</a>
       </article>
     {% empty %}
       <div class="empty-box">هنوز مطلبی منتشر نشده است.</div>

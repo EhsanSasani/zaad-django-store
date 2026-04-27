@@ -5,9 +5,10 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>تماس با زاد</h1>
-  <p class="intro-text">برای سفارش سریع، استعلام موجودی امروز یا هماهنگی زمان تحویل، از تماس فوری یا واتساپ استفاده کنید.</p>
+<section class="container section-block page-intro">
+  <p class="intro-text">
+    برای سفارش سریع، استعلام موجودی، هماهنگی زمان تحویل یا دریافت مشاوره، از تماس مستقیم یا واتساپ استفاده کن.
+  </p>
 
   <div class="meta-row">
     <span>تلفن: {{ site_phone_display }}</span>
@@ -16,13 +17,26 @@
   </div>
 
   <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">استعلام موجودی امروز</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">ارسال عکس و هماهنگی</a>
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">تماس فوری</a>
+    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">پیام در واتساپ</a>
   </div>
 </section>
 
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type cta_position="inline" %}
+<section class="container section-block contact-help">
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="راهنمایی می‌خواهم" lead_subtitle="اگر برای انتخاب، قیمت، زمان تحویل یا نوع سفارش مردد هستی، فرم کوتاه را ثبت کن تا سریع‌تر با تو هماهنگ شویم." cta_position="inline" %}
 </section>
 
+<section class="container section-block contact-help-link">
+  <div class="section-head">
+    <h2>راهنمای بیشتر</h2>
+  </div>
+
+  <p class="intro-text">
+    اگر قبل از تماس می‌خواهی پاسخ سوال‌های رایج را ببینی، از صفحه سوالات پرتکرار استفاده کن.
+  </p>
+
+  <div class="cta-row">
+    <a href="{% url 'faq' %}" class="btn btn-light">مشاهده سوالات پرتکرار</a>
+  </div>
+</section>
 {% endblock %}

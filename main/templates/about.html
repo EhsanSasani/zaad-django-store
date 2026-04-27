@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}page-about{% endblock %}
+
+{% block content %}
+{% include "partials/breadcrumbs.html" %}
+
+<section class="container section-block about-intro">
+  <div class="section-head">
+    <h1>About ZAAD</h1>
+  </div>
+
+  <p class="intro-text">
+    ZAAD is a warm concept store built around flowers, gifts, soft details and meaningful moments.
+    We care about calm presentation, thoughtful selection and a more personal ordering experience.
+  </p>
+</section>
+
+<section class="container section-block about-gallery">
+  <div class="about-grid">
+    <div class="about-card">
+      <img src="{% static 'main/img/about-store.jpg' %}" alt="ZAAD Store">
+      <div class="about-card__body">
+        <h2>Our Store</h2>
+        <p>A quiet and elegant space for flowers, gifts and curated details.</p>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <img src="{% static 'main/img/about-team.jpg' %}" alt="ZAAD Team">
+      <div class="about-card__body">
+        <h2>Our Team</h2>
+        <p>Careful hands and thoughtful people behind every arrangement.</p>
+      </div>
+    </div>
+
+    <div class="about-card">
+      <img src="{% static 'main/img/about-process.jpg' %}" alt="ZAAD Process">
+      <div class="about-card__body">
+        <h2>Our Process</h2>
+        <p>From selection to final presentation, every detail is handled with care.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container section-block about-cta">
+  <div class="section-head">
+    <h2>Get in Touch</h2>
+  </div>
+
+  <p class="intro-text">
+    If you want to know more about ZAAD, our work, or our ordering process, we would be happy to hear from you.
+  </p>
+
+  <div class="cta-row">
+    <a href="{% url 'contact' %}" class="btn btn-light">Contact</a>
+    <a href="{% url 'visit' %}" class="btn btn-light">Visit Us</a>
+  </div>
+</section>
+{% endblock %}

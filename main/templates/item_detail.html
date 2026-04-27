@@ -5,53 +5,61 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block item-grid">
-  <article class="item-media">
-    {% if product.cover %}
-      <img src="{{ product.cover.url }}" alt="{{ product.name }}" width="720" height="720">
-    {% else %}
-      <div class="placeholder large">بدون تصویر</div>
-    {% endif %}
-  </article>
-
-  <aside class="item-info">
-    <h1>{{ product.name }}</h1>
-    <p class="muted">{{ category_name }}</p>
-
-    {% if product.price %}
-      <p class="item-price">{{ product.price }} تومان</p>
-    {% else %}
-      <p class="item-price">استعلام قیمت</p>
-    {% endif %}
-
-    <p>
-      {% if product.description %}
-        {{ product.description }}
+<section class="container section-block item-detail">
+  <div class="item-detail__grid">
+    <article class="item-detail__media">
+      {% if product.cover %}
+        <img src="{{ product.cover.url }}" alt="{{ product.name }}" width="900" height="900">
       {% else %}
-        برای استعلام موجودی روز و زمان تحویل، با تیم زاد تماس بگیرید.
+        <div class="placeholder large">بدون تصویر</div>
       {% endif %}
-    </p>
+    </article>
 
-    <div class="cta-row">
-      <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">{{ item_call_text }}</a>
-      <a href="{{ item_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">{{ item_whatsapp_text }}</a>
-    </div>
+    <aside class="item-detail__info">
+      <p class="item-detail__eyebrow">{{ category_name }}</p>
 
-    <div class="inline-links">
-      <a href="{{ category_url }}">دسته اصلی</a>
-      {% if subcategory_url %}<a href="{{ subcategory_url }}">{{ subcategory_label }}</a>{% endif %}
-      <a href="{{ mashhad_order_url }}">سفارش در مشهد</a>
-    </div>
-  </aside>
+      <h1>{{ product.name }}</h1>
+
+      {% if product.price %}
+        <p class="item-detail__price">{{ product.price }} تومان</p>
+      {% else %}
+        <p class="item-detail__price">استعلام قیمت</p>
+      {% endif %}
+
+      <div class="item-detail__desc">
+        {% if product.description %}
+          <p>{{ product.description }}</p>
+        {% else %}
+          <p>برای استعلام موجودی، زمان تحویل و هماهنگی سفارش، با تیم زاد تماس بگیر یا در واتساپ پیام بده.</p>
+        {% endif %}
+      </div>
+
+      <div class="cta-row">
+        <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">{{ item_call_text }}</a>
+        <a href="{{ item_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">{{ item_whatsapp_text }}</a>
+      </div>
+
+      <div class="inline-links">
+        <a href="{{ category_url }}">دسته اصلی</a>
+        {% if subcategory_url %}
+          <a href="{{ subcategory_url }}">{{ subcategory_label }}</a>
+        {% endif %}
+        <a href="{{ mashhad_order_url }}">سفارش در مشهد</a>
+      </div>
+    </aside>
+  </div>
 </section>
 
-<section class="container section-block">
-  <h2>آیتم‌های مشابه</h2>
-  {% include "partials/product_grid.html" with products=similar_items %}
-</section>
+{% if similar_items %}
+<section class="container section-block featured-products-section">
+  <div class="section-head featured-products-section__head">
+    <h2>آیتم‌های مشابه</h2>
+    {% if category_url %}
+      <a href="{{ category_url }}" class="section-link">مشاهده تمام آیتم‌ها</a>
+    {% endif %}
+  </div>
 
-<div class="sticky-cta">
-  <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="sticky">تماس</a>
-  <a href="{{ item_whatsapp_href }}" class="btn btn-wa" data-cta-position="sticky">واتساپ</a>
-</div>
+  {% include "partials/featured_products_slider.html" with products=similar_items %}
+</section>
+{% endif %}
 {% endblock %}

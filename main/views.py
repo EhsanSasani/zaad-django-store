@@ -4,7 +4,6 @@ from urllib.parse import quote
 
 from django.conf import settings
 from django.contrib import messages
-from django.db.models import Q
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -13,8 +12,22 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
 from .forms import LeadRequestForm
-from .models import Event, Flower, NewsPost, Product, PublishStatus
+from .models import (
+    Category,
+    Event,
+    Flower,
+    HomeHeroSlide,
+    NewsPost,
+    Product,
+    PublishStatus,
+    SiteHero,
+    Tag,
+)
 
+
+# =========================
+# Page content
+# =========================
 
 SECTION_CONTENT = {
     "flowers": {
@@ -22,12 +35,12 @@ SECTION_CONTENT = {
         "nav": "flowers",
         "lead_type": "flower",
         "meta_title": "سفارش گل لوکس در مشهد | زاد",
-        "meta_description": "گل‌های تازه، طراحی لوکس و ارسال فوری در مشهد. برای سفارش تلفنی یا واتساپ با زاد هماهنگ کنید.",
-        "intro": "گل‌های زاد برای هدیه و مناسبت با تمرکز روی تازگی، هارمونی رنگ و ارائه لوکس آماده می‌شوند. هر سفارش قبل از ارسال از نظر کیفیت و بسته‌بندی بررسی می‌شود تا تجربه‌ای دقیق و قابل اعتماد داشته باشید. اگر زمان شما محدود است، می‌توانید موجودی امروز را سریع استعلام بگیرید و برای ارسال همان‌روز در محدوده‌های اصلی مشهد هماهنگ کنید.",
+        "meta_description": "گل‌های تازه، طراحی لوکس و ارسال سریع در مشهد. برای سفارش تلفنی یا واتساپ با زاد هماهنگ کنید.",
+        "intro": "گل‌های زاد با طراحی لوکس، انتخاب دقیق و ارسال سریع در مشهد ارائه می‌شوند. برای شروع، دسته مناسب را انتخاب کنید.",
         "faq": [
             {
                 "question": "آیا امکان ارسال فوری گل در مشهد دارید؟",
-                "answer": "بله، برای سفارش‌های همان‌روز در بازه کاری، ارسال فوری در بیشتر مناطق مشهد انجام می‌شود.",
+                "answer": "بله، برای سفارش‌های همان‌روز در بازه کاری، ارسال سریع در بیشتر مناطق مشهد انجام می‌شود.",
             },
             {
                 "question": "قبل از سفارش می‌توانم موجودی امروز را بپرسم؟",
@@ -49,7 +62,7 @@ SECTION_CONTENT = {
         "lead_type": "bakery",
         "meta_title": "سفارش بیکری خاص در مشهد | زاد",
         "meta_description": "بیکری منتخب زاد با طراحی پریمیوم برای پذیرایی و هدیه. هماهنگی سفارش روزانه از طریق تماس و واتساپ.",
-        "intro": "بیکری زاد برای سفارش‌هایی طراحی شده که هم کیفیت طعم و هم ظاهر ارائه اهمیت دارد. محصولات روزانه با انتخاب مواد اولیه مناسب آماده می‌شوند و می‌توانند به‌صورت مستقل یا همراه سفارش گل ارسال شوند. برای ثبت سریع، بهتر است ابتدا موجودی همان روز و بازه آماده‌سازی را استعلام کنید تا انتخاب نهایی با زمان تحویل شما کاملاً هماهنگ باشد.",
+        "intro": "بیکری زاد برای پذیرایی، هدیه و سفارش‌های خاص روزانه آماده می‌شود. برای انتخاب سریع‌تر، آیتم‌های منتخب را ببینید یا برای هماهنگی با ما تماس بگیرید.",
         "faq": [
             {
                 "question": "سفارش بیکری برای امروز امکان‌پذیر است؟",
@@ -75,41 +88,135 @@ SECTION_CONTENT = {
         "lead_type": "gift",
         "meta_title": "هدیه‌های خاص و کانسپت‌استور زاد | مشهد",
         "meta_description": "انتخاب هدیه‌های مینیمال و لوکس در کانسپت‌استور زاد. هماهنگی سریع برای ست هدیه، گل و ارسال در مشهد.",
-        "intro": "هدیه‌های کانسپت‌استور زاد برای انتخابی مینیمال، کاربردی و در عین حال لوکس گردآوری شده‌اند. این بخش برای مناسبت‌های شخصی و سازمانی طراحی شده تا بتوانید با زمان کم، گزینه‌ای دقیق پیدا کنید. اگر نیاز به ست هدیه همراه گل دارید، تیم زاد ترکیب‌های هماهنگ را پیشنهاد می‌دهد و زمان تحویل را متناسب با برنامه شما نهایی می‌کند.",
+        "intro": "هدیه‌های زاد برای انتخابی خاص، مینیمال و پریمیوم گردآوری شده‌اند. اگر برای ست هدیه یا انتخاب مناسب مردد هستی، سریع‌تر با ما هماهنگ کن.",
         "faq": [],
     },
 }
 
-FLOWER_SUBCATEGORIES = {
+
+CATEGORY_CONTENT_OVERRIDES = {
     "bouquet": {
-        "label": "دسته‌گل",
-        "pack_types": [Flower.PackType.BOUQUET],
+        "label": "Bouquets",
         "meta_title": "دسته‌گل لوکس در مشهد | زاد",
-        "meta_description": "دسته‌گل‌های مینیمال و پریمیوم زاد با امکان ارسال فوری در مشهد.",
-        "intro": "دسته‌گل‌های این بخش برای هدیه، قرار رسمی و مناسبت‌های روزمره طراحی شده‌اند. تمرکز زاد روی هارمونی رنگ و تازگی گل است تا نتیجه نهایی حرفه‌ای و شیک بماند.",
+        "meta_description": "دسته‌گل‌های مینیمال و پریمیوم زاد با امکان ارسال سریع در مشهد.",
+        "intro": "Softly made for gifting.",
+        "image": "main/img/sub-bouquet.jpg",
+        "hero_image": "main/img/hero-subcategory.jpg",
     },
     "box": {
-        "label": "باکس گل",
-        "pack_types": [Flower.PackType.BOX],
+        "label": "Flower Boxes",
         "meta_title": "باکس گل خاص در مشهد | زاد",
         "meta_description": "باکس‌گل‌های ویژه زاد با طراحی لوکس و هماهنگی تحویل سریع.",
-        "intro": "باکس‌گل‌های زاد انتخابی مناسب برای هدیه رسمی و سورپرایزهای روزانه است. هر باکس با چیدمان دقیق و بسته‌بندی تمیز آماده می‌شود.",
+        "intro": "Elegant and easy to gift.",
+        "image": "main/img/sub-box.jpg",
+        "hero_image": "main/img/hero-subcategory.jpg",
+    },
+    "basket": {
+        "label": "Flower Baskets",
+        "meta_title": "سبد گل خاص در مشهد | زاد",
+        "meta_description": "سبد گل‌های خاص زاد برای هدیه، مراسم و لحظه‌های مهم.",
+        "intro": "Warm, full and beautifully arranged.",
+        "image": "main/img/sub-plant.jpg",
+        "hero_image": "main/img/hero-subcategory.jpg",
     },
     "stand": {
-        "label": "استند و تاج",
-        "pack_types": [Flower.PackType.STAND],
+        "label": "Stands & Wreaths",
         "meta_title": "استند گل و تاج ترحیم در مشهد | زاد",
         "meta_description": "استند و تاج گل رسمی با هماهنگی سریع برای مراسم در مشهد.",
-        "intro": "برای مراسم رسمی و ترحیم، استند و تاج گل با طراحی متناسب و رنگ‌بندی محترمانه آماده می‌شود. قبل از ارسال، جزئیات متن یا سبک موردنظر شما هماهنگ می‌گردد.",
-    },
-    "plant": {
-        "label": "گیاه",
-        "pack_types": [Flower.PackType.STEM, Flower.PackType.BASKET],
-        "meta_title": "گیاه آپارتمانی و هدیه سبز در مشهد | زاد",
-        "meta_description": "گیاه‌های منتخب برای هدیه یا دکور فضای داخلی با هماهنگی ارسال در مشهد.",
-        "intro": "این بخش برای انتخاب گیاه‌های کاربردی و زیبا در فضای خانه یا محل کار طراحی شده است. گزینه‌ها بر اساس نگهداری آسان و ظاهر لوکس انتخاب می‌شوند.",
+        "intro": "Thoughtful flowers for formal moments.",
+        "image": "main/img/sub-stand.jpg",
+        "hero_image": "main/img/hero-subcategory.jpg",
     },
 }
+
+
+CATEGORY_SLUG_ALIASES = {
+    "plant": "basket",
+    "wreath": "stand",
+}
+
+
+PAGE_HERO_CONTENT = {
+    "occasions": {
+        "kicker": "ZAAD Occasions",
+        "title": "برای هر لحظه، یک انتخاب نرم‌تر",
+        "text": "مناسبتت را انتخاب کن تا پیشنهادهای هماهنگ‌تر ببینی.",
+        "image": "main/img/hero-occasions.jpg",
+    },
+    "flowers": {
+        "kicker": "ZAAD Flowers",
+        "title": "Flowers for soft, beautiful moments",
+        "text": "Made with warmth, care, and feeling.",
+        "image": "main/img/hero-flowers.jpg",
+    },
+    "bakery": {
+        "kicker": "ZAAD Bakery",
+        "title": "Sweet pieces for everyday joy",
+        "text": "Fresh, warm, and made to share.",
+        "image": "main/img/hero-bakery.jpg",
+    },
+    "gifts": {
+        "kicker": "ZAAD Gifts",
+        "title": "Gifts with warmth and meaning",
+        "text": "Simple pieces, chosen with care.",
+        "image": "main/img/hero-gifts.jpg",
+    },
+    "subcategory": {
+        "kicker": "ZAAD Collection",
+        "title": "",
+        "text": "",
+        "image": "main/img/hero-subcategory.jpg",
+    },
+    "item": {
+        "kicker": "ZAAD Item",
+        "title": "",
+        "text": "",
+        "image": "main/img/hero-item.jpg",
+    },
+    "contact": {
+        "kicker": "Contact ZAAD",
+        "title": "We’re here to help with your order",
+        "text": "Reach out for availability, delivery timing, or a quick recommendation from the ZAAD team.",
+        "image": "main/img/hero-contact.jpg",
+    },
+    "visit": {
+        "kicker": "Visit ZAAD",
+        "title": "Come by and experience ZAAD in person",
+        "text": "Visit our space, explore the collection up close, and choose with more confidence and ease.",
+        "image": "main/img/hero-visit.jpg",
+    },
+    "events": {
+        "kicker": "ZAAD Events",
+        "title": "Beautiful details for special gatherings",
+        "text": "Styled softly, remembered warmly.",
+        "image": "main/img/hero-events.jpg",
+    },
+    "blog": {
+        "kicker": "ZAAD Journal",
+        "title": "Stories, ideas, and gentle inspiration",
+        "text": "Thoughtful notes for choosing flowers, gifts, and beautiful details with more ease.",
+        "image": "main/img/hero-blog.jpg",
+    },
+    "faq": {
+        "kicker": "ZAAD Help",
+        "title": "Answers to help you order with ease",
+        "text": "A quick guide to common questions about ordering, delivery, and choosing the right piece.",
+        "image": "main/img/hero-faq.jpg",
+    },
+    "mashhad": {
+        "kicker": "ZAAD Mashhad",
+        "title": "سفارش در مشهد",
+        "text": "برای سفارش سریع، ارسال فوری و هماهنگی دقیق در مشهد از این بخش استفاده کن.",
+        "image": "main/img/hero-mashhad.jpg",
+    },
+    "about": {
+        "kicker": "ZAAD Concept Store",
+        "title": "About ZAAD",
+        "text": "A closer look at our space, our people, and the care behind every order.",
+        "image": "main/img/hero-about.jpg",
+    },
+}
+
 
 HOME_FAQ = [
     {
@@ -118,7 +225,7 @@ HOME_FAQ = [
     },
     {
         "question": "آیا ارسال همان‌روز در مشهد دارید؟",
-        "answer": "بله، برای بخش زیادی از سفارش‌ها امکان ارسال فوری همان‌روز وجود دارد.",
+        "answer": "بله، برای بخش زیادی از سفارش‌ها امکان ارسال سریع همان‌روز وجود دارد.",
     },
     {
         "question": "سریع‌ترین راه هماهنگی سفارش چیست؟",
@@ -129,6 +236,7 @@ HOME_FAQ = [
         "answer": "از صفحه رویدادها یا فرم مشاوره سفارش، تاریخ و نوع درخواست را ثبت کنید.",
     },
 ]
+
 
 VISIT_FAQ = [
     {
@@ -149,6 +257,7 @@ VISIT_FAQ = [
     },
 ]
 
+
 CONTACT_FAQ = [
     {
         "question": "زمان پاسخ‌گویی زاد چقدر است؟",
@@ -168,12 +277,17 @@ CONTACT_FAQ = [
     },
 ]
 
+
 FAQ_PAGE_ITEMS = [
     *HOME_FAQ,
     *VISIT_FAQ,
     *CONTACT_FAQ,
 ]
 
+
+# =========================
+# Generic helpers
+# =========================
 
 def _jsonld(data):
     return json.dumps(data, ensure_ascii=False)
@@ -196,6 +310,7 @@ def _faq_jsonld(faq_items):
 
 def _breadcrumbs_jsonld(request, breadcrumbs):
     items = []
+
     for position, crumb in enumerate(breadcrumbs, start=1):
         crumb_url = crumb.get("url") or request.path
         items.append(
@@ -206,39 +321,12 @@ def _breadcrumbs_jsonld(request, breadcrumbs):
                 "item": request.build_absolute_uri(crumb_url),
             }
         )
-    return {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": items}
 
-
-def _default_context(
-    request,
-    *,
-    page_type,
-    active_nav,
-    meta_title,
-    meta_description,
-    breadcrumbs=None,
-    faq_items=None,
-    item_id=None,
-):
-    context = {
-        "page_type": page_type,
-        "active_nav": active_nav,
-        "meta_title": meta_title,
-        "meta_description": meta_description,
-        "canonical_url": request.build_absolute_uri(request.path),
-        "item_id": item_id,
-        "extra_jsonld": [],
+    return {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": items,
     }
-
-    if breadcrumbs:
-        context["breadcrumbs"] = breadcrumbs
-        context["breadcrumbs_jsonld"] = _jsonld(_breadcrumbs_jsonld(request, breadcrumbs))
-
-    if faq_items:
-        context["faq_items"] = faq_items
-        context["faq_jsonld"] = _jsonld(_faq_jsonld(faq_items))
-
-    return context
 
 
 def _with_home(items):
@@ -262,48 +350,283 @@ def _item_whatsapp_href(request, product):
 def _stock_to_schema(stock_status):
     if stock_status == Product.StockStatus.OUT_OF_STOCK:
         return "https://schema.org/OutOfStock"
+
     if stock_status == Product.StockStatus.PREORDER:
         return "https://schema.org/PreOrder"
+
     return "https://schema.org/InStock"
 
 
 def _product_jsonld(request, product):
+    offer = {
+        "@type": "Offer",
+        "priceCurrency": "IRR",
+        "availability": _stock_to_schema(product.stock_status),
+        "url": request.build_absolute_uri(product.get_absolute_url()),
+    }
+
+    if product.price:
+        offer["price"] = str(int(product.price) * 10)
+
     schema = {
         "@context": "https://schema.org",
         "@type": "Product",
         "name": product.name,
         "brand": {"@type": "Brand", "name": "زاد"},
-        "offers": {
-            "@type": "Offer",
-            "priceCurrency": "IRR",
-            "price": str(product.price or 0),
-            "availability": _stock_to_schema(product.stock_status),
-            "url": request.build_absolute_uri(product.get_absolute_url()),
-        },
+        "offers": offer,
     }
-    if product.cover:
-        schema["image"] = [request.build_absolute_uri(product.cover.url)]
+
+    if getattr(product, "cover_image", None):
+        schema["image"] = [request.build_absolute_uri(product.cover_image.url)]
+
     return schema
 
 
 def _event_to_iso(dt):
     current_tz = timezone.get_current_timezone()
+
     if timezone.is_naive(dt):
         dt = timezone.make_aware(dt, current_tz)
     else:
         dt = timezone.localtime(dt, current_tz)
+
     return dt.isoformat()
 
 
+def _hero_defaults(meta_title, meta_description):
+    return {
+        "page_hero_kicker": "ZAAD",
+        "page_hero_title": meta_title,
+        "page_hero_text": meta_description,
+        "page_hero_image": "main/img/hero-2.jpg",
+    }
+
+
+def _hero_from_key(key, *, title=None, text=None, image=None):
+    hero = PAGE_HERO_CONTENT.get(key, {})
+
+    return {
+        "page_hero_kicker": hero.get("kicker", "ZAAD"),
+        "page_hero_title": title or hero.get("title", "زاد"),
+        "page_hero_text": text or hero.get("text", "انتخابی دقیق برای گل، هدیه و سفارش‌های خاص"),
+        "page_hero_image": image or hero.get("image", "main/img/hero-2.jpg"),
+    }
+
+
+def _get_active_home_hero_slides():
+    slides = list(
+        HomeHeroSlide.objects.filter(is_active=True).order_by("sort_order", "id")
+    )
+
+    if slides:
+        return slides
+
+    return [
+        {
+            "title": "سفارش گل، بیکری و هدیه با ارسال سریع",
+            "kicker": "ZAAD Concept Store",
+            "description": "ترکیب لوکس گل، بیکری و هدیه با هماهنگی سریع در مشهد.",
+            "image_url": settings.STATIC_URL + "main/img/hero-1.jpg",
+            "primary_button_text": "تماس فوری",
+            "primary_button_url": "",
+            "secondary_button_text": "واتساپ برای سفارش",
+            "secondary_button_url": "",
+        },
+        {
+            "title": "چیدمان خاص برای مناسبت‌های مهم",
+            "kicker": "لوکس و مینیمال",
+            "description": "سفارش گل، بیکری و هدیه با تجربه‌ای یک‌دست و حرفه‌ای.",
+            "image_url": settings.STATIC_URL + "main/img/hero-2.jpg",
+            "primary_button_text": "",
+            "primary_button_url": "",
+            "secondary_button_text": "",
+            "secondary_button_url": "",
+        },
+        {
+            "title": "ارسال سریع در مشهد",
+            "kicker": "زاد مشهد",
+            "description": "هماهنگی سریع برای سفارش‌های فوری و انتخاب‌های روز.",
+            "image_url": settings.STATIC_URL + "main/img/hero-3.jpg",
+            "primary_button_text": "",
+            "primary_button_url": "",
+            "secondary_button_text": "",
+            "secondary_button_url": "",
+        },
+    ]
+
+
+def _get_site_hero(target_page, target_slug=""):
+    hero = (
+        SiteHero.objects.filter(
+            is_active=True,
+            target_page=target_page,
+            target_slug=target_slug,
+        )
+        .order_by("sort_order", "id")
+        .first()
+    )
+
+    if hero:
+        return {
+            "page_hero_kicker": hero.kicker or "ZAAD",
+            "page_hero_title": hero.title,
+            "page_hero_text": hero.description,
+            "page_hero_image": hero.image.url if hero.image else "main/img/hero-2.jpg",
+        }
+
+    if target_slug:
+        fallback = (
+            SiteHero.objects.filter(
+                is_active=True,
+                target_page=target_page,
+                target_slug="",
+            )
+            .order_by("sort_order", "id")
+            .first()
+        )
+
+        if fallback:
+            return {
+                "page_hero_kicker": fallback.kicker or "ZAAD",
+                "page_hero_title": fallback.title,
+                "page_hero_text": fallback.description,
+                "page_hero_image": fallback.image.url if fallback.image else "main/img/hero-2.jpg",
+            }
+
+    return None
+
+
+def _default_context(
+    request,
+    *,
+    page_type,
+    active_nav,
+    meta_title,
+    meta_description,
+    breadcrumbs=None,
+    faq_items=None,
+    item_id=None,
+):
+    context = {
+        "page_type": page_type,
+        "active_nav": active_nav,
+        "meta_title": meta_title,
+        "meta_description": meta_description,
+        "canonical_url": request.build_absolute_uri(request.path),
+        "item_id": item_id,
+        "extra_jsonld": [],
+        "is_homepage": False,
+        **_hero_defaults(meta_title, meta_description),
+    }
+
+    if breadcrumbs:
+        context["breadcrumbs"] = breadcrumbs
+        context["breadcrumbs_jsonld"] = _jsonld(
+            _breadcrumbs_jsonld(request, breadcrumbs)
+        )
+
+    if faq_items:
+        context["faq_items"] = faq_items
+        context["faq_jsonld"] = _jsonld(_faq_jsonld(faq_items))
+
+    return context
+
+
+# =========================
+# Product / category helpers
+# =========================
+
+def _published_products():
+    return Product.objects.filter(
+        is_active=True,
+        publish_status=Product.PublishStatus.PUBLISHED,
+    )
+
+
+def _published_products_for_section(section):
+    return (
+        _published_products()
+        .filter(category__section=section)
+        .select_related("category")
+        .prefetch_related("tags")
+    )
+
+
+def _active_categories_for_section(section):
+    return Category.objects.filter(
+        section=section,
+        is_active=True,
+    ).order_by("sort_order", "name")
+
+
+def _category_content(category):
+    override = CATEGORY_CONTENT_OVERRIDES.get(category.slug, {})
+
+    return {
+        "label": override.get("label") or category.name,
+        "meta_title": override.get("meta_title") or f"{category.name} | زاد",
+        "meta_description": (
+            override.get("meta_description")
+            or category.description
+            or f"مشاهده محصولات دسته {category.name} در زاد."
+        ),
+        "intro": override.get("intro") or category.description or "انتخاب‌هایی هماهنگ برای همین حال‌وهوا.",
+        "image": override.get("image") or "main/img/sub-bouquet.jpg",
+        "hero_image": override.get("hero_image") or "main/img/hero-subcategory.jpg",
+    }
+
+
+def _category_card(category):
+    content = _category_content(category)
+
+    return {
+        "slug": category.slug,
+        "label": category.name,
+        "url": reverse("flower_subcategory", args=[category.slug]),
+        "image": category.cover_image.url if category.cover_image else content["image"],
+        "intro": category.description or content["intro"],
+    }
+
+
+def _occasion_links(limit=4):
+    tags = list(
+        Tag.objects.filter(
+            tag_type=Tag.TagType.OCCASION,
+            is_active=True,
+        ).order_by("sort_order", "name")[:limit]
+    )
+
+    return [
+        {
+            "label": tag.name,
+            "url": reverse("occasion_detail", args=[tag.slug]),
+        }
+        for tag in tags
+    ]
+
+
+# =========================
+# Home
+# =========================
+
 def index(request):
     legacy_section = (request.GET.get("section") or "").lower()
+
     if legacy_section in SECTION_CONTENT:
         return redirect(legacy_section)
 
     featured_today = list(
-        Product.objects.filter(is_active=True)
+        _published_products()
         .select_related("category")
+        .prefetch_related("tags")
         .order_by("-featured", "sort_order", "-created_at")[:8]
+    )
+
+    occasion_tags = list(
+        Tag.objects.filter(
+            tag_type=Tag.TagType.OCCASION,
+            is_active=True,
+        ).order_by("sort_order", "name")[:8]
     )
 
     context = _default_context(
@@ -311,32 +634,44 @@ def index(request):
         page_type="home",
         active_nav="home",
         meta_title="زاد | سفارش گل، بیکری و هدیه در مشهد",
-        meta_description="زاد کانسپت‌استور مشهد برای سفارش گل، بیکری، هدیه و هماهنگی رویداد با ارسال فوری.",
+        meta_description="زاد کانسپت‌استور مشهد برای سفارش گل، بیکری، هدیه و هماهنگی رویداد با ارسال سریع.",
         faq_items=HOME_FAQ,
     )
+
     context.update(
         {
             "featured_today": featured_today,
+            "occasion_tags": occasion_tags,
             "sections": SECTION_CONTENT,
             "hero_call_text": "تماس فوری",
             "hero_whatsapp_text": "واتساپ برای سفارش",
             "home_subtitle": "ترکیب لوکس گل، بیکری و هدیه با ارسال سریع در مشهد",
+            "is_homepage": True,
+            "home_hero_slides": _get_active_home_hero_slides(),
         }
     )
+
     return render(request, "index.html", context)
 
 
+# =========================
+# Section pages
+# =========================
+
 def _category_page(request, section):
     config = SECTION_CONTENT[section]
-    products_qs = (
-        Product.objects.filter(is_active=True, category__section=section)
-        .select_related("category")
-        .order_by("-featured", "sort_order", "-created_at")
+
+    products_qs = _published_products_for_section(section).order_by(
+        "-featured",
+        "sort_order",
+        "-created_at",
     )
 
     featured_items = list(products_qs[:8])
+    all_items = list(products_qs[:16])
 
     breadcrumbs = _with_home([{"name": config["title"], "url": None}])
+
     context = _default_context(
         request,
         page_type="category",
@@ -347,16 +682,21 @@ def _category_page(request, section):
         faq_items=config["faq"] or None,
     )
 
+    hero_data = _hero_from_key(section)
+    db_hero = _get_site_hero(section)
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
+
     subcategories = []
-    if section == "flowers":
-        for slug, sub in FLOWER_SUBCATEGORIES.items():
-            subcategories.append(
-                {
-                    "slug": slug,
-                    "label": sub["label"],
-                    "url": reverse("flower_subcategory", args=[slug]),
-                }
-            )
+
+    if section == Category.Section.FLOWERS:
+        subcategories = [
+            _category_card(category)
+            for category in _active_categories_for_section(Category.Section.FLOWERS)
+        ]
 
     context.update(
         {
@@ -364,7 +704,7 @@ def _category_page(request, section):
             "section_title": config["title"],
             "section_intro": config["intro"],
             "featured_items": featured_items,
-            "all_items": list(products_qs[:16]),
+            "all_items": all_items,
             "subcategory_links": subcategories,
             "lead_form": LeadRequestForm(initial_lead_type=config["lead_type"]),
             "lead_default_type": config["lead_type"],
@@ -372,97 +712,158 @@ def _category_page(request, section):
             "category_whatsapp_text": "مشاوره در واتساپ",
         }
     )
+
     return render(request, "category.html", context)
 
 
 def flowers(request):
-    return _category_page(request, "flowers")
+    return _category_page(request, Category.Section.FLOWERS)
 
 
 def bakery(request):
-    return _category_page(request, "bakery")
+    return _category_page(request, Category.Section.BAKERY)
 
 
 def gifts(request):
-    return _category_page(request, "gifts")
+    return _category_page(request, Category.Section.GIFTS)
 
 
 def flower_subcategory(request, subcategory_slug):
-    config = FLOWER_SUBCATEGORIES.get(subcategory_slug)
-    if not config:
-        raise Http404("Subcategory not found")
+    canonical_slug = CATEGORY_SLUG_ALIASES.get(subcategory_slug, subcategory_slug)
 
-    queryset = Flower.objects.filter(is_active=True).select_related("category")
-    if subcategory_slug == "plant":
-        queryset = queryset.filter(Q(pack_type__in=config["pack_types"]) | Q(category__slug="plant"))
-    else:
-        queryset = queryset.filter(pack_type__in=config["pack_types"])
+    if canonical_slug != subcategory_slug:
+        return redirect("flower_subcategory", subcategory_slug=canonical_slug)
 
-    items = list(queryset.order_by("-featured", "sort_order", "-created_at")[:12])
+    category = get_object_or_404(
+        Category,
+        section=Category.Section.FLOWERS,
+        slug=canonical_slug,
+        is_active=True,
+    )
+
+    content = _category_content(category)
+
+    items = list(
+        _published_products()
+        .filter(category=category)
+        .select_related("category")
+        .prefetch_related("tags")
+        .order_by("-featured", "sort_order", "-created_at")[:24]
+    )
+
     related_posts = list(
-        NewsPost.objects.filter(status=PublishStatus.PUBLISHED).order_by("-published_at", "-created_at")[:3]
+        NewsPost.objects.filter(status=PublishStatus.PUBLISHED).order_by(
+            "-published_at",
+            "-created_at",
+        )[:3]
     )
 
     breadcrumbs = _with_home(
         [
             {"name": "گل‌های زاد", "url": reverse("flowers")},
-            {"name": config["label"], "url": None},
+            {"name": category.name, "url": None},
         ]
     )
+
     context = _default_context(
         request,
         page_type="category",
         active_nav="flowers",
-        meta_title=config["meta_title"],
-        meta_description=config["meta_description"],
+        meta_title=content["meta_title"],
+        meta_description=content["meta_description"],
         breadcrumbs=breadcrumbs,
     )
+
+    hero_data = _hero_from_key(
+        "subcategory",
+        title=content["label"],
+        text=content["intro"],
+        image=category.cover_image.url if category.cover_image else content["hero_image"],
+    )
+
+    db_hero = _get_site_hero("subcategory", category.slug)
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
     context.update(
         {
-            "subcategory_slug": subcategory_slug,
-            "subcategory_label": config["label"],
-            "subcategory_intro": config["intro"],
+            "subcategory_slug": category.slug,
+            "subcategory_label": category.name,
+            "subcategory_intro": category.description or content["intro"],
             "items": items,
             "related_posts": related_posts,
             "lead_form": LeadRequestForm(initial_lead_type="flower"),
             "lead_default_type": "flower",
         }
     )
+
     return render(request, "subcategory.html", context)
 
 
+# =========================
+# Product detail
+# =========================
+
 def _item_detail_context(request, product):
-    category_name = product.category.name if product.category else "محصول"
-    section = product.category.section if product.category else ""
-    active_nav = section if section in {"flowers", "bakery", "gifts"} else ""
+    category = product.category
+    category_name = category.name if category else "محصول"
+    section = category.section if category else ""
+    active_nav = section if section in SECTION_CONTENT else ""
 
     subcategory_url = None
     subcategory_label = None
-    if isinstance(product, Flower):
-        pack_to_slug = {
-            Flower.PackType.BOUQUET: "bouquet",
-            Flower.PackType.BOX: "box",
-            Flower.PackType.STAND: "stand",
-            Flower.PackType.BASKET: "plant",
-            Flower.PackType.STEM: "plant",
-        }
-        sub_slug = pack_to_slug.get(product.pack_type)
-        if sub_slug:
-            subcategory_url = reverse("flower_subcategory", args=[sub_slug])
-            subcategory_label = FLOWER_SUBCATEGORIES[sub_slug]["label"]
+
+    if category and category.section == Category.Section.FLOWERS:
+        subcategory_url = reverse("flower_subcategory", args=[category.slug])
+        subcategory_label = category.name
 
     breadcrumbs = [{"name": "خانه", "url": reverse("index")}]
-    if section:
-        breadcrumbs.append({"name": SECTION_CONTENT[section]["title"], "url": reverse(section)})
+
+    if section and section in SECTION_CONTENT:
+        breadcrumbs.append(
+            {
+                "name": SECTION_CONTENT[section]["title"],
+                "url": reverse(section),
+            }
+        )
+
     if subcategory_url and subcategory_label:
-        breadcrumbs.append({"name": subcategory_label, "url": subcategory_url})
+        breadcrumbs.append(
+            {
+                "name": subcategory_label,
+                "url": subcategory_url,
+            }
+        )
+
     breadcrumbs.append({"name": product.name, "url": None})
 
     similar_items = list(
-        Product.objects.filter(is_active=True, category__section=section)
+        _published_products()
+        .filter(category=category)
         .exclude(pk=product.pk)
         .select_related("category")
-        .order_by("-featured", "sort_order", "-created_at")[:3]
+        .prefetch_related("tags")
+        .order_by("-featured", "sort_order", "-created_at")[:6]
+    )
+
+    if len(similar_items) < 3 and section:
+        extra_items = list(
+            _published_products()
+            .filter(category__section=section)
+            .exclude(pk=product.pk)
+            .exclude(pk__in=[item.pk for item in similar_items])
+            .select_related("category")
+            .prefetch_related("tags")
+            .order_by("-featured", "sort_order", "-created_at")[: 6 - len(similar_items)]
+        )
+        similar_items.extend(extra_items)
+
+    description = (
+        product.description[:140]
+        if product.description
+        else "برای استعلام موجودی، زمان تحویل و هماهنگی سفارش با تیم زاد تماس بگیرید."
     )
 
     context = _default_context(
@@ -474,11 +875,25 @@ def _item_detail_context(request, product):
         breadcrumbs=breadcrumbs,
         item_id=product.pk,
     )
+
+    hero_data = _hero_from_key(
+        "item",
+        title=product.name,
+        text=description,
+        image=product.cover_image.url if getattr(product, "cover_image", None) else "main/img/hero-item.jpg",
+    )
+
+    db_hero = _get_site_hero("item", product.slug)
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
     context.update(
         {
             "product": product,
             "category_name": category_name,
-            "category_url": reverse(section) if section else reverse("index"),
+            "category_url": reverse(section) if section in SECTION_CONTENT else reverse("index"),
             "subcategory_url": subcategory_url,
             "subcategory_label": subcategory_label,
             "similar_items": similar_items,
@@ -488,34 +903,174 @@ def _item_detail_context(request, product):
             "mashhad_order_url": reverse("mashhad_flower_order"),
         }
     )
+
     context["extra_jsonld"].append(_jsonld(_product_jsonld(request, product)))
+
     return context
 
 
 def product_detail(request, pk: int, slug: str):
-    product = get_object_or_404(Product.objects.select_related("category"), pk=pk)
+    product = get_object_or_404(
+        _published_products().select_related("category").prefetch_related("tags"),
+        pk=pk,
+    )
+
     if slug != product.slug:
         return redirect("product_detail", pk=product.pk, slug=product.slug)
+
     return render(request, "item_detail.html", _item_detail_context(request, product))
 
 
 def flower_detail(request, pk: int, slug: str):
-    flower = get_object_or_404(Flower.objects.select_related("category"), pk=pk)
+    flower = get_object_or_404(
+        Flower.objects.filter(
+            is_active=True,
+            publish_status=Product.PublishStatus.PUBLISHED,
+        )
+        .select_related("category")
+        .prefetch_related("tags"),
+        pk=pk,
+    )
+
     if slug != flower.slug:
         return redirect("flower_detail", pk=flower.pk, slug=flower.slug)
+
     return render(request, "item_detail.html", _item_detail_context(request, flower))
 
 
 def flower_detail_redirect(request, pk: int):
-    flower = get_object_or_404(Flower, pk=pk)
+    flower = get_object_or_404(
+        Flower.objects.filter(
+            is_active=True,
+            publish_status=Product.PublishStatus.PUBLISHED,
+        ),
+        pk=pk,
+    )
+
     return redirect("flower_detail", pk=flower.pk, slug=flower.slug)
 
 
+# =========================
+# Occasions
+# =========================
+
+def occasions(request):
+    occasion_tags = list(
+        Tag.objects.filter(
+            tag_type=Tag.TagType.OCCASION,
+            is_active=True,
+        ).order_by("sort_order", "name")
+    )
+
+    breadcrumbs = _with_home(
+        [
+            {
+                "name": "مناسبت‌ها",
+                "url": None,
+            }
+        ]
+    )
+
+    context = _default_context(
+        request,
+        page_type="occasions",
+        active_nav="occasions",
+        meta_title="مناسبت‌ها | زاد",
+        meta_description="انتخاب گل، بیکری و هدیه بر اساس مناسبت در زاد.",
+        breadcrumbs=breadcrumbs,
+    )
+
+    hero_data = _hero_from_key("occasions")
+    db_hero = _get_site_hero("occasions")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
+    context.update(
+        {
+            "occasion_tags": occasion_tags,
+        }
+    )
+
+    return render(request, "occasions.html", context)
+
+
+def occasion_detail(request, slug):
+    occasion = get_object_or_404(
+        Tag,
+        slug=slug,
+        tag_type=Tag.TagType.OCCASION,
+        is_active=True,
+    )
+
+    products = list(
+        _published_products()
+        .filter(tags=occasion)
+        .select_related("category")
+        .prefetch_related("tags")
+        .order_by("-featured", "sort_order", "-created_at")[:24]
+    )
+
+    breadcrumbs = _with_home(
+        [
+            {
+                "name": "مناسبت‌ها",
+                "url": reverse("occasions"),
+            },
+            {
+                "name": occasion.name,
+                "url": None,
+            },
+        ]
+    )
+
+    context = _default_context(
+        request,
+        page_type="occasion-detail",
+        active_nav="occasions",
+        meta_title=f"{occasion.name} | زاد",
+        meta_description=f"پیشنهادهای زاد برای مناسبت {occasion.name}.",
+        breadcrumbs=breadcrumbs,
+    )
+
+    db_hero = _get_site_hero("occasions", occasion.slug)
+
+    if db_hero:
+        context.update(db_hero)
+    else:
+        context.update(
+            {
+                "page_hero_kicker": "ZAAD Occasion",
+                "page_hero_title": occasion.name,
+                "page_hero_text": "انتخاب‌هایی هماهنگ برای همین حال‌وهوا.",
+                "page_hero_image": "main/img/hero-occasions.jpg",
+            }
+        )
+
+    context.update(
+        {
+            "occasion": occasion,
+            "products": products,
+        }
+    )
+
+    return render(request, "occasion_detail.html", context)
+
+
+# =========================
+# Events
+# =========================
+
 def events(request):
-    published_events_qs = Event.objects.filter(status=PublishStatus.PUBLISHED).order_by("start_at", "-created_at")
+    published_events_qs = Event.objects.filter(
+        status=PublishStatus.PUBLISHED,
+    ).order_by("start_at", "-created_at")
+
     published_events = list(published_events_qs)
 
     breadcrumbs = _with_home([{"name": "رویدادها", "url": None}])
+
     context = _default_context(
         request,
         page_type="category",
@@ -525,7 +1080,17 @@ def events(request):
         breadcrumbs=breadcrumbs,
     )
 
-    if not published_events:
+    hero_data = _hero_from_key("events")
+    db_hero = _get_site_hero("events")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
+
+    events_are_demo = not published_events_qs.exists()
+
+    if events_are_demo:
         now = timezone.now()
         published_events = [
             {
@@ -549,22 +1114,32 @@ def events(request):
     context.update(
         {
             "events": published_events,
-            "lead_form": LeadRequestForm(initial_lead_type="event", include_event_fields=True),
+            "lead_form": LeadRequestForm(
+                initial_lead_type="event",
+                include_event_fields=True,
+            ),
             "lead_default_type": "event",
-            "events_are_demo": not published_events_qs.exists(),
+            "events_are_demo": events_are_demo,
         }
     )
+
     return render(request, "events.html", context)
 
 
 def event_detail(request, slug: str):
-    event = get_object_or_404(Event, slug=slug, status=PublishStatus.PUBLISHED)
+    event = get_object_or_404(
+        Event,
+        slug=slug,
+        status=PublishStatus.PUBLISHED,
+    )
+
     breadcrumbs = _with_home(
         [
             {"name": "رویدادها", "url": reverse("events")},
             {"name": event.title, "url": None},
         ]
     )
+
     context = _default_context(
         request,
         page_type="category",
@@ -573,6 +1148,20 @@ def event_detail(request, slug: str):
         meta_description=f"جزئیات رویداد {event.title} در زاد: زمان برگزاری، مکان و هماهنگی حضور.",
         breadcrumbs=breadcrumbs,
     )
+
+    hero_data = _hero_from_key(
+        "events",
+        title=event.title,
+        text=event.description,
+        image=event.cover_image.url if event.cover_image else "main/img/hero-events.jpg",
+    )
+
+    db_hero = _get_site_hero("events", event.slug)
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
 
     event_schema = {
         "@context": "https://schema.org",
@@ -595,35 +1184,57 @@ def event_detail(request, slug: str):
         },
         "url": request.build_absolute_uri(event.get_absolute_url()),
     }
+
     if event.cover_image:
         event_schema["image"] = [request.build_absolute_uri(event.cover_image.url)]
 
     context.update(
         {
             "event": event,
-            "lead_form": LeadRequestForm(initial_lead_type="event", include_event_fields=True),
+            "lead_form": LeadRequestForm(
+                initial_lead_type="event",
+                include_event_fields=True,
+            ),
             "lead_default_type": "event",
         }
     )
+
     context["extra_jsonld"].append(_jsonld(event_schema))
+
     return render(request, "event_detail.html", context)
 
 
+# =========================
+# Local SEO pages
+# =========================
+
 def mashhad_hub(request):
     curated_items = list(
-        Product.objects.filter(is_active=True, category__section="flowers")
-        .select_related("category")
-        .order_by("-featured", "sort_order", "-created_at")[:6]
+        _published_products_for_section(Category.Section.FLOWERS).order_by(
+            "-featured",
+            "sort_order",
+            "-created_at",
+        )[:6]
     )
+
     breadcrumbs = _with_home([{"name": "سفارش در مشهد", "url": None}])
+
     context = _default_context(
         request,
         page_type="local",
         active_nav="mashhad",
         meta_title="سفارش در مشهد | زاد",
-        meta_description="مرکز سفارش زاد در مشهد برای گل، ارسال فوری و هماهنگی سریع.",
+        meta_description="مرکز سفارش زاد در مشهد برای گل، ارسال سریع و هماهنگی فوری.",
         breadcrumbs=breadcrumbs,
     )
+
+    hero_data = _hero_from_key("mashhad")
+    db_hero = _get_site_hero("mashhad")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
     context.update(
         {
             "curated_items": curated_items,
@@ -631,6 +1242,7 @@ def mashhad_hub(request):
             "lead_default_type": "flower",
         }
     )
+
     return render(request, "mashhad_hub.html", context)
 
 
@@ -649,9 +1261,11 @@ def _local_landing(request, landing_type):
         raise Http404("Landing page not found")
 
     curated_items = list(
-        Product.objects.filter(is_active=True, category__section="flowers")
-        .select_related("category")
-        .order_by("-featured", "sort_order", "-created_at")[:8]
+        _published_products_for_section(Category.Section.FLOWERS).order_by(
+            "-featured",
+            "sort_order",
+            "-created_at",
+        )[:8]
     )
 
     local_faq = [
@@ -664,12 +1278,12 @@ def _local_landing(request, landing_type):
             "answer": "برای تحویل همان‌روز بهتر است حداقل ۲ تا ۳ ساعت زودتر هماهنگ کنید.",
         },
         {
-            "question": "آیا عکس محصول قبل از ارسال ارسال می‌شود؟",
+            "question": "آیا عکس محصول قبل از ارسال فرستاده می‌شود؟",
             "answer": "در صورت درخواست، پیش از خروج سفارش امکان ارسال تصویر نهایی وجود دارد.",
         },
         {
             "question": "اگر آیتم انتخابی موجود نباشد چه می‌شود؟",
-            "answer": "گزینه‌های نزدیک با همان سطح کیفیت پیشنهاد می‌شود و پس از تایید شما ارسال انجام می‌گردد.",
+            "answer": "گزینه‌های نزدیک با همان سطح کیفیت پیشنهاد می‌شود و پس از تأیید شما ارسال انجام می‌گردد.",
         },
         {
             "question": "امکان هماهنگی تلفنی سریع دارید؟",
@@ -687,6 +1301,7 @@ def _local_landing(request, landing_type):
             {"name": title, "url": None},
         ]
     )
+
     context = _default_context(
         request,
         page_type="local",
@@ -696,6 +1311,23 @@ def _local_landing(request, landing_type):
         breadcrumbs=breadcrumbs,
         faq_items=local_faq,
     )
+
+    hero_data = _hero_from_key("mashhad", title=title, text=subtitle)
+    db_hero = _get_site_hero("mashhad")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
+
+    occasion_links = _occasion_links(limit=4)
+
+    if not occasion_links:
+        occasion_links = [
+            _category_card(category)
+            for category in _active_categories_for_section(Category.Section.FLOWERS)[:4]
+        ]
+
     context.update(
         {
             "landing_title": title,
@@ -707,16 +1339,12 @@ def _local_landing(request, landing_type):
                 "ارسال همان‌روز در محدوده‌های اصلی مشهد",
                 "بسته‌بندی حرفه‌ای و مناسب هدیه",
             ],
-            "occasion_links": [
-                {"label": "تولد", "url": reverse("flower_subcategory", args=["bouquet"])},
-                {"label": "سالگرد", "url": reverse("flower_subcategory", args=["box"])},
-                {"label": "ترحیم", "url": reverse("flower_subcategory", args=["stand"])},
-                {"label": "رویداد", "url": reverse("events")},
-            ],
+            "occasion_links": occasion_links,
             "lead_form": LeadRequestForm(initial_lead_type="flower"),
             "lead_default_type": "flower",
         }
     )
+
     return render(request, "local_landing.html", context)
 
 
@@ -728,8 +1356,13 @@ def mashhad_flower_delivery(request):
     return _local_landing(request, "delivery")
 
 
+# =========================
+# Static content pages
+# =========================
+
 def visit(request):
     breadcrumbs = _with_home([{"name": "بازدید حضوری", "url": None}])
+
     context = _default_context(
         request,
         page_type="contact",
@@ -739,17 +1372,27 @@ def visit(request):
         breadcrumbs=breadcrumbs,
         faq_items=VISIT_FAQ,
     )
+
+    hero_data = _hero_from_key("visit")
+    db_hero = _get_site_hero("visit")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
     context.update(
         {
             "lead_form": LeadRequestForm(initial_lead_type="flower"),
             "lead_default_type": "flower",
         }
     )
+
     return render(request, "visit.html", context)
 
 
 def contact(request):
     breadcrumbs = _with_home([{"name": "تماس با ما", "url": None}])
+
     context = _default_context(
         request,
         page_type="contact",
@@ -759,35 +1402,85 @@ def contact(request):
         breadcrumbs=breadcrumbs,
         faq_items=CONTACT_FAQ,
     )
+
+    hero_data = _hero_from_key("contact")
+    db_hero = _get_site_hero("contact")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
     context.update(
         {
             "lead_form": LeadRequestForm(initial_lead_type="flower"),
             "lead_default_type": "flower",
         }
     )
+
     return render(request, "contact.html", context)
 
 
 def faq(request):
     breadcrumbs = _with_home([{"name": "سوالات پرتکرار", "url": None}])
+
     context = _default_context(
         request,
         page_type="category",
         active_nav="",
         meta_title="سوالات پرتکرار | زاد",
-        meta_description="پاسخ سوالات رایج درباره سفارش گل، ارسال فوری، ساعات کاری و هماهنگی رویداد در زاد.",
+        meta_description="پاسخ سوالات رایج درباره سفارش گل، ارسال سریع، ساعات کاری و هماهنگی رویداد در زاد.",
         breadcrumbs=breadcrumbs,
         faq_items=FAQ_PAGE_ITEMS,
     )
+
+    hero_data = _hero_from_key("faq")
+    db_hero = _get_site_hero("faq")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
     context["faq_page_items"] = FAQ_PAGE_ITEMS
+
     return render(request, "faq.html", context)
 
 
+def about(request):
+    breadcrumbs = _with_home([{"name": "درباره ما", "url": None}])
+
+    context = _default_context(
+        request,
+        page_type="about",
+        active_nav="about",
+        meta_title="درباره ما | زاد",
+        meta_description="آشنایی با زاد، فضای فروشگاه، روند آماده‌سازی سفارش و جزئیات برند.",
+        breadcrumbs=breadcrumbs,
+    )
+
+    hero_data = _hero_from_key("about")
+    db_hero = _get_site_hero("about")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
+
+    return render(request, "about.html", context)
+
+
+# =========================
+# Blog
+# =========================
+
 def blog(request):
     posts = list(
-        NewsPost.objects.filter(status=PublishStatus.PUBLISHED).order_by("-published_at", "-created_at")
+        NewsPost.objects.filter(
+            status=PublishStatus.PUBLISHED,
+        ).order_by("-published_at", "-created_at")
     )
+
     breadcrumbs = _with_home([{"name": "بلاگ", "url": None}])
+
     context = _default_context(
         request,
         page_type="category",
@@ -796,17 +1489,49 @@ def blog(request):
         meta_description="مطالب بلاگ زاد درباره انتخاب گل، هدیه و برنامه‌ریزی مناسبت‌ها.",
         breadcrumbs=breadcrumbs,
     )
+
+    hero_data = _hero_from_key("blog")
+    db_hero = _get_site_hero("blog")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
     context["posts"] = posts
+
     return render(request, "blog_list.html", context)
 
 
 def blog_detail(request, slug):
-    post = get_object_or_404(NewsPost, slug=slug, status=PublishStatus.PUBLISHED)
+    post = get_object_or_404(
+        NewsPost,
+        slug=slug,
+        status=PublishStatus.PUBLISHED,
+    )
+
     recommended_items = list(
-        Product.objects.filter(is_active=True)
+        _published_products()
         .select_related("category")
+        .prefetch_related("tags")
         .order_by("-featured", "sort_order", "-created_at")[:3]
     )
+
+    flower_category = (
+        Category.objects.filter(
+            section=Category.Section.FLOWERS,
+            is_active=True,
+        )
+        .order_by("sort_order", "name")
+        .first()
+    )
+
+    recommended_subcategory = None
+
+    if flower_category:
+        recommended_subcategory = {
+            "label": flower_category.name,
+            "url": reverse("flower_subcategory", args=[flower_category.slug]),
+        }
 
     breadcrumbs = _with_home(
         [
@@ -814,35 +1539,60 @@ def blog_detail(request, slug):
             {"name": post.title, "url": None},
         ]
     )
+
     context = _default_context(
         request,
         page_type="category",
         active_nav="",
         meta_title=f"{post.title} | بلاگ زاد",
-        meta_description=post.excerpt or "مطالعه مطلب بلاگ زاد و دسترسی به لینک‌های مرتبط با سفارش.",
+        meta_description=post.excerpt or "مطالعه مطلبی از بلاگ زاد.",
         breadcrumbs=breadcrumbs,
     )
+
+    hero_data = _hero_from_key(
+        "blog",
+        title=post.title,
+        text=post.excerpt or "مطالعه مطلبی از بلاگ زاد.",
+        image=post.cover_image.url if post.cover_image else "main/img/hero-blog.jpg",
+    )
+
+    db_hero = _get_site_hero("blog", post.slug)
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
     context.update(
         {
             "post": post,
             "recommended_category": {"label": "گل‌ها", "url": reverse("flowers")},
-            "recommended_subcategory": {
-                "label": "دسته‌گل",
-                "url": reverse("flower_subcategory", args=["bouquet"]),
-            },
+            "recommended_subcategory": recommended_subcategory,
             "recommended_items": recommended_items,
         }
     )
+
     return render(request, "blog_detail.html", context)
 
+
+# =========================
+# Leads
+# =========================
 
 @require_POST
 def submit_lead_request(request):
     include_event_fields = request.POST.get("lead_type") == "event"
     form = LeadRequestForm(request.POST, include_event_fields=include_event_fields)
 
-    next_url = request.POST.get("next") or request.META.get("HTTP_REFERER") or reverse("index")
-    if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+    next_url = (
+        request.POST.get("next")
+        or request.META.get("HTTP_REFERER")
+        or reverse("index")
+    )
+
+    if not url_has_allowed_host_and_scheme(
+        next_url,
+        allowed_hosts={request.get_host()},
+    ):
         next_url = reverse("index")
 
     if form.is_valid():
@@ -856,6 +1606,10 @@ def submit_lead_request(request):
     return redirect(next_url)
 
 
+# =========================
+# SEO
+# =========================
+
 def robots_txt(request):
     lines = [
         "User-agent: *",
@@ -866,4 +1620,8 @@ def robots_txt(request):
         "Disallow: /search/",
         f"Sitemap: {request.build_absolute_uri(reverse('sitemap'))}",
     ]
-    return HttpResponse("\n".join(lines), content_type="text/plain; charset=utf-8")
+
+    return HttpResponse(
+        "\n".join(lines),
+        content_type="text/plain; charset=utf-8",
+    )

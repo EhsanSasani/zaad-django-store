@@ -1,46 +1,104 @@
+
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-home{% endblock %}
 
 {% block content %}
-<section class="hero container">
-  <p class="kicker">زاد مشهد</p>
-  <h1>سفارش گل، بیکری و هدیه با ارسال فوری</h1>
-  <p>{{ home_subtitle }}</p>
-  <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="hero">{{ hero_call_text }}</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="hero">{{ hero_whatsapp_text }}</a>
+<section class="global-hero home-hero">
+  <div class="hero-slides" id="heroSlides">
+    {% for slide in home_hero_slides %}
+      <div class="hero-slide {% if forloop.first %}is-active{% endif %}">
+        {% if slide.image_url %}
+          <img src="{{ slide.image_url }}" alt="{{ slide.title|default:'ZAAD' }}">
+        {% else %}
+          <img src="{{ slide.image.url }}" alt="{{ slide.title|default:'ZAAD' }}">
+        {% endif %}
+
+        <div class="hero-slide__overlay"></div>
+        <div class="hero-slide__content hero-slide__content--left-bottom container"></div>
+      </div>
+    {% empty %}
+      <div class="hero-slide is-active">
+        <img src="{% static 'main/img/hero-1.jpg' %}" alt="ZAAD Concept Store">
+        <div class="hero-slide__overlay"></div>
+        <div class="hero-slide__content hero-slide__content--left-bottom container"></div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if home_hero_slides|length > 1 %}
+    <button class="hero-slider__nav hero-slider__nav--prev" id="heroPrev" type="button" aria-label="Previous slide">‹</button>
+    <button class="hero-slider__nav hero-slider__nav--next" id="heroNext" type="button" aria-label="Next slide">›</button>
+
+    <div class="hero-slider__dots" id="heroDots">
+      {% for slide in home_hero_slides %}
+        <button type="button" class="{% if forloop.first %}is-active{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
+
+<section class="container section-block home-intro home-intro--trust">
+  <div class="home-intro__brandline">
+    <h2 class="home-intro__title hero-brand-text">Present in every moment</h2>
+  </div>
+
+  <div class="home-categories home-categories--fixed">
+    <a href="{% url 'flowers' %}" class="home-category-card">
+      <img src="{% static 'main/img/cat-flowers.jpg' %}" alt="Flowers">
+      <div class="home-category-card__overlay"></div>
+      <div class="home-category-card__content">
+        <p class="home-category-card__eyebrow hero-ui-text">Floral Design</p>
+        <h3 class="hero-brand-text">Flowers</h3>
+        <p class="hero-ui-text">For moments that need beauty.</p>
+      </div>
+    </a>
+
+    <a href="{% url 'bakery' %}" class="home-category-card">
+      <img src="{% static 'main/img/cat-bakery.jpg' %}" alt="Bakery">
+      <div class="home-category-card__overlay"></div>
+      <div class="home-category-card__content">
+        <p class="home-category-card__eyebrow hero-ui-text">Sweet Moments</p>
+        <h3 class="hero-brand-text">Bakery</h3>
+        <p class="hero-ui-text">Small details, sweeter days.</p>
+      </div>
+    </a>
+
+    <a href="{% url 'gifts' %}" class="home-category-card">
+      <img src="{% static 'main/img/cat-gifts.jpg' %}" alt="Gifts">
+      <div class="home-category-card__overlay"></div>
+      <div class="home-category-card__content">
+        <p class="home-category-card__eyebrow hero-ui-text">Curated Finds</p>
+        <h3 class="hero-brand-text">Gifts</h3>
+        <p class="hero-ui-text">Chosen with warmth and care.</p>
+      </div>
+    </a>
+
+    <a href="{% url 'events' %}" class="home-category-card">
+      <img src="{% static 'main/img/cat-events.jpg' %}" alt="Events">
+      <div class="home-category-card__overlay"></div>
+      <div class="home-category-card__content">
+        <p class="home-category-card__eyebrow hero-ui-text">Event Styling</p>
+        <h3 class="hero-brand-text">Events</h3>
+        <p class="hero-ui-text">A softer mood for special days.</p>
+      </div>
+    </a>
   </div>
 </section>
 
-<section class="container section-block">
-  <h2>دسته‌بندی‌ها</h2>
-  <div class="category-grid">
-    <a href="{% url 'flowers' %}" class="category-card">
-      <h3>گل‌ها</h3>
-      <p>دسته‌گل، باکس، استند و گیاه</p>
-    </a>
-    <a href="{% url 'bakery' %}" class="category-card">
-      <h3>بیکری</h3>
-      <p>پیشنهادهای تازه برای پذیرایی</p>
-    </a>
-    <a href="{% url 'gifts' %}" class="category-card">
-      <h3>هدایا</h3>
-      <p>انتخاب‌های مینیمال و خاص</p>
-    </a>
-    <a href="{% url 'events' %}" class="category-card">
-      <h3>رویدادها</h3>
-      <p>هماهنگی ورکشاپ و تجربه حضوری</p>
-    </a>
-  </div>
-</section>
+<section class="container section-block featured-products-section">
+  <div class="section-head featured-products-section__head featured-products-section__head--center">
+  <h2 class="section-title-en hero-brand-text">Our Selection</h2>
+  <a href="{% url 'flowers' %}" class="section-link hero-ui-text">View All</a>
+</div>
 
-<section class="container section-block">
-  <div class="section-head">
-    <h2>انتخاب‌های پیشنهادی امروز</h2>
-    <a href="{% url 'mashhad_flower_delivery' %}" class="text-link">ارسال فوری گل در مشهد</a>
-  </div>
-  {% include "partials/product_grid.html" with products=featured_today %}
+  {% include "partials/featured_products_slider.html" with products=featured_today %}
 </section>
-
 {% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'main/js/home-slider.js' %}?v=4"></script>
+  <script src="{% static 'main/js/featured-products-slider.js' %}?v=2"></script>
+{% endblock %}
+```

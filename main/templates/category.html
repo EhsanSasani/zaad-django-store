@@ -1,45 +1,59 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-category{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>{{ section_title }}</h1>
-  <p class="intro-text">{{ section_intro }}</p>
-  <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">{{ category_call_text }}</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">{{ category_whatsapp_text }}</a>
-  </div>
-</section>
-
 {% if subcategory_links %}
 <section class="container section-block">
-  <div class="section-head">
-    <h2>زیر‌دسته‌های گل</h2>
-    <a href="{% url 'mashhad_flower_delivery' %}" class="text-link">ارسال فوری گل در مشهد</a>
+  <div class="section-head section-head--center">
+    {% if active_nav == "flowers" %}
+      <h2 class="section-title-en">Our Flowers</h2>
+    {% elif active_nav == "bakery" %}
+      <h2 class="section-title-en">Our Bakery</h2>
+    {% elif active_nav == "gifts" %}
+      <h2 class="section-title-en">Our Gifts</h2>
+    {% elif active_nav == "events" %}
+      <h2 class="section-title-en">Our Events</h2>
+    {% else %}
+      <h2 class="section-title-en">Our Collection</h2>
+    {% endif %}
   </div>
-  <div class="subcategory-grid">
-    {% for sub in subcategory_links %}
-      <a href="{{ sub.url }}" class="subcategory-card">{{ sub.label }}</a>
+
+  <div class="subcategory-cards">
+    {% for item in subcategory_links %}
+      <a href="{{ item.url }}" class="subcategory-showcase-card">
+        <div class="subcategory-showcase-card__media">
+          <img src="{% static item.image %}" alt="{{ item.label }}">
+        </div>
+
+        <div class="subcategory-showcase-card__overlay"></div>
+
+        <div class="subcategory-showcase-card__content">
+          <h3>{{ item.label }}</h3>
+          <p>{{ item.intro }}</p>
+          <span class="subcategory-showcase-card__action">Explore Collection</span>
+        </div>
+      </a>
     {% endfor %}
   </div>
 </section>
 {% endif %}
 
-<section class="container section-block">
-  <h2>آیتم‌های منتخب</h2>
-  {% include "partials/product_grid.html" with products=featured_items %}
-</section>
+{% if featured_items %}
+<section class="container section-block featured-products-section">
+  <div class="section-head featured-products-section__head featured-products-section__head--center">
+    <h2 class="section-title-en">Our Selection</h2>
+    <a href="{{ request.path }}" class="section-link">View All</a>
+  </div>
 
-<section class="container section-block">
-  <h2>همه آیتم‌ها</h2>
-  {% include "partials/product_grid.html" with products=all_items %}
+  {% include "partials/featured_products_slider.html" with products=featured_items %}
 </section>
-
-
+{% else %}
 <section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="راهنمایی می‌خواهم" cta_position="inline" %}
+  <div class="empty-box">فعلاً آیتمی برای نمایش وجود ندارد.</div>
 </section>
+{% endif %}
 {% endblock %}

@@ -5,23 +5,23 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>{{ event.title }}</h1>
-  <p class="intro-text">{{ event.description }}</p>
-
-  <div class="meta-row">
-    <span>شروع: {{ event.start_at|date:"Y/m/d H:i" }}</span>
-    <span>پایان: {{ event.end_at|date:"Y/m/d H:i" }}</span>
-    <span>مکان: {{ event.location }}</span>
+<section class="container section-block event-detail">
+  <div class="section-head section-head--center">
+    <h2 class="section-title-en">Event Details</h2>
   </div>
 
-  <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">هماهنگی سفارش</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">مشاوره در واتساپ</a>
+  <div class="meta-row">
+    <span>Starts: {{ event.start_at|date:"Y/m/d H:i" }}</span>
+    <span>Ends: {{ event.end_at|date:"Y/m/d H:i" }}</span>
+    <span>Location: {{ event.location }}</span>
+  </div>
+
+  <div class="event-detail__body">
+    <p class="intro-text">{{ event.description }}</p>
   </div>
 </section>
 
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="درخواست هماهنگی رویداد" cta_position="inline" %}
+<section class="container section-block contact-help">
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="Let’s plan this event together" lead_subtitle="If you’d like to join, reserve, or coordinate something related to this event, send your request here." cta_position="inline" %}
 </section>
 {% endblock %}

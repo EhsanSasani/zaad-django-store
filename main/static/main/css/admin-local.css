@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "VazirmatnLocal";
+  src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "VazirmatnLocal";
+  src: url("../fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body, input, textarea, select, button,
+.brand-text, .main-header, .main-sidebar, .content-wrapper,
+.card, .form-control, .select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple,
+.table, .btn, .nav-sidebar, .dropdown-menu {
+  font-family: "VazirmatnLocal", Tahoma, sans-serif !important;
+}
+
+html {
+  font-size: 16px !important;
+}
+
+body {
+  font-size: 15px !important;
+}
+
+.table th,
+.table td,
+.form-control,
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple,
+.btn,
+.nav-sidebar .nav-link,
+.brand-text {
+  font-size: 0.98rem !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.content-header h1,
+.card-title {
+  font-size: 1.15rem !important;
+}
+
+.sidebar .nav-link p {
+  font-size: 0.98rem !important;
+}
+
+.select2-container .select2-selection--single {
+  min-height: 40px !important;
+}
+
+.form-control {
+  min-height: 40px !important;
+}

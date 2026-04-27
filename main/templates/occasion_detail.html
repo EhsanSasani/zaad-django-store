@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-occasion-detail{% endblock %}
+
+{% block content %}
+{% include "partials/breadcrumbs.html" %}
+
+<section class="container section-block">
+  <div class="section-head section-head--center">
+    <h2 class="section-title-en hero-brand-text">{{ occasion.name }}</h2>
+    <p class="intro-text">
+      چند انتخاب هماهنگ برای این حال‌وهوا.
+    </p>
+  </div>
+
+  {% include "partials/product_grid.html" with products=products %}
+</section>
+{% endblock %}

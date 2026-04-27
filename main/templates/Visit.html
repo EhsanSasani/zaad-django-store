@@ -5,22 +5,39 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>بازدید حضوری از زاد</h1>
-  <p class="intro-text">برای بررسی کیفیت گل‌ها و انتخاب نزدیک، حضوری تشریف بیاورید. تیم زاد قبل از مراجعه هم هماهنگی کوتاه انجام می‌دهد.</p>
+<section class="container section-block page-intro">
+  <p class="intro-text">
+    اگر ترجیح می‌دهی انتخابت را از نزدیک انجام بدهی، می‌توانی برای بازدید حضوری از زاد هماهنگ کنی. برای سفارش‌های خاص، بهتر است قبل از مراجعه تماس بگیری تا روند انتخاب سریع‌تر و دقیق‌تر انجام شود.
+  </p>
+
   <div class="meta-row">
     <span>{{ site_opening_hours_text }}</span>
     <span>{{ site_response_time_text }}</span>
     <span>{{ site_address_text }}</span>
   </div>
+
   <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">تماس فوری</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">واتساپ برای سفارش</a>
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">هماهنگی قبل از مراجعه</a>
+    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">دریافت لوکیشن در واتساپ</a>
   </div>
 </section>
 
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type cta_position="inline" %}
+<section class="container section-block visit-help">
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="برای بازدید حضوری هماهنگ می‌کنم" lead_subtitle="اگر زمان مشخصی برای مراجعه در نظر داری، فرم کوتاه را ثبت کن تا هماهنگی سریع‌تر انجام شود." cta_position="inline" %}
 </section>
 
+<section class="container section-block visit-help-link">
+  <div class="section-head">
+    <h2>قبل از مراجعه</h2>
+  </div>
+
+  <p class="intro-text">
+    اگر اول می‌خواهی پاسخ سوال‌های متداول را ببینی یا درباره سفارش اطلاعات بیشتری بگیری، از صفحه‌های راهنما استفاده کن.
+  </p>
+
+  <div class="cta-row">
+    <a href="{% url 'faq' %}" class="btn btn-light">سوالات پرتکرار</a>
+    <a href="{% url 'contact' %}" class="btn btn-light">تماس و مشاوره</a>
+  </div>
+</section>
 {% endblock %}

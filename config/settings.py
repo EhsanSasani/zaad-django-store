@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 # --- حالت اجرا و تنظیمات امنیتی پایه ---
 ENV = os.getenv("ENV", "dev").lower()
 DEBUG = os.getenv("DEBUG", "1" if ENV == "dev" else "0") == "1"
@@ -17,6 +19,8 @@ ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "*").split(",") i
 
 # --- تعریف اپ‌ها و میان‌افزارها ---
 INSTALLED_APPS = [
+    "jazzmin",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -133,3 +137,77 @@ ZAAD_ADDRESS_LOCALITY = os.getenv("ZAAD_ADDRESS_LOCALITY", "Mashhad")
 ZAAD_ADDRESS_REGION = os.getenv("ZAAD_ADDRESS_REGION", "Razavi Khorasan")
 ZAAD_ADDRESS_COUNTRY = os.getenv("ZAAD_ADDRESS_COUNTRY", "IR")
 ZAAD_ADDRESS_POSTAL_CODE = os.getenv("ZAAD_ADDRESS_POSTAL_CODE", "9183811111")
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "ZAAD Admin",
+    "site_header": "ZAAD",
+    "site_brand": "ZAAD Admin",
+    "welcome_sign": "خوش آمدید به پنل مدیریت زاد",
+    "copyright": "ZAAD Concept Store",
+    "search_model": [
+        "main.Product",
+        
+    ],
+    "topmenu_links": [
+        {"name": "سایت", "url": "/", "new_window": True},
+        {"model": "auth.User"},
+    ],
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "order_with_respect_to": [
+        "main",
+        "main.Product",
+        "main.Flower",
+        "main.BakeryItem",
+        "main.GiftItem",
+        "main.Category",
+        "main.Tag",
+        "main.ProductImage",
+        "main.LeadRequest",
+        "main.NewsPost",
+        "main.Event",
+    ],
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "main.Product": "fas fa-box-open",
+        "main.Flower": "fas fa-seedling",
+        "main.BakeryItem": "fas fa-birthday-cake",
+        "main.GiftItem": "fas fa-gift",
+        "main.Category": "fas fa-sitemap",
+        "main.Tag": "fas fa-tags",
+        "main.ProductImage": "fas fa-image",
+        "main.LeadRequest": "fas fa-phone-alt",
+        "main.NewsPost": "fas fa-newspaper",
+        "main.Event": "fas fa-calendar-alt",
+    },
+    "default_icon_parents": "fas fa-folder",
+    "default_icon_children": "fas fa-circle",
+    "related_modal_active": True,
+    "changeform_format": "horizontal_tabs",
+    "custom_css": "main/admin/css/admin-local.css",
+    "use_google_fonts_cdn": False,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "default",
+    "dark_mode_theme": None,
+    "navbar": "navbar-dark",
+    "no_navbar_border": True,
+    "sidebar": "sidebar-dark-primary",
+    "accent": "accent-lightblue",
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "sidebar_nav_small_text": False,
+    "sidebar_disable_expand": False,
+    "sidebar_nav_child_indent": True,
+    "sidebar_nav_compact_style": False,
+    "sidebar_nav_legacy_style": False,
+    "sidebar_nav_flat_style": False,
+    "theme_switcher": False,
+}
+

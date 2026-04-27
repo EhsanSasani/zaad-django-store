@@ -5,39 +5,33 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>رویدادها و تجربه‌های زاد</h1>
-  <p class="intro-text">برای همکاری‌های رویدادی، ورکشاپ‌ها و برنامه‌های مناسبتی می‌توانید سریع هماهنگ کنید.</p>
-  <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">رزرو و هماهنگی</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">ارسال عکس و هماهنگی</a>
-  </div>
+<section class="container section-block page-intro">
+  <p class="intro-text">
+    این بخش برای معرفی رویدادها، ورکشاپ‌ها و تجربه‌های حضوری زاد طراحی شده است. اگر برای مناسبت یا همکاری خاصی برنامه‌ریزی می‌کنی، از همین‌جا شروع کن.
+  </p>
 </section>
 
 <section class="container section-block">
+  <div class="section-head section-head--center">
+    <h2 class="section-title-en">Current Events</h2>
+  </div>
+
   <div class="list-grid">
     {% for event in events %}
       <article class="list-card">
-        <h2>
-          {% if event.slug and not event.is_demo %}
-            <a href="{% url 'event_detail' event.slug %}">{{ event.title }}</a>
-          {% else %}
-            {{ event.title }}
-          {% endif %}
-        </h2>
-        <p>{{ event.description|truncatechars:170 }}</p>
+        <h3>{{ event.title }}</h3>
+        <p>{{ event.description|truncatechars:160 }}</p>
         <p class="muted">{{ event.start_at|date:"Y/m/d H:i" }} | {{ event.location }}</p>
+
         {% if event.slug and not event.is_demo %}
-          <a href="{% url 'event_detail' event.slug %}" class="text-link">جزئیات رویداد</a>
+          <a href="{% url 'event_detail' event.slug %}" class="text-link">View Details</a>
         {% elif events_are_demo %}
-          <span class="muted">نمونه نمایشی</span>
+          <span class="muted">Demo Preview</span>
         {% endif %}
       </article>
+    {% empty %}
+      <div class="empty-box">فعلاً رویدادی برای نمایش وجود ندارد.</div>
     {% endfor %}
   </div>
-</section>
-
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="درخواست مشاوره رویداد" cta_position="inline" %}
 </section>
 {% endblock %}

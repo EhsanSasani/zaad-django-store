@@ -1,93 +1,111 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="light">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ meta_title|default:"زاد" }}</title>
-  <meta name="description" content="{{ meta_description|default:'زاد کاتالوگ گل، بیکری و هدیه با ارسال سریع' }}">
-  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="description" content="{{ meta_description|default:'زاد، کاتالوگ گل، بیکری و هدیه با ارسال سریع در مشهد.' }}">
+  {% if canonical_url %}
+    <link rel="canonical" href="{{ canonical_url }}">
+  {% endif %}
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fa_IR">
   <meta property="og:title" content="{{ meta_title|default:'زاد' }}">
-  <meta property="og:description" content="{{ meta_description|default:'زاد کاتالوگ گل، بیکری و هدیه با ارسال سریع' }}">
-  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:description" content="{{ meta_description|default:'زاد، کاتالوگ گل، بیکری و هدیه با ارسال سریع در مشهد.' }}">
+  {% if canonical_url %}
+    <meta property="og:url" content="{{ canonical_url }}">
+  {% endif %}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'main/css/base.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/layout.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/navbar.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/hero.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/home.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/components.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/page.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/footer.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/responsive.css' %}?v=1">
 
-  <script>
-    (function () {
-      var key = "zaad-theme";
-      var root = document.documentElement;
-      var theme = null;
-
-      try {
-        theme = localStorage.getItem(key);
-      } catch (error) {
-        theme = null;
-      }
-
-      if (theme !== "dark" && theme !== "light") {
-        theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      }
-
-      root.setAttribute("data-theme", theme);
-      root.classList.toggle("theme-dark", theme === "dark");
-    })();
-  </script>
-
-  <link rel="stylesheet" href="{% static 'main/css/site.css' %}?v=6">
   {% block extra_head %}{% endblock %}
 
-  <script type="application/ld+json">{{ local_business_jsonld|safe }}</script>
+  {% if local_business_jsonld %}
+    <script type="application/ld+json">{{ local_business_jsonld|safe }}</script>
+  {% endif %}
   {% if breadcrumbs_jsonld %}
     <script type="application/ld+json">{{ breadcrumbs_jsonld|safe }}</script>
   {% endif %}
   {% if faq_jsonld %}
     <script type="application/ld+json">{{ faq_jsonld|safe }}</script>
   {% endif %}
-  {% for schema in extra_jsonld %}
-    <script type="application/ld+json">{{ schema|safe }}</script>
-  {% endfor %}
+  {% if extra_jsonld %}
+    {% for schema in extra_jsonld %}
+      <script type="application/ld+json">{{ schema|safe }}</script>
+    {% endfor %}
+  {% endif %}
 </head>
-<body class="{% block body_class %}{% endblock %}" data-page-type="{{ page_type|default:'home' }}"{% if item_id %} data-item-id="{{ item_id }}"{% endif %}>
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="{% url 'index' %}">زاد</a>
 
-      <nav class="main-nav" aria-label="ناوبری اصلی">
+<body class="{% block body_class %}{% endblock %}" data-page-type="{{ page_type|default:'default' }}"{% if item_id %} data-item-id="{{ item_id }}"{% endif %}>
+
+  <div class="top-notice-bar">
+    <a href="{{ site_whatsapp_href }}" target="_blank" rel="noopener" class="top-notice-bar__link">
+      چنانچه قصد خرید محصولات زاد از خارج از ایران را دارید، از طریق PayPal یا از طریق شماره
+      989374999505+ در واتساپ با ما در ارتباط باشید.
+    </a>
+  </div>
+
+  <header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand brand--logo" href="{% url 'index' %}" aria-label="ZAAD Home">
+      <img src="{% static 'main/img/logo-zaad-en.png' %}" alt="ZAAD Logo">
+    </a>
+
+    <nav class="main-nav" aria-label="ناوبری اصلی">
+      <div class="main-nav__center">
         <a href="{% url 'index' %}" class="{% if active_nav == 'home' %}is-active{% endif %}">خانه</a>
         <a href="{% url 'flowers' %}" class="{% if active_nav == 'flowers' %}is-active{% endif %}">گل‌ها</a>
         <a href="{% url 'bakery' %}" class="{% if active_nav == 'bakery' %}is-active{% endif %}">بیکری</a>
         <a href="{% url 'gifts' %}" class="{% if active_nav == 'gifts' %}is-active{% endif %}">هدایا</a>
         <a href="{% url 'events' %}" class="{% if active_nav == 'events' %}is-active{% endif %}">رویدادها</a>
-        <a href="{% url 'mashhad_hub' %}" class="{% if active_nav == 'mashhad' %}is-active{% endif %}">سفارش در مشهد</a>
-      </nav>
-
-      <div class="header-ctas">
-        <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="header">تماس فوری</a>
-        <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="header" aria-label="واتساپ">
-          <span class="wa-icon" aria-hidden="true">&#9679;</span>
-          واتساپ
-        </a>
-        <button type="button" class="btn btn-wa theme-toggle" id="themeToggle" aria-label="تغییر به حالت تیره" aria-pressed="false" title="تغییر به حالت تیره">
-          <span class="theme-icon" aria-hidden="true">
-            <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 14.2A9 9 0 1 1 9.8 3a7 7 0 1 0 11.2 11.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M12 2.5V5M12 19V21.5M4.93 4.93 6.7 6.7M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07 6.7 17.3M17.3 6.7l1.77-1.77" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="theme-text">تیره</span>
-        </button>
       </div>
-    </div>
-  </header>
+
+      <a href="{% url 'about' %}" class="main-nav__about {% if active_nav == 'about' %}is-active{% endif %}">
+        درباره ما
+      </a>
+    </nav>
+  </div>
+</header>
+
+  {% if not is_homepage %}
+    <section class="page-hero">
+      <div class="page-hero__media">
+        {% if page_hero_image %}
+          {% if page_hero_image|slice:":7" == "/media/" %}
+            <img src="{{ page_hero_image }}" alt="{{ page_hero_title|default:'ZAAD' }}">
+          {% else %}
+            <img src="{% static page_hero_image %}" alt="{{ page_hero_title|default:'ZAAD' }}">
+          {% endif %}
+        {% else %}
+          <img src="{% static 'main/img/hero-about.jpg' %}" alt="{{ page_hero_title|default:'ZAAD' }}">
+        {% endif %}
+      </div>
+
+      <div class="page-hero__overlay"></div>
+
+      <div class="container page-hero__content page-hero__content--en">
+        {% if page_hero_kicker %}
+          <p class="page-hero__kicker hero-brand-text">{{ page_hero_kicker }}</p>
+        {% endif %}
+
+        <h1 class="page-hero__title hero-brand-text">{{ page_hero_title|default:"ZAAD" }}</h1>
+
+        {% if page_hero_text %}
+          <p class="page-hero__desc hero-ui-text">{{ page_hero_text }}</p>
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
 
   {% if messages %}
     <div class="container alerts">
@@ -97,46 +115,78 @@
     </div>
   {% endif %}
 
-  <main>
+  <main class="site-main">
     {% block content %}{% endblock %}
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-top">
-      <section class="footer-brand">
-        <h2>زاد</h2>
-        <p>کاتالوگ گل، بیکری و هدیه با ارسال سریع در مشهد.</p>
+  <footer class="site-footer footer-clean">
+    <div class="container footer-clean__top">
+      <section class="footer-clean__col footer-clean__col--menu">
+        <h3 class="footer-clean__title">Menu</h3>
+        <ul class="footer-clean__list">
+          <li><a href="{% url 'flowers' %}">Flowers</a></li>
+          <li><a href="{% url 'bakery' %}">Bakery</a></li>
+          <li><a href="{% url 'gifts' %}">Gifts</a></li>
+          <li><a href="{% url 'events' %}">Events</a></li>
+        </ul>
       </section>
 
-      <section class="footer-links">
-        <div class="footer-links-grid">
-          <div class="footer-col">
-            <h3>راهنما</h3>
-            <ul class="footer-list">
-              <li><a href="{% url 'visit' %}">بازدید و آدرس</a></li>
-              <li><a href="{% url 'contact' %}">تماس با ما</a></li>
-              <li><a href="{% url 'faq' %}">سوالات متداول</a></li>
-              <li><a href="{{ site_instagram_url }}" target="_blank" rel="noopener">اینستاگرام</a></li>
-            </ul>
+      <section class="footer-clean__col footer-clean__col--form">
+        <h3 class="footer-clean__title">More Guidance</h3>
+
+        <form class="footer-clean-form" action="{% url 'contact' %}" method="get">
+          <div class="footer-clean-form__row">
+            <input type="text" name="name" placeholder="Name">
+            <input type="text" name="mobile" placeholder="Mobile Number">
           </div>
-        </div>
+          <button type="submit" class="footer-clean-form__btn">Submit Request</button>
+        </form>
       </section>
 
-      <section class="footer-contact">
-        <h3>ارتباط سریع</h3>
-        <p><a href="{{ site_call_href }}">{{ site_phone_display }}</a></p>
-        <p>{{ site_opening_hours_text }}</p>
+      <section class="footer-clean__col">
+        <h3 class="footer-clean__title">Quick Links</h3>
+        <ul class="footer-clean__list">
+          <li><a href="{% url 'visit' %}">Visit Us</a></li>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="{% url 'faq' %}">FAQ</a></li>
+        </ul>
       </section>
     </div>
 
-    <div class="container footer-bottom">
-      <p class="copy">© ۱۴۰۴ زاد</p>
-      <p class="microcopy">طراحی و توسعه برای زاد</p>
+    <div class="footer-clean__bottom-wrap">
+      <div class="container footer-clean__bottom">
+        <p class="footer-clean__copy">© 2018 · Mashhad</p>
+
+        <div class="footer-clean__socials">
+          <a href="{{ site_instagram_url|default:'#' }}" target="_blank" rel="noopener" class="footer-clean__social" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor"/>
+            </svg>
+          </a>
+
+          <a href="{{ site_telegram_url|default:'#' }}" target="_blank" rel="noopener" class="footer-clean__social" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 4.8 17.8 19a1 1 0 0 1-1.5.6l-4.4-3.2-2.2 2.1c-.3.3-.6.3-.8.3l.4-4.6 8.5-7.7c.4-.4-.1-.6-.6-.3L6.8 12 2.3 10.6c-1-.3-1-.9.2-1.3l16.9-6.5c.8-.3 1.5.2 1.2 2Z" fill="currentColor"/>
+            </svg>
+          </a>
+
+          <a href="mailto:{{ site_email|default:'info@zaadconcept.com' }}" class="footer-clean__social" aria-label="Email">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="5" width="18" height="14" rx="2.2" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M4.5 7 12 12.8 19.5 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <p class="footer-clean__credit">design by Ehsan Sasani</p>
+      </div>
     </div>
   </footer>
 
-  <script src="{% static 'main/js/theme-toggle.js' %}?v=3"></script>
   <script src="{% static 'main/js/analytics.js' %}"></script>
+  
   {% block extra_js %}{% endblock %}
 </body>
 </html>

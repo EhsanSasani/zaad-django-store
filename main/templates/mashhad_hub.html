@@ -5,21 +5,25 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>سفارش در مشهد</h1>
-  <p class="intro-text">مرکز هماهنگی سفارش زاد برای مشهد: ثبت سفارش گل، ارسال فوری و مشاوره کوتاه.</p>
+<section class="container section-block page-intro">
+  <p class="intro-text">
+    این بخش برای سفارش در مشهد، ارسال سریع و هماهنگی دقیق طراحی شده تا در زمان کم، انتخاب مناسب‌تری داشته باشی.
+  </p>
+
   <div class="cta-row">
     <a href="{% url 'mashhad_flower_order' %}" class="btn btn-light">سفارش گل در مشهد</a>
     <a href="{% url 'mashhad_flower_delivery' %}" class="btn btn-light">ارسال فوری گل در مشهد</a>
   </div>
 </section>
 
-<section class="container section-block">
-  <h2>انتخاب‌های پیشنهادی امروز</h2>
-  {% include "partials/product_grid.html" with products=curated_items %}
-</section>
+{% if curated_items %}
+<section class="container section-block featured-products-section">
+  <div class="section-head featured-products-section__head">
+    <h2>آیتم‌های منتخب</h2>
+    <a href="{% url 'flowers' %}" class="section-link">مشاهده تمام آیتم‌ها</a>
+  </div>
 
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type cta_position="inline" %}
+  {% include "partials/featured_products_slider.html" with products=curated_items %}
 </section>
+{% endif %}
 {% endblock %}

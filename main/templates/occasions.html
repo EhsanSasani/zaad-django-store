@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-occasions{% endblock %}
+
+{% block content %}
+{% include "partials/breadcrumbs.html" %}
+
+<section class="container section-block">
+  <div class="section-head section-head--center">
+    <h2 class="section-title-en hero-brand-text">Choose the Mood</h2>
+    <p class="intro-text">
+      مناسبت را انتخاب کن تا پیشنهادهای مناسب‌تر و سریع‌تر ببینی.
+    </p>
+  </div>
+
+  <div class="occasion-grid">
+    {% for tag in occasion_tags %}
+      <a href="{% url 'occasion_detail' tag.slug %}" class="occasion-card">
+        <span class="occasion-card__label">{{ tag.name }}</span>
+        <span class="occasion-card__hint">مشاهده پیشنهادها</span>
+      </a>
+    {% empty %}
+      <div class="empty-box">
+        هنوز مناسبتی برای نمایش ثبت نشده است.
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -5,9 +5,9 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block hero-local">
-  <h1>{{ landing_title }}</h1>
+<section class="container section-block page-intro">
   <p class="intro-text">{{ landing_subtitle }}</p>
+
   <div class="cta-row">
     <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="hero">رزرو و هماهنگی</a>
     <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="hero">واتساپ برای سفارش</a>
@@ -15,7 +15,10 @@
 </section>
 
 <section class="container section-block">
-  <h2>بازه ارسال و پوشش</h2>
+  <div class="section-head">
+    <h2>بازه ارسال و پوشش</h2>
+  </div>
+
   <div class="meta-row">
     <span>ارسال فوری در محدوده‌های اصلی مشهد</span>
     <span>{{ site_opening_hours_text }}</span>
@@ -23,13 +26,22 @@
   </div>
 </section>
 
-<section class="container section-block">
-  <h2>انتخاب‌های پیشنهادی امروز</h2>
-  {% include "partials/product_grid.html" with products=curated_items %}
+{% if curated_items %}
+<section class="container section-block featured-products-section">
+  <div class="section-head featured-products-section__head">
+    <h2>آیتم‌های منتخب</h2>
+    <a href="{% url 'flowers' %}" class="section-link">مشاهده تمام آیتم‌ها</a>
+  </div>
+
+  {% include "partials/featured_products_slider.html" with products=curated_items %}
 </section>
+{% endif %}
 
 <section class="container section-block">
-  <h2>چرا زاد؟</h2>
+  <div class="section-head">
+    <h2>چرا زاد؟</h2>
+  </div>
+
   <div class="list-grid">
     {% for item in why_zaad %}
       <article class="list-card"><p>{{ item }}</p></article>
@@ -38,25 +50,14 @@
 </section>
 
 <section class="container section-block">
-  <h2>مناسبت‌ها</h2>
+  <div class="section-head">
+    <h2>مناسبت‌ها</h2>
+  </div>
+
   <div class="inline-links">
     {% for occasion in occasion_links %}
       <a href="{{ occasion.url }}">{{ occasion.label }}</a>
     {% endfor %}
-  </div>
-</section>
-
-
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="درخواست سفارش / مشاوره" cta_position="inline" %}
-</section>
-
-<section class="container section-block close-cta">
-  <h2>برای هماهنگی نهایی آماده‌ایم</h2>
-  <p>{{ site_opening_hours_text }} | {{ site_response_time_text }}</p>
-  <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="footer">تماس فوری</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="footer">مشاوره در واتساپ</a>
   </div>
 </section>
 {% endblock %}
