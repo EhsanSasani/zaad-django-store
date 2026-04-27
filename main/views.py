@@ -591,7 +591,7 @@ def _category_card(category):
 def _occasion_links(limit=4):
     tags = list(
         Tag.objects.filter(
-            tag_type=Tag.TagType.OCCASION,
+            is_occasion=True,
             is_active=True,
         ).order_by("sort_order", "name")[:limit]
     )
@@ -623,9 +623,9 @@ def index(request):
     )
 
     occasion_tags = list(
-        Tag.objects.filter(
-            tag_type=Tag.TagType.OCCASION,
-            is_active=True,
+    Tag.objects.filter(
+        is_occasion=True,
+        is_active=True,
         ).order_by("sort_order", "name")[:8]
     )
 
@@ -956,11 +956,11 @@ def flower_detail_redirect(request, pk: int):
 
 def occasions(request):
     occasion_tags = list(
-        Tag.objects.filter(
-            tag_type=Tag.TagType.OCCASION,
-            is_active=True,
-        ).order_by("sort_order", "name")
-    )
+    Tag.objects.filter(
+        is_occasion=True,
+        is_active=True,
+    ).order_by("sort_order", "name")[:8]
+)
 
     breadcrumbs = _with_home(
         [
@@ -1000,7 +1000,7 @@ def occasion_detail(request, slug):
     occasion = get_object_or_404(
         Tag,
         slug=slug,
-        tag_type=Tag.TagType.OCCASION,
+        is_occasion=True,
         is_active=True,
     )
 

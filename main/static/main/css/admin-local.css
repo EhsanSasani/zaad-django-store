@@ -58,3 +58,243 @@ h1, h2, h3, h4, h5, h6,
 .form-control {
   min-height: 40px !important;
 }
+
+
+/* =========================================
+   ZAAD Admin Fix Pack
+   مودال related object + ریسپانسیو موبایل
+   ========================================= */
+
+/* ---------- پایه ---------- */
+html, body {
+  overflow-x: hidden;
+}
+
+.content-wrapper > .content {
+  padding: 1rem;
+}
+
+.card,
+.modal-content,
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  border-radius: 14px;
+}
+
+/* ---------- تب‌های فرم ---------- */
+.nav-tabs {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+.nav-tabs .nav-item {
+  flex: 0 0 auto;
+}
+
+.nav-tabs .nav-link {
+  white-space: nowrap;
+}
+
+/* ---------- فیلدهای related ---------- */
+.related-widget-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.related-widget-wrapper > *:not(.related-widget-wrapper-link) {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.related-widget-wrapper-link {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  text-decoration: none;
+  flex: 0 0 auto;
+}
+
+/* ---------- مودال add another ---------- */
+.modal {
+  z-index: 3000 !important;
+  padding-right: 0 !important;
+}
+
+.modal-backdrop {
+  z-index: 2990 !important;
+}
+
+.modal-dialog {
+  width: min(980px, calc(100vw - 2rem));
+  max-width: min(980px, calc(100vw - 2rem));
+  margin: 1rem auto;
+}
+
+.modal-content {
+  overflow: hidden;
+  max-height: calc(100vh - 2rem);
+  border-radius: 18px;
+}
+
+.modal-header {
+  padding: 0.9rem 1rem;
+}
+
+.modal-body {
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* iframe داخلی مودال */
+.modal-body iframe,
+.modal iframe {
+  display: block;
+  width: 100% !important;
+  min-width: 100% !important;
+  border: 0 !important;
+  height: 72vh !important;
+  min-height: 520px;
+  background: #fff;
+}
+
+/* اگر محتوای مودال iframe نبود */
+.modal-body .card,
+.modal-body .content,
+.modal-body .container-fluid {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* ---------- دکمه‌های ذخیره ---------- */
+.submit-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.submit-row input,
+.submit-row a,
+.submit-row button {
+  width: 100%;
+  margin: 0 !important;
+  border-radius: 12px;
+}
+
+/* ---------- جداول ---------- */
+.results,
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* ---------- تصاویر ---------- */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- فرم‌ها ---------- */
+.form-group,
+.form-row,
+.form-check {
+  max-width: 100%;
+}
+
+.select2-container {
+  max-width: 100% !important;
+}
+
+/* =========================================
+   Mobile
+   ========================================= */
+@media (max-width: 991.98px) {
+  .content-wrapper > .content {
+    padding: 0.75rem;
+  }
+
+  .card-body,
+  .tab-content {
+    padding: 0.75rem !important;
+  }
+
+  .nav-tabs .nav-link {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.92rem;
+  }
+
+  .related-widget-wrapper {
+    align-items: flex-start;
+  }
+
+  .related-widget-wrapper > *:not(.related-widget-wrapper-link) {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .related-widget-wrapper-link {
+    width: 38px;
+    height: 38px;
+  }
+
+  .modal-dialog {
+    width: calc(100vw - 1rem);
+    max-width: calc(100vw - 1rem);
+    margin: 0.5rem auto;
+  }
+
+  .modal-content {
+    max-height: calc(100vh - 1rem);
+  }
+
+  .modal-body iframe,
+  .modal iframe {
+    height: calc(100vh - 140px) !important;
+    min-height: 420px;
+  }
+
+  .submit-row {
+    position: static !important;
+  }
+
+  .form-row > .field-box,
+  .form-row > div,
+  .form-row > [class*="col-"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .content-header h1,
+  .content-header .breadcrumb {
+    text-align: right;
+  }
+
+  .nav-tabs .nav-link {
+    font-size: 0.85rem;
+  }
+
+  .modal-header {
+    padding: 0.75rem 0.85rem;
+  }
+
+  .modal-body iframe,
+  .modal iframe {
+    height: calc(100vh - 120px) !important;
+    min-height: 360px;
+  }
+
+  .related-widget-wrapper-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+  }
+}

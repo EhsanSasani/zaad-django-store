@@ -2,9 +2,16 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
 .venv/
 venv/
+
 db.sqlite3
+*.sqlite3
+
 media/
+media_backup*/
+
 staticfiles/
+
 .env

@@ -188,6 +188,7 @@ JAZZMIN_SETTINGS = {
     "related_modal_active": True,
     "changeform_format": "horizontal_tabs",
     "custom_css": "main/admin/css/admin-local.css",
+    "custom_js": "main/admin/js/admin-local.js",
     "use_google_fonts_cdn": False,
 }
 
@@ -211,3 +212,4 @@ JAZZMIN_UI_TWEAKS = {
     "theme_switcher": False,
 }
 
+X_FRAME_OPTIONS = "SAMEORIGIN"
