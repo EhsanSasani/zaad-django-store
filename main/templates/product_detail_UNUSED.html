@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}page-item{% endblock %}
+
+{% block content %}
+{% include "partials/breadcrumbs.html" %}
+
+<section class="container section-block item-detail item-detail--premium">
+  <div class="item-detail__grid">
+    <article class="item-detail__media">
+      <div class="item-detail__image-frame">
+        {% if product.cover_image %}
+          <img src="{{ product.cover_image.url }}" alt="{{ product.name }}" width="1100" height="1300">
+        {% else %}
+          <div class="item-detail__placeholder">تصویر هنوز اضافه نشده</div>
+        {% endif %}
+
+        {% if product.stock_status == "out_of_stock" %}
+          <span class="item-detail__floating-badge item-detail__floating-badge--out">ناموجود</span>
+        {% elif product.stock_status == "preorder" %}
+          <span class="item-detail__floating-badge">پیش‌سفارش</span>
+        {% else %}
+          <span class="item-detail__floating-badge">موجود</span>
+        {% endif %}
+      </div>
+
+      {% with gallery=product.gallery_images.all %}
+        {% if gallery %}
+          <div class="item-detail__thumbs" aria-label="Product gallery">
+            {% if product.cover_image %}
+              <span class="item-detail__thumb is-active">
+                <img src="{{ product.cover_image.url }}" alt="{{ product.name }}">
+              </span>
+            {% endif %}
+
+            {% for image in gallery|slice:":5" %}
+              <span class="item-detail__thumb">
+                <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.name }}">
+              </span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </article>
+
+    <aside class="item-detail__info">
+      <p class="item-detail__eyebrow">ZAAD {{ section_label|default:"Collection" }}</p>
+
+      <h1>{{ product.name }}</h1>
+
+      <div class="item-detail__chips">
+        {% if product.category %}
+          <span>{{ product.category.name }}</span>
+        {% endif %}
+
+        {% if product.stock_status == "out_of_stock" %}
+          <span class="is-warning">ناموجود</span>
+        {% elif product.stock_status == "preorder" %}
+          <span>پیش‌سفارش</span>
+        {% else %}
+          <span>موجود</span>
+        {% endif %}
+      </div>
+
+      <div class="item-detail__summary">
+        {% if product.description %}
+          <p>{{ product.description }}</p>
+        {% else %}
+          <p>برای هماهنگی موجودی روز، رنگ‌بندی، زمان ارسال و جزئیات سفارش با زاد تماس بگیرید.</p>
+        {% endif %}
+      </div>
+
+      <div class="item-detail__purchase-box">
+        <div>
+          <span class="item-detail__price-label">Price</span>
+          <p class="item-detail__price">{{ product.display_price }}</p>
+        </div>
+
+        <p class="item-detail__microcopy">
+          برای ثبت نهایی سفارش، موجودی امروز، زمان ارسال و جزئیات شخصی‌سازی را تلفنی هماهنگ کنید.
+        </p>
+      </div>
+
+      <div class="cta-row item-detail__cta">
+        {% if product.stock_status == "out_of_stock" %}
+          <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="product-detail">Call</a>
+        {% else %}
+          <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="product-detail">{{ item_call_text|default:"Call" }}</a>
+        {% endif %}
+
+        <a href="{{ item_telegram_href|default:site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="product-detail">
+          {{ item_telegram_text|default:"Telegram" }}
+        </a>
+      </div>
+
+      <dl class="item-detail__specs">
+        <div>
+          <dt>Code</dt>
+          <dd>#{{ product.id }}</dd>
+        </div>
+
+        {% if product.category %}
+          <div>
+            <dt>Category</dt>
+            <dd>{{ product.category.name }}</dd>
+          </div>
+        {% endif %}
+
+        <div>
+          <dt>Delivery</dt>
+          <dd>هماهنگی ارسال در مشهد</dd>
+        </div>
+      </dl>
+
+      {% with tags=product.tags.all %}
+        {% if tags %}
+          <div class="item-detail__tags" aria-label="Product tags">
+            {% for tag in tags %}
+              <span>{{ tag.name }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <div class="inline-links item-detail__links">
+        {% if category_url %}
+          <a href="{{ category_url }}">{{ section_label|default:"Collection" }}</a>
+        {% endif %}
+
+        {% if subcategory_url %}
+          <a href="{{ subcategory_url }}">{{ subcategory_label }}</a>
+        {% endif %}
+
+        <a href="{{ mashhad_order_url }}">Mashhad</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="container section-block item-detail-extra">
+  <div class="item-detail-extra__grid">
+    <article class="item-detail-panel">
+      <p class="item-detail-panel__kicker">Details</p>
+      <h2>Details</h2>
+      {% if product.description %}
+        <p>{{ product.description }}</p>
+      {% else %}
+        <p>این محصول براساس موجودی روز، رنگ‌بندی قابل اجرا و زمان ارسال، قبل از ثبت سفارش هماهنگ می‌شود.</p>
+      {% endif %}
+    </article>
+
+    <article class="item-detail-panel">
+      <p class="item-detail-panel__kicker">Care</p>
+      <h2>Before Order</h2>
+      <p>در گل‌آرایی و هدیه‌های چیدمان‌شده، رنگ نهایی و بعضی جزئیات ممکن است براساس تازه‌ترین آیتم‌های موجود همان روز کمی تغییر کند.</p>
+    </article>
+  </div>
+</section>
+
+{% if similar_items %}
+<section class="container section-block featured-products-section item-detail-related">
+  <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
+    <div>
+      <h2 class="section-title-en">Related</h2>
+    </div>
+    {% if category_url %}
+      <a href="{{ category_url }}" class="section-link">View All</a>
+    {% endif %}
+  </div>
+
+  {% include "partials/featured_products_slider.html" with products=similar_items %}
+</section>
+{% endif %}
+{% endblock %}

@@ -417,13 +417,13 @@ button {
   background: var(--accent-hover);
 }
 
-.btn-wa {
+.btn-telegram {
   background: var(--bg-soft);
   color: var(--text);
   border-color: var(--line);
 }
 
-.btn-wa:hover {
+.btn-telegram:hover {
   background: #f4ede4;
 }
 

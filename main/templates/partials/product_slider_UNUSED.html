@@ -2,12 +2,12 @@
   <div class="section-head">
     <h2>{{ title }}</h2>
     {% if view_all_url %}
-      <a href="{{ view_all_url }}" class="text-link">مشاهده همه</a>
+      <a href="{{ view_all_url }}" class="text-link">View All</a>
     {% endif %}
   </div>
 
   <div class="product-slider" data-slider>
-    <button class="product-slider__nav product-slider__nav--prev" type="button" aria-label="قبلی" data-slider-prev>
+    <button class="product-slider__nav product-slider__nav--prev" type="button" aria-label="Previous" data-slider-prev>
       ‹
     </button>
 
@@ -17,10 +17,10 @@
           <div class="product-slider__slide">
             <article class="product-card">
               <a href="{{ product.get_absolute_url }}" class="product-image">
-                {% if product.cover %}
-                  <img src="{{ product.cover.url }}" alt="{{ product.name }}" loading="lazy">
+                {% if product.cover_image %}
+                  <img src="{{ product.cover_image.url }}" alt="{{ product.name }}" loading="lazy">
                 {% else %}
-                  <div class="placeholder">بدون تصویر</div>
+                  <div class="placeholder">No image yet</div>
                 {% endif %}
               </a>
 
@@ -36,26 +36,24 @@
                 </h3>
 
                 <div class="product-code">
-                  کد محصول: {{ product.id }}
+                  Product Code: {{ product.id }}
                 </div>
 
-                {% if product.price %}
-                  <div class="product-price">{{ product.price }} تومان</div>
-                {% else %}
-                  <div class="product-contact">استعلام قیمت</div>
-                {% endif %}
+                <div class="{% if product.price %}product-price{% else %}product-contact{% endif %}">
+                  {{ product.display_price }}
+                </div>
 
-                <a href="{{ product.get_absolute_url }}" class="product-btn">مشاهده جزئیات</a>
+                <a href="{{ product.get_absolute_url }}" class="product-btn">View Details</a>
               </div>
             </article>
           </div>
         {% empty %}
-          <div class="empty-box">فعلاً محصولی برای نمایش وجود ندارد.</div>
+          <div class="empty-box">No products are available yet.</div>
         {% endfor %}
       </div>
     </div>
 
-    <button class="product-slider__nav product-slider__nav--next" type="button" aria-label="بعدی" data-slider-next>
+    <button class="product-slider__nav product-slider__nav--next" type="button" aria-label="Next" data-slider-next>
       ›
     </button>
   </div>

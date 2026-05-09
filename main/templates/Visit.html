@@ -6,8 +6,8 @@
 {% include "partials/breadcrumbs.html" %}
 
 <section class="container section-block page-intro">
-  <p class="intro-text">
-    اگر ترجیح می‌دهی انتخابت را از نزدیک انجام بدهی، می‌توانی برای بازدید حضوری از زاد هماهنگ کنی. برای سفارش‌های خاص، بهتر است قبل از مراجعه تماس بگیری تا روند انتخاب سریع‌تر و دقیق‌تر انجام شود.
+  <p class="intro-text intro-text--en">
+    Prefer to choose in person? Coordinate your visit before coming in so the ZAAD team can prepare the right options and guide you faster.
   </p>
 
   <div class="meta-row">
@@ -17,27 +17,27 @@
   </div>
 
   <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">هماهنگی قبل از مراجعه</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">دریافت لوکیشن در واتساپ</a>
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">Call Before Visiting</a>
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="inline">Telegram</a>
   </div>
 </section>
 
 <section class="container section-block visit-help">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="برای بازدید حضوری هماهنگ می‌کنم" lead_subtitle="اگر زمان مشخصی برای مراجعه در نظر داری، فرم کوتاه را ثبت کن تا هماهنگی سریع‌تر انجام شود." cta_position="inline" %}
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="Plan a Visit" lead_subtitle="Share your preferred time and request so the visit can be coordinated smoothly." cta_position="inline" %}
 </section>
 
 <section class="container section-block visit-help-link">
   <div class="section-head">
-    <h2>قبل از مراجعه</h2>
+    <h2>Before You Visit</h2>
   </div>
 
-  <p class="intro-text">
-    اگر اول می‌خواهی پاسخ سوال‌های متداول را ببینی یا درباره سفارش اطلاعات بیشتری بگیری، از صفحه‌های راهنما استفاده کن.
+  <p class="intro-text intro-text--en">
+    You can also review common questions or contact ZAAD before coming in.
   </p>
 
   <div class="cta-row">
-    <a href="{% url 'faq' %}" class="btn btn-light">سوالات پرتکرار</a>
-    <a href="{% url 'contact' %}" class="btn btn-light">تماس و مشاوره</a>
+    <a href="{% url 'faq' %}" class="btn btn-light">FAQ</a>
+    <a href="{% url 'contact' %}" class="btn btn-light">Contact</a>
   </div>
 </section>
 {% endblock %}

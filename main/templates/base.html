@@ -4,16 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ meta_title|default:"زاد" }}</title>
-  <meta name="description" content="{{ meta_description|default:'زاد، کاتالوگ گل، بیکری و هدیه با ارسال سریع در مشهد.' }}">
+  <title>{{ meta_title|default:"ZAAD" }}</title>
+  <meta name="description" content="{{ meta_description|default:'ZAAD concept store for flowers, bakery, gifts, and event coordination in Mashhad.' }}">
   {% if canonical_url %}
     <link rel="canonical" href="{{ canonical_url }}">
   {% endif %}
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fa_IR">
-  <meta property="og:title" content="{{ meta_title|default:'زاد' }}">
-  <meta property="og:description" content="{{ meta_description|default:'زاد، کاتالوگ گل، بیکری و هدیه با ارسال سریع در مشهد.' }}">
+  <meta property="og:title" content="{{ meta_title|default:'ZAAD' }}">
+  <meta property="og:description" content="{{ meta_description|default:'ZAAD concept store for flowers, bakery, gifts, and event coordination in Mashhad.' }}">
   {% if canonical_url %}
     <meta property="og:url" content="{{ canonical_url }}">
   {% endif %}
@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="{% static 'main/css/home.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/components.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/page.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/product_detail.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/footer.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/responsive.css' %}?v=1">
 
@@ -48,64 +50,65 @@
 
 <body class="{% block body_class %}{% endblock %}" data-page-type="{{ page_type|default:'default' }}"{% if item_id %} data-item-id="{{ item_id }}"{% endif %}>
 
-  <div class="top-notice-bar">
-    <a href="{{ site_whatsapp_href }}" target="_blank" rel="noopener" class="top-notice-bar__link">
-      چنانچه قصد خرید محصولات زاد از خارج از ایران را دارید، از طریق PayPal یا از طریق شماره
-      989374999505+ در واتساپ با ما در ارتباط باشید.
+    <div class="top-notice-bar">
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="top-notice-bar__link">
+      {{ top_notice_text }}
     </a>
-  </div>
+   </div>
 
   <header class="site-header">
   <div class="container nav-wrap">
-    <a class="brand brand--logo" href="{% url 'index' %}" aria-label="ZAAD Home">
-      <img src="{% static 'main/img/logo-zaad-en.png' %}" alt="ZAAD Logo">
+    <a class="brand brand--text" href="{% url 'index' %}" aria-label="ZAAD Home">
+      <span class="brand__name">ZAAD</span>
+      <span class="brand__sub">flowerstore</span>
     </a>
 
-    <nav class="main-nav" aria-label="ناوبری اصلی">
+    <nav class="main-nav" aria-label="Main navigation">
       <div class="main-nav__center">
         <a href="{% url 'index' %}" class="{% if active_nav == 'home' %}is-active{% endif %}">خانه</a>
-        <a href="{% url 'flowers' %}" class="{% if active_nav == 'flowers' %}is-active{% endif %}">گل‌ها</a>
+        <a href="{% url 'flowers' %}" class="{% if active_nav == 'flowers' %}is-active{% endif %}">گل</a>
         <a href="{% url 'bakery' %}" class="{% if active_nav == 'bakery' %}is-active{% endif %}">بیکری</a>
-        <a href="{% url 'gifts' %}" class="{% if active_nav == 'gifts' %}is-active{% endif %}">هدایا</a>
+        <a href="{% url 'gifts' %}" class="{% if active_nav == 'gifts' %}is-active{% endif %}">هدیه</a>
         <a href="{% url 'events' %}" class="{% if active_nav == 'events' %}is-active{% endif %}">رویدادها</a>
       </div>
 
       <a href="{% url 'about' %}" class="main-nav__about {% if active_nav == 'about' %}is-active{% endif %}">
-        درباره ما
+        درباره زاد
       </a>
     </nav>
   </div>
 </header>
 
   {% if not is_homepage %}
-    <section class="page-hero">
-      <div class="page-hero__media">
-        {% if page_hero_image %}
-          {% if page_hero_image|slice:":7" == "/media/" %}
-            <img src="{{ page_hero_image }}" alt="{{ page_hero_title|default:'ZAAD' }}">
-          {% else %}
-            <img src="{% static page_hero_image %}" alt="{{ page_hero_title|default:'ZAAD' }}">
-          {% endif %}
+  <section class="page-hero">
+    <div class="page-hero__media">
+      {% if page_hero_image %}
+        {% if page_hero_image|slice:":7" == "/media/" %}
+          <img src="{{ page_hero_image }}" alt="{{ page_hero_title|default:'ZAAD' }}">
         {% else %}
-          <img src="{% static 'main/img/hero-about.jpg' %}" alt="{{ page_hero_title|default:'ZAAD' }}">
+          <img src="{% static page_hero_image %}" alt="{{ page_hero_title|default:'ZAAD' }}">
         {% endif %}
-      </div>
+      {% else %}
+        <img src="{% static 'main/img/hero-about.jpg' %}" alt="{{ page_hero_title|default:'ZAAD' }}">
+      {% endif %}
+    </div>
 
-      <div class="page-hero__overlay"></div>
+    <div class="page-hero__overlay"></div>
+  </section>
 
-      <div class="container page-hero__content page-hero__content--en">
-        {% if page_hero_kicker %}
-          <p class="page-hero__kicker hero-brand-text">{{ page_hero_kicker }}</p>
-        {% endif %}
-
-        <h1 class="page-hero__title hero-brand-text">{{ page_hero_title|default:"ZAAD" }}</h1>
+  {% if page_type != "item" %}
+    <section class="container section-block page-hero-mood">
+      <div class="home-intro__brandline page-hero-mood__brandline">
+        <span class="page-hero-mood__mark">✦</span>
+        <h2 class="home-intro__title hero-brand-text">{{ page_hero_title }}</h2>
 
         {% if page_hero_text %}
-          <p class="page-hero__desc hero-ui-text">{{ page_hero_text }}</p>
+          <p class="page-hero-mood__text">{{ page_hero_text }}</p>
         {% endif %}
       </div>
     </section>
   {% endif %}
+{% endif %}
 
   {% if messages %}
     <div class="container alerts">
@@ -186,7 +189,9 @@
   </footer>
 
   <script src="{% static 'main/js/analytics.js' %}"></script>
+<script src="{% static 'main/js/featured-products-slider.js' %}?v=10000"></script>
+
+{% block extra_js %}{% endblock %}
   
-  {% block extra_js %}{% endblock %}
 </body>
 </html>

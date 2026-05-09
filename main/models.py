@@ -195,6 +195,13 @@ class Product(TimeStampedModel):
         blank=True,
         help_text="فقط عدد وارد کن؛ مثلاً 2500000. اگر قیمت استعلامی باشد، این فیلد خالی می‌ماند.",
     )
+    price_usd = models.DecimalField(
+    "قیمت دلاری",
+    max_digits=8,
+    decimal_places=2,
+    null=True,
+    blank=True,
+    )
 
     cover_image = models.ImageField(
         "تصویر اصلی",
@@ -279,9 +286,14 @@ class Product(TimeStampedModel):
     @property
     def display_price(self):
         if self.pricing_type == self.PricingType.INQUIRY or self.price is None:
-            return "استعلام قیمت"
+            return "Call for Price"
 
-        return f"{int(self.price):,} تومان"
+        price_parts = [f"{int(self.price):,} IRT"]
+
+        if self.price_usd:
+            price_parts.append(f"{int(self.price_usd)} USD")
+
+        return " · ".join(price_parts)
 
     def save(self, *args, **kwargs):
         if self.pricing_type == self.PricingType.INQUIRY:

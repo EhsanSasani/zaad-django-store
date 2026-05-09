@@ -119,16 +119,15 @@ TIME_ZONE = "Asia/Tehran"
 USE_I18N = True
 USE_TZ = True
 
-# --- استاتیک و پیش‌فرض کلید اصلی مدل‌ها ---
-STATIC_URL = "static/"
-
+# --- پیش‌فرض کلید اصلی مدل‌ها ---
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --- اطلاعات پایه کسب‌وکار برای SEO/CTA ---
 ZAAD_SITE_URL = os.getenv("ZAAD_SITE_URL", "https://zaad.ir")
 ZAAD_PHONE_DISPLAY = os.getenv("ZAAD_PHONE_DISPLAY", "۰۹۱۲ ۱۲۳ ۴۵۶۷")
 ZAAD_PHONE_E164 = os.getenv("ZAAD_PHONE_E164", "+989121234567")
-ZAAD_WHATSAPP_NUMBER = os.getenv("ZAAD_WHATSAPP_NUMBER", "989121234567")
+ZAAD_TELEGRAM_URL = os.getenv("ZAAD_TELEGRAM_URL", "https://t.me/zaad_store")
+ZAAD_EMAIL = os.getenv("ZAAD_EMAIL", "info@zaadconcept.com")
 ZAAD_INSTAGRAM_URL = os.getenv("ZAAD_INSTAGRAM_URL", "https://instagram.com/zaad.store")
 ZAAD_OPENING_HOURS_TEXT = os.getenv("ZAAD_OPENING_HOURS_TEXT", "هر روز ۱۰:۰۰ تا ۲۲:۰۰")
 ZAAD_RESPONSE_TIME_TEXT = os.getenv("ZAAD_RESPONSE_TIME_TEXT", "زمان متوسط پاسخ‌گویی: حدود ۱۵ دقیقه")

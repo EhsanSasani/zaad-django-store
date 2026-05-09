@@ -6,37 +6,37 @@
 {% include "partials/breadcrumbs.html" %}
 
 <section class="container section-block page-intro">
-  <p class="intro-text">
-    برای سفارش سریع، استعلام موجودی، هماهنگی زمان تحویل یا دریافت مشاوره، از تماس مستقیم یا واتساپ استفاده کن.
+  <p class="intro-text intro-text--en">
+    For availability, delivery timing, custom orders, or quick guidance, call ZAAD directly or message us on Telegram.
   </p>
 
   <div class="meta-row">
-    <span>تلفن: {{ site_phone_display }}</span>
+    <span>Phone: {{ site_phone_display }}</span>
     <span>{{ site_opening_hours_text }}</span>
     <span>{{ site_response_time_text }}</span>
   </div>
 
   <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">تماس فوری</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">پیام در واتساپ</a>
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">Call Now</a>
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="inline">Telegram</a>
   </div>
 </section>
 
 <section class="container section-block contact-help">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="راهنمایی می‌خواهم" lead_subtitle="اگر برای انتخاب، قیمت، زمان تحویل یا نوع سفارش مردد هستی، فرم کوتاه را ثبت کن تا سریع‌تر با تو هماهنگ شویم." cta_position="inline" %}
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="Need Guidance?" lead_subtitle="Share a short note about your order, timing, or budget so the ZAAD team can coordinate faster." cta_position="inline" %}
 </section>
 
 <section class="container section-block contact-help-link">
   <div class="section-head">
-    <h2>راهنمای بیشتر</h2>
+    <h2>More Guidance</h2>
   </div>
 
-  <p class="intro-text">
-    اگر قبل از تماس می‌خواهی پاسخ سوال‌های رایج را ببینی، از صفحه سوالات پرتکرار استفاده کن.
+  <p class="intro-text intro-text--en">
+    Want to check common ordering and delivery questions first? Visit the FAQ page.
   </p>
 
   <div class="cta-row">
-    <a href="{% url 'faq' %}" class="btn btn-light">مشاهده سوالات پرتکرار</a>
+    <a href="{% url 'faq' %}" class="btn btn-light">View FAQ</a>
   </div>
 </section>
 {% endblock %}

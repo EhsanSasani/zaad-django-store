@@ -1,35 +1,42 @@
 <div class="featured-products" data-featured-slider>
   {% if products %}
-    <div class="featured-products__viewport">
-      <div class="featured-products__track">
+    <button class="featured-products__nav featured-products__nav--prev" type="button" aria-label="Previous products" data-featured-prev>
+      ‹
+    </button>
+
+    <div class="featured-products__viewport" data-featured-viewport>
+      <div class="featured-products__track" data-featured-track>
         {% for product in products %}
-          <article class="featured-product-card">
-            <a href="{{ product.get_absolute_url }}" class="featured-product-card__image-wrap">
+          <a href="{{ product.get_absolute_url }}" class="featured-product-card {% if product.stock_status == 'out_of_stock' %}featured-product-card--out{% endif %}">
+            <div class="featured-product-card__image-wrap">
               {% if product.cover_image %}
                 <img src="{{ product.cover_image.url }}" alt="{{ product.name }}" class="featured-product-card__image" loading="lazy">
               {% else %}
-                <div class="featured-product-card__placeholder">بدون تصویر</div>
+                <div class="featured-product-card__placeholder">No image yet</div>
               {% endif %}
-            </a>
 
-            <div class="featured-product-card__body">
-              <h3 class="featured-product-card__title">
-                <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-              </h3>
-
-              <p class="featured-product-card__meta">کد محصول: {{ product.pk }}</p>
-
-              {% if product.price %}
-                <p class="featured-product-card__price">{{ product.price }} تومان</p>
-              {% else %}
-                <p class="featured-product-card__price featured-product-card__price--muted">برای خرید تماس بگیرید</p>
+              {% if product.stock_status == "out_of_stock" %}
+                <span class="product-stock-badge product-stock-badge--out">ناموجود</span>
+              {% elif product.stock_status == "preorder" %}
+                <span class="product-stock-badge product-stock-badge--preorder">پیش‌سفارش</span>
               {% endif %}
             </div>
-          </article>
+
+            <div class="featured-product-card__body">
+              <h3 class="featured-product-card__title">{{ product.name }}</h3>
+              <p class="featured-product-card__price {% if not product.price %}featured-product-card__price--muted{% endif %}">
+                {{ product.display_price }}
+              </p>
+            </div>
+          </a>
         {% endfor %}
       </div>
     </div>
+
+    <button class="featured-products__nav featured-products__nav--next" type="button" aria-label="Next products" data-featured-next>
+      ›
+    </button>
   {% else %}
-    <div class="empty-box">فعلاً محصولی برای نمایش وجود ندارد.</div>
+    <div class="empty-box">No products are available yet.</div>
   {% endif %}
 </div>

@@ -1,47 +1,30 @@
-<div class="products-grid">
-  {% for product in products %}
-    <article class="product-card">
-      <a href="{{ product.get_absolute_url }}" class="product-image">
-        {% if product.cover_image %}
-          <img src="{{ product.cover_image.url }}" alt="{{ product.name }}" loading="lazy">
-        {% else %}
-          <div class="placeholder">بدون تصویر</div>
-        {% endif %}
-      </a>
+<div class="product-grid">
+  {% if products %}
+    {% for product in products %}
+      <a href="{{ product.get_absolute_url }}" class="product-card {% if product.stock_status == 'out_of_stock' %}product-card--out{% endif %}">
+        <div class="product-card__image-wrap">
+          {% if product.cover_image %}
+            <img src="{{ product.cover_image.url }}" alt="{{ product.name }}" class="product-card__image" loading="lazy">
+          {% else %}
+            <div class="product-card__placeholder">No image yet</div>
+          {% endif %}
 
-      <div class="product-info">
-        <div class="product-meta-top">
-          {% if product.category %}
-            <span class="product-badge">{{ product.category.name }}</span>
+          {% if product.stock_status == "out_of_stock" %}
+            <span class="product-stock-badge product-stock-badge--out">ناموجود</span>
+          {% elif product.stock_status == "preorder" %}
+            <span class="product-stock-badge product-stock-badge--preorder">پیش‌سفارش</span>
           {% endif %}
         </div>
 
-        <h3 class="product-title">
-          <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-        </h3>
-
-        <div class="product-code">
-          کد محصول: {{ product.id }}
+        <div class="product-card__body">
+          <h3 class="product-card__title">{{ product.name }}</h3>
+          <p class="product-card__price {% if not product.price %}product-card__price--muted{% endif %}">
+            {{ product.display_price }}
+          </p>
         </div>
-
-        {% if product.price %}
-          <div class="product-price">
-            {{ product.price }} تومان
-          </div>
-        {% else %}
-          <div class="product-contact">
-            استعلام قیمت
-          </div>
-        {% endif %}
-
-        <a href="{{ product.get_absolute_url }}" class="product-btn">
-          مشاهده جزئیات
-        </a>
-      </div>
-    </article>
-  {% empty %}
-    <div class="empty-box">
-      فعلاً محصولی برای نمایش وجود ندارد.
-    </div>
-  {% endfor %}
+      </a>
+    {% endfor %}
+  {% else %}
+    <div class="empty-box">فعلاً محصولی برای نمایش وجود ندارد.</div>
+  {% endif %}
 </div>

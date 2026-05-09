@@ -6,8 +6,8 @@
 {% include "partials/breadcrumbs.html" %}
 
 <section class="container section-block faq-page-intro">
-  <p class="intro-text">
-    پاسخ کوتاه به سوال‌های رایج درباره سفارش، زمان تحویل، هماهنگی خدمات و روند ثبت درخواست در زاد.
+  <p class="intro-text intro-text--en">
+    Short answers about ordering, delivery timing, request coordination, and choosing the right ZAAD piece.
   </p>
 </section>
 
@@ -19,23 +19,23 @@
         <p>{{ item.answer }}</p>
       </article>
     {% empty %}
-      <div class="empty-box">فعلاً سوالی برای نمایش ثبت نشده است.</div>
+      <div class="empty-box">No questions have been added yet.</div>
     {% endfor %}
   </div>
 </section>
 
 <section class="container section-block faq-page-cta">
   <div class="section-head">
-    <h2>هنوز سوالی داری؟</h2>
+    <h2>Still Have a Question?</h2>
   </div>
 
-  <p class="intro-text">
-    اگر پاسخ موردنظرت را پیدا نکردی، از طریق تماس یا واتساپ با زاد در ارتباط باش.
+  <p class="intro-text intro-text--en">
+    Call ZAAD or send a Telegram message for quick guidance.
   </p>
 
   <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">تماس فوری</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">پیام در واتساپ</a>
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">Call Now</a>
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="inline">Telegram</a>
   </div>
 </section>
 {% endblock %}

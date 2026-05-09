@@ -1,37 +1,54 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-events{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block page-intro">
-  <p class="intro-text">
-    این بخش برای معرفی رویدادها، ورکشاپ‌ها و تجربه‌های حضوری زاد طراحی شده است. اگر برای مناسبت یا همکاری خاصی برنامه‌ریزی می‌کنی، از همین‌جا شروع کن.
-  </p>
-</section>
 
-<section class="container section-block">
-  <div class="section-head section-head--center">
-    <h2 class="section-title-en">Current Events</h2>
-  </div>
 
-  <div class="list-grid">
+
+{% if events %}
+<section class="container section-block events-section">
+  <div class="events-grid">
     {% for event in events %}
-      <article class="list-card">
-        <h3>{{ event.title }}</h3>
-        <p>{{ event.description|truncatechars:160 }}</p>
-        <p class="muted">{{ event.start_at|date:"Y/m/d H:i" }} | {{ event.location }}</p>
+      <article class="event-card">
+        <a href="{{ event.get_absolute_url }}" class="event-card__media">
+          {% if event.cover_image %}
+            <img src="{{ event.cover_image.url }}" alt="{{ event.title }}">
+          {% else %}
+            <img src="{% static 'main/img/cat-events.jpg' %}" alt="{{ event.title }}">
+          {% endif %}
+        </a>
 
-        {% if event.slug and not event.is_demo %}
-          <a href="{% url 'event_detail' event.slug %}" class="text-link">View Details</a>
-        {% elif events_are_demo %}
-          <span class="muted">Demo Preview</span>
-        {% endif %}
+        <div class="event-card__body">
+          <p class="event-card__date">
+            {{ event.start_at|date:"Y/m/d" }}
+          </p>
+
+          <h2>
+            <a href="{{ event.get_absolute_url }}">{{ event.title }}</a>
+          </h2>
+
+          {% if event.description %}
+            <p>{{ event.description|truncatechars:140 }}</p>
+          {% endif %}
+
+          <div class="event-card__meta">
+            {% if event.location %}
+              <span>{{ event.location }}</span>
+            {% endif %}
+            <a href="{{ event.get_absolute_url }}">Reserve</a>
+          </div>
+        </div>
       </article>
-    {% empty %}
-      <div class="empty-box">فعلاً رویدادی برای نمایش وجود ندارد.</div>
     {% endfor %}
   </div>
 </section>
+{% else %}
+<section class="container section-block">
+  <div class="empty-box">No events are available yet.</div>
+</section>
+{% endif %}
 {% endblock %}

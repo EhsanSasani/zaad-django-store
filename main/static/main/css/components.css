@@ -29,13 +29,13 @@
   background: var(--accent-hover);
 }
 
-.btn-wa {
+.btn-telegram {
   background: var(--bg-soft);
   color: var(--text);
   border-color: var(--line);
 }
 
-.btn-wa:hover {
+.btn-telegram:hover {
   background: #f4ede4;
 }
 
@@ -569,4 +569,48 @@
 
 .event-detail__body{
   margin-top: 18px;
+}
+
+/* =========================
+   ZAAD English-facing catalog polish
+   ========================= */
+
+.product-card,
+.featured-product-card {
+  direction: ltr;
+  text-align: left;
+}
+
+.product-info {
+  text-align: left;
+}
+
+.product-title,
+.featured-product-card__title {
+  font-family: var(--font-ui-en), var(--font-fa);
+  letter-spacing: -0.01em;
+}
+
+.product-code,
+.product-badge,
+.product-price,
+.product-contact,
+.product-btn,
+.featured-product-card__meta,
+.featured-product-card__price {
+  font-family: var(--font-ui-en), var(--font-fa);
+}
+
+.product-btn {
+  border-radius: 999px;
+}
+
+.btn-telegram {
+  background: var(--bg-soft);
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.btn-telegram:hover {
+  background: #f4ede4;
 }

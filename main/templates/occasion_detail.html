@@ -1,18 +1,45 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block body_class %}page-occasion-detail{% endblock %}
+{% block body_class %}page-occasion-detail page-catalog-occasion{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <div class="section-head section-head--center">
-    <h2 class="section-title-en hero-brand-text">{{ occasion.name }}</h2>
-    <p class="intro-text">
-      چند انتخاب هماهنگ برای این حال‌وهوا.
-    </p>
-  </div>
+<section class="container section-block catalog-products-section">
+  {% if flower_occasion_url and not is_flower_occasion %}
+    <div class="catalog-head-actions catalog-head-actions--center">
+      <a href="{{ flower_occasion_url }}" class="section-link">View Flower Selection</a>
+    </div>
+  {% endif %}
+
+  {% if filter_links %}
+    <div class="catalog-filter-row" aria-label="Catalog filters">
+      {% for item in filter_links %}
+        <a href="{{ item.url }}" class="catalog-filter-chip {% if item.is_active %}is-active{% endif %}">
+          {{ item.label }}
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
 
   {% include "partials/product_grid.html" with products=products %}
 </section>
+
+{% if suggested_sections %}
+  {% for block in suggested_sections %}
+    <section class="container section-block featured-products-section catalog-suggestion-section">
+      <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
+        <div>
+          <h2 class="section-title-en">{{ block.title }}</h2>
+        </div>
+        {% if block.more_url %}
+          <a href="{{ block.more_url }}" class="section-link">View All</a>
+        {% endif %}
+      </div>
+
+      {% include "partials/featured_products_slider.html" with products=block.products %}
+    </section>
+  {% endfor %}
+{% endif %}
 {% endblock %}

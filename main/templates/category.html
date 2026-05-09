@@ -1,41 +1,45 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block body_class %}page-category{% endblock %}
+{% block body_class %}page-category page-catalog-section{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-{% if subcategory_links %}
-<section class="container section-block">
-  <div class="section-head section-head--center">
-    {% if active_nav == "flowers" %}
-      <h2 class="section-title-en">Our Flowers</h2>
-    {% elif active_nav == "bakery" %}
-      <h2 class="section-title-en">Our Bakery</h2>
-    {% elif active_nav == "gifts" %}
-      <h2 class="section-title-en">Our Gifts</h2>
-    {% elif active_nav == "events" %}
-      <h2 class="section-title-en">Our Events</h2>
-    {% else %}
-      <h2 class="section-title-en">Our Collection</h2>
-    {% endif %}
+
+
+{% if occasion_cards %}
+<section class="container section-block catalog-primary-section">
+  <div class="catalog-card-grid">
+    {% for item in occasion_cards %}
+      <a href="{{ item.url }}" class="catalog-image-card catalog-image-card--quiet">
+        <div class="catalog-image-card__media">
+          {% if item.image|slice:":7" == "/media/" %}
+            <img src="{{ item.image }}" alt="{{ item.label }}" loading="lazy">
+          {% else %}
+            <img src="{% static item.image %}" alt="{{ item.label }}" loading="lazy">
+          {% endif %}
+        </div>
+        <div class="catalog-image-card__overlay"></div>
+      </a>
+    {% endfor %}
   </div>
+</section>
+{% endif %}
 
-  <div class="subcategory-cards">
+{% if subcategory_links %}
+<section class="container section-block catalog-primary-section">
+  <div class="catalog-card-grid">
     {% for item in subcategory_links %}
-      <a href="{{ item.url }}" class="subcategory-showcase-card">
-        <div class="subcategory-showcase-card__media">
-          <img src="{% static item.image %}" alt="{{ item.label }}">
+      <a href="{{ item.url }}" class="catalog-image-card">
+        <div class="catalog-image-card__media">
+          {% if item.image|slice:":7" == "/media/" %}
+            <img src="{{ item.image }}" alt="{{ item.label }}" loading="lazy">
+          {% else %}
+            <img src="{% static item.image %}" alt="{{ item.label }}" loading="lazy">
+          {% endif %}
         </div>
-
-        <div class="subcategory-showcase-card__overlay"></div>
-
-        <div class="subcategory-showcase-card__content">
-          <h3>{{ item.label }}</h3>
-          <p>{{ item.intro }}</p>
-          <span class="subcategory-showcase-card__action">Explore Collection</span>
-        </div>
+        <div class="catalog-image-card__overlay"></div>
       </a>
     {% endfor %}
   </div>
@@ -44,16 +48,20 @@
 
 {% if featured_items %}
 <section class="container section-block featured-products-section">
-  <div class="section-head featured-products-section__head featured-products-section__head--center">
-    <h2 class="section-title-en">Our Selection</h2>
-    <a href="{{ request.path }}" class="section-link">View All</a>
+  <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
+    <div>
+      <h2 class="section-title-en">{{ featured_title|default:"Our Selection" }}</h2>
+    </div>
+    {% if section_more_url %}
+      <a href="{{ section_more_url }}" class="section-link">View All</a>
+    {% endif %}
   </div>
 
   {% include "partials/featured_products_slider.html" with products=featured_items %}
 </section>
 {% else %}
 <section class="container section-block">
-  <div class="empty-box">فعلاً آیتمی برای نمایش وجود ندارد.</div>
+  <div class="empty-box">No products are available yet.</div>
 </section>
 {% endif %}
 {% endblock %}

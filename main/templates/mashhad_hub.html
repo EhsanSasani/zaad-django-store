@@ -6,21 +6,23 @@
 {% include "partials/breadcrumbs.html" %}
 
 <section class="container section-block page-intro">
-  <p class="intro-text">
-    این بخش برای سفارش در مشهد، ارسال سریع و هماهنگی دقیق طراحی شده تا در زمان کم، انتخاب مناسب‌تری داشته باشی.
+  <p class="intro-text intro-text--en">
+    A focused hub for Mashhad orders, same-day coordination, and faster access to ZAAD’s flower selection.
   </p>
 
   <div class="cta-row">
-    <a href="{% url 'mashhad_flower_order' %}" class="btn btn-light">سفارش گل در مشهد</a>
-    <a href="{% url 'mashhad_flower_delivery' %}" class="btn btn-light">ارسال فوری گل در مشهد</a>
+    <a href="{% url 'mashhad_flower_order' %}" class="btn btn-light">Flower Orders in Mashhad</a>
+    <a href="{% url 'mashhad_flower_delivery' %}" class="btn btn-light">Same-day Flower Delivery</a>
   </div>
 </section>
 
 {% if curated_items %}
 <section class="container section-block featured-products-section">
-  <div class="section-head featured-products-section__head">
-    <h2>آیتم‌های منتخب</h2>
-    <a href="{% url 'flowers' %}" class="section-link">مشاهده تمام آیتم‌ها</a>
+  <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
+    <div>
+      <h2 class="section-title-en">Our Selection</h2>
+    </div>
+    <a href="{% url 'flowers' %}" class="section-link">View All</a>
   </div>
 
   {% include "partials/featured_products_slider.html" with products=curated_items %}

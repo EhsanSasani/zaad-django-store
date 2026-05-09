@@ -1,4 +1,4 @@
-﻿from django.apps import AppConfig
+from django.apps import AppConfig
 
 
 # --- پیکربندی پایه اپ اصلی فروشگاه ---

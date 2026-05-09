@@ -151,3 +151,56 @@
 .nav-about-link {
   display: none !important;
 }
+
+/* Final Persian header polish */
+.top-notice-bar__link {
+  font-family: var(--font-fa);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.main-nav,
+.main-nav__center,
+.main-nav__center a,
+.main-nav__about {
+  font-family: var(--font-fa);
+  direction: rtl;
+  letter-spacing: 0;
+}
+
+.main-nav__center {
+  transform: none;
+}
+
+.main-nav__center a,
+.main-nav__about {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+
+.brand--text {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-decoration: none;
+  color: inherit;
+  min-width: 92px;
+}
+
+.brand__name {
+  font-size: 1.15rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+}
+
+.brand__sub {
+  font-size: 0.62rem;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
+  color: #9b806a;
+}

@@ -6,21 +6,21 @@
 {% include "partials/breadcrumbs.html" %}
 
 <section class="container section-block page-intro">
-  <p class="intro-text">{{ landing_subtitle }}</p>
+  <p class="intro-text intro-text--en">{{ landing_subtitle }}</p>
 
   <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="hero">رزرو و هماهنگی</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="hero">واتساپ برای سفارش</a>
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="hero">Call</a>
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="hero">Telegram</a>
   </div>
 </section>
 
 <section class="container section-block">
   <div class="section-head">
-    <h2>بازه ارسال و پوشش</h2>
+    <h2>Delivery & Coverage</h2>
   </div>
 
   <div class="meta-row">
-    <span>ارسال فوری در محدوده‌های اصلی مشهد</span>
+    <span>Same-day coordination in key Mashhad areas</span>
     <span>{{ site_opening_hours_text }}</span>
     <span>{{ site_response_time_text }}</span>
   </div>
@@ -28,9 +28,11 @@
 
 {% if curated_items %}
 <section class="container section-block featured-products-section">
-  <div class="section-head featured-products-section__head">
-    <h2>آیتم‌های منتخب</h2>
-    <a href="{% url 'flowers' %}" class="section-link">مشاهده تمام آیتم‌ها</a>
+  <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
+    <div>
+      <h2 class="section-title-en">Our Selection</h2>
+    </div>
+    <a href="{% url 'flowers' %}" class="section-link">View All</a>
   </div>
 
   {% include "partials/featured_products_slider.html" with products=curated_items %}
@@ -39,7 +41,7 @@
 
 <section class="container section-block">
   <div class="section-head">
-    <h2>چرا زاد؟</h2>
+    <h2>Why ZAAD?</h2>
   </div>
 
   <div class="list-grid">
@@ -51,7 +53,7 @@
 
 <section class="container section-block">
   <div class="section-head">
-    <h2>مناسبت‌ها</h2>
+    <h2>Occasions</h2>
   </div>
 
   <div class="inline-links">

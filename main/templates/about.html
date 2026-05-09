@@ -6,57 +6,117 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block about-intro">
-  <div class="section-head">
-    <h1>About ZAAD</h1>
+<section class="container section-block about-hero-text">
+  <p class="section-kicker">About ZAAD</p>
+  <h1>زاد، برای لحظه‌هایی که باید با دقت انتخاب شوند.</h1>
+  <p>
+    زاد یک گل‌فروشی ساده نیست؛ ترکیبی از گل، بیکری، هدیه و تجربه‌های کوچک اما به‌یادماندنی است.
+    ما تلاش می‌کنیم هر سفارش فقط یک محصول نباشد، بلکه حس درست را با ظاهر زیبا، هماهنگی دقیق و اجرای تمیز منتقل کند.
+  </p>
+</section>
+
+<section class="container section-block about-story">
+  <div class="about-story__grid">
+    <article class="about-story__text">
+      <p class="section-kicker">Our Story</p>
+      <h2>ایده‌ی زاد از توجه به جزئیات شروع شد.</h2>
+      <p>
+        بعضی لحظه‌ها با یک انتخاب ساده کامل می‌شوند؛ یک دسته‌گل، یک کیک کوچک، یک هدیه‌ی فکرشده یا یک چیدمان خاص.
+        زاد برای همین لحظه‌ها ساخته شده؛ برای وقتی که می‌خواهید چیزی بفرستید که فقط زیبا نباشد، بلکه حس داشته باشد.
+      </p>
+      <p>
+        در زاد، زیبایی برای ما فقط ظاهر نیست. هماهنگی رنگ‌ها، کیفیت آیتم‌ها، نحوه‌ی بسته‌بندی، زمان ارسال و حتی شیوه‌ی گفت‌وگو با مشتری بخشی از تجربه‌ی سفارش است.
+      </p>
+    </article>
+
+    <article class="about-story__image">
+      <img src="{% static 'main/img/about-store.jpg' %}" alt="فضای زاد">
+    </article>
+  </div>
+</section>
+
+<section class="container section-block about-values">
+  <div class="section-head section-head--center">
+    <p class="section-kicker">What We Care About</p>
+    <h2>چیزی که زاد را می‌سازد</h2>
   </div>
 
-  <p class="intro-text">
-    ZAAD is a warm concept store built around flowers, gifts, soft details and meaningful moments.
-    We care about calm presentation, thoughtful selection and a more personal ordering experience.
-  </p>
+  <div class="about-values__grid">
+    <article class="about-value-card">
+      <span>01</span>
+      <h3>انتخاب دقیق</h3>
+      <p>
+        هر گل، هدیه یا آیتم بیکری باید با حال‌وهوای سفارش هماهنگ باشد؛ نه صرفاً چیزی که موجود است.
+      </p>
+    </article>
+
+    <article class="about-value-card">
+      <span>02</span>
+      <h3>اجرای تمیز</h3>
+      <p>
+        از چیدمان و بسته‌بندی تا ارسال و هماهنگی، جزئیات کوچک برای ما جدی‌اند.
+      </p>
+    </article>
+
+    <article class="about-value-card">
+      <span>03</span>
+      <h3>حس شخصی</h3>
+      <p>
+        سفارش خوب باید شبیه انتخابی شخصی باشد؛ چیزی که برای آدم درست و لحظه‌ی درست آماده شده.
+      </p>
+    </article>
+  </div>
 </section>
 
 <section class="container section-block about-gallery">
-  <div class="about-grid">
-    <div class="about-card">
-      <img src="{% static 'main/img/about-store.jpg' %}" alt="ZAAD Store">
+  <div class="about-grid about-grid--reworked">
+    <article class="about-card">
+      <img src="{% static 'main/img/about-store.jpg' %}" alt="فروشگاه زاد">
       <div class="about-card__body">
-        <h2>Our Store</h2>
-        <p>A quiet and elegant space for flowers, gifts and curated details.</p>
+        <p class="about-card__eyebrow">Store</p>
+        <h2>فضای زاد</h2>
+        <p>فضایی آرام برای انتخاب گل، هدیه و سفارش‌های خاص با حال‌وهوای گرم و مینیمال.</p>
       </div>
-    </div>
+    </article>
 
-    <div class="about-card">
-      <img src="{% static 'main/img/about-team.jpg' %}" alt="ZAAD Team">
+    <article class="about-card">
+      <img src="{% static 'main/img/about-team.jpg' %}" alt="تیم زاد">
       <div class="about-card__body">
-        <h2>Our Team</h2>
-        <p>Careful hands and thoughtful people behind every arrangement.</p>
+        <p class="about-card__eyebrow">Team</p>
+        <h2>تیم زاد</h2>
+        <p>دست‌هایی دقیق و آدم‌هایی حساس به جزئیات، پشت هر سفارش و هر چیدمان.</p>
       </div>
-    </div>
+    </article>
 
-    <div class="about-card">
-      <img src="{% static 'main/img/about-process.jpg' %}" alt="ZAAD Process">
+    <article class="about-card">
+      <img src="{% static 'main/img/about-process.jpg' %}" alt="فرآیند آماده‌سازی در زاد">
       <div class="about-card__body">
-        <h2>Our Process</h2>
-        <p>From selection to final presentation, every detail is handled with care.</p>
+        <p class="about-card__eyebrow">Process</p>
+        <h2>فرآیند آماده‌سازی</h2>
+        <p>از انتخاب آیتم‌ها تا بسته‌بندی نهایی، هر سفارش با توجه به موجودی روز هماهنگ می‌شود.</p>
       </div>
-    </div>
+    </article>
   </div>
 </section>
 
-<section class="container section-block about-cta">
-  <div class="section-head">
-    <h2>Get in Touch</h2>
+<section class="container section-block about-note">
+  <div class="about-note__box">
+    <p class="section-kicker">Before Order</p>
+    <h2>هر سفارش قبل از نهایی شدن هماهنگ می‌شود.</h2>
+    <p>
+      رنگ گل‌ها، جزئیات چیدمان، بسته‌بندی و بعضی آیتم‌ها ممکن است براساس موجودی تازه‌ی همان روز کمی تغییر کند.
+      پیش از ثبت نهایی سفارش، تیم زاد موجودی، زمان ارسال و جزئیات سفارش را با شما هماهنگ می‌کند.
+    </p>
   </div>
+</section>
 
-  <p class="intro-text">
-    If you want to know more about ZAAD, our work, or our ordering process, we would be happy to hear from you.
-  </p>
+<section class="container section-block about-cta about-cta--reworked">
+  <p class="section-kicker">Contact ZAAD</p>
+  <h2>برای سفارش، همکاری یا هماهنگی بیشتر با زاد در ارتباط باشید.</h2>
 
   <div class="cta-row">
-    <a href="{% url 'contact' %}" class="btn btn-light">Contact</a>
-    <a href="{% url 'visit' %}" class="btn btn-light">Visit Us</a>
+    <a href="{{ site_call_href }}" class="btn btn-call">Call</a>
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram">Telegram</a>
   </div>
 </section>
 {% endblock %}

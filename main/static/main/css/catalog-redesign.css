@@ -1,0 +1,191 @@
+/* =====================================================
+   ZAAD Catalog Redesign
+   Occasions, subcategories, filters and product grids
+   ===================================================== */
+
+.catalog-entry-section__head {
+  max-width: 780px;
+  margin-inline: auto;
+}
+
+.catalog-entry-section__intro,
+.subcategory-intro-section .section-subtitle {
+  max-width: 720px;
+  margin: 0.6rem auto 0;
+  line-height: 2;
+  color: rgba(33, 28, 24, 0.72);
+  font-size: 0.98rem;
+}
+
+.occasion-cards .subcategory-showcase-card__content h3,
+.subcategory-cards .subcategory-showcase-card__content h3 {
+  font-weight: 800;
+}
+
+.occasion-showcase-card__eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  color: #fff;
+  font-size: 0.76rem;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.55rem;
+}
+
+.decision-section {
+  margin-top: 0.5rem;
+}
+
+.decision-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.decision-card {
+  display: flex;
+  min-height: 190px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem;
+  border-radius: 1.35rem;
+  text-decoration: none;
+  color: #2a211c;
+  background: rgba(255, 250, 244, 0.84);
+  border: 1px solid rgba(194, 154, 111, 0.22);
+  box-shadow: 0 20px 60px rgba(70, 45, 30, 0.07);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.decision-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(194, 154, 111, 0.48);
+  box-shadow: 0 26px 70px rgba(70, 45, 30, 0.12);
+}
+
+.decision-card h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+  color: #2a211c;
+}
+
+.decision-card p {
+  margin: 0;
+  line-height: 1.85;
+  font-size: 0.88rem;
+  color: rgba(42, 33, 28, 0.68);
+}
+
+.decision-card span {
+  margin-top: 1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #b47b43;
+}
+
+.catalog-filter-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.4rem;
+}
+
+.catalog-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #594336;
+  background: #fffaf4;
+  border: 1px solid rgba(183, 138, 92, 0.26);
+  box-shadow: 0 12px 32px rgba(70, 45, 30, 0.06);
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.catalog-filter-chip:hover,
+.catalog-filter-chip.is-active {
+  color: #fff;
+  background: #c79a64;
+  transform: translateY(-2px);
+}
+
+.catalog-filter-chip small {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  padding-inline: 0.35rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.26);
+  font-size: 0.75rem;
+}
+
+.catalog-products-grid {
+  align-items: stretch;
+}
+
+.catalog-product-card {
+  overflow: hidden;
+}
+
+.catalog-product-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.product-badge--soft {
+  background: rgba(198, 154, 101, 0.1);
+  color: #9b6d3b;
+}
+
+.related-stories-section .list-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.related-stories-section .list-card {
+  padding: 1.15rem;
+  border-radius: 1.25rem;
+  background: #fffaf4;
+  border: 1px solid rgba(194, 154, 111, 0.18);
+}
+
+@media (max-width: 1100px) {
+  .decision-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .decision-grid,
+  .related-stories-section .list-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-filter-bar {
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.35rem;
+  }
+
+  .catalog-filter-chip {
+    flex: 0 0 auto;
+  }
+
+  .catalog-entry-section__intro,
+  .subcategory-intro-section .section-subtitle {
+    font-size: 0.92rem;
+  }
+}

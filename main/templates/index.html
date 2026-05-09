@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 {% load static %}
 
@@ -41,7 +40,7 @@
 
 <section class="container section-block home-intro home-intro--trust">
   <div class="home-intro__brandline">
-    <h2 class="home-intro__title hero-brand-text">Present in every moment</h2>
+    <h2 class="home-intro__title hero-brand-text">Present in Every Moment</h2>
   </div>
 
   <div class="home-categories home-categories--fixed">
@@ -89,16 +88,31 @@
 
 <section class="container section-block featured-products-section">
   <div class="section-head featured-products-section__head featured-products-section__head--center">
-  <h2 class="section-title-en hero-brand-text">Our Selection</h2>
-  <a href="{% url 'flowers' %}" class="section-link hero-ui-text">View All</a>
-</div>
+    <h2 class="section-title-en hero-brand-text">Our Selection</h2>
+    <a href="{% url 'flowers' %}" class="section-link hero-ui-text">View All</a>
+  </div>
 
   {% include "partials/featured_products_slider.html" with products=featured_today %}
+</section>
+
+<section class="container section-block home-abroad">
+  <div class="home-abroad__box">
+    <div>
+      <p class="section-kicker">From Abroad</p>
+      <h2 class="section-title-en hero-brand-text">Order for Iran</h2>
+      <p>
+        اگر خارج از ایران هستید و می‌خواهید برای عزیزانتان در ایران گل، بیکری یا هدیه سفارش دهید،
+        زاد می‌تواند سفارش شما را از طریق Telegram هماهنگ کند.
+      </p>
+    </div>
+
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram">
+      Telegram
+    </a>
+  </div>
 </section>
 {% endblock %}
 
 {% block extra_js %}
   <script src="{% static 'main/js/home-slider.js' %}?v=4"></script>
-  <script src="{% static 'main/js/featured-products-slider.js' %}?v=2"></script>
 {% endblock %}
-```

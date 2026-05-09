@@ -41,8 +41,8 @@
       return;
     }
 
-    if (href.indexOf("wa.me") !== -1 || href.indexOf("whatsapp") !== -1) {
-      pushEvent("click_whatsapp", params);
+    if (href.indexOf("t.me") !== -1 || href.indexOf("telegram") !== -1) {
+      pushEvent("click_telegram", params);
     }
   });
 

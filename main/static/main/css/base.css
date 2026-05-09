@@ -1,10 +1,42 @@
-﻿/* =========================
+/* =========================
    Base / fonts / variables / reset
    ========================= */
 
 @font-face {
+  font-family: "EstedadLocal";
+  src: url("../fonts/Estedad-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EstedadLocal";
+  src: url("../fonts/Estedad-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EstedadLocal";
+  src: url("../fonts/Estedad-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EstedadLocal";
+  src: url("../fonts/Estedad-Bold.woff2") format("woff2");
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "VazirmatnLocal";
-  src: url("../fonts/Vazirmatn-Regular.woff2") format("woff2");
+  src: url("../admin/fonts/Vazirmatn-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -12,16 +44,8 @@
 
 @font-face {
   font-family: "VazirmatnLocal";
-  src: url("../fonts/Vazirmatn-Bold.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "VazirmatnLocal";
-  src: url("../fonts/Vazirmatn-ExtraBold.woff2") format("woff2");
-  font-weight: 800 900;
+  src: url("../admin/fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 700 900;
   font-style: normal;
   font-display: swap;
 }
@@ -118,6 +142,7 @@
 
   --font-brand-en: "CormorantGaramond", serif;
   --font-ui-en: "PlusJakartaSans", sans-serif;
+  --font-fa: "EstedadLocal", "VazirmatnLocal", Tahoma, sans-serif;
 }
 
 *,
@@ -132,7 +157,7 @@ input,
 textarea,
 select,
 button {
-  font-family: "VazirmatnLocal", Tahoma, sans-serif;
+  font-family: var(--font-fa);
 }
 
 html {

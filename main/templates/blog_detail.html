@@ -5,38 +5,39 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block blog-detail">
+<article class="container section-block blog-detail">
   {% if post.cover_image %}
-    <div class="blog-detail__cover-wrap">
-      <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" width="1200" height="630" class="cover-image blog-detail__cover">
-    </div>
+    <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="cover-image">
   {% endif %}
 
-  {% if post.excerpt %}
-    <p class="intro-text blog-detail__excerpt">{{ post.excerpt }}</p>
-  {% endif %}
-
-  <div class="post-body blog-detail__body">
+  <div class="blog-detail__body">
     {{ post.body|linebreaks }}
   </div>
-</section>
+</article>
 
-<section class="container section-block blog-detail__related-links">
+{% if related_links %}
+<section class="container section-block">
   <div class="section-head">
-    <h2>مسیرهای مرتبط</h2>
+    <h2>Related Paths</h2>
   </div>
 
   <div class="inline-links">
-    <a href="{{ recommended_category.url }}">{{ recommended_category.label }}</a>
-    <a href="{{ recommended_subcategory.url }}">{{ recommended_subcategory.label }}</a>
+    {% for item in related_links %}
+      <a href="{{ item.url }}">{{ item.label }}</a>
+    {% endfor %}
   </div>
 </section>
+{% endif %}
 
+{% if related_products %}
 <section class="container section-block featured-products-section">
-  <div class="section-head featured-products-section__head">
-    <h2>پیشنهادهای مرتبط</h2>
+  <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
+    <div>
+      <h2 class="section-title-en">Related Pieces</h2>
+    </div>
   </div>
 
-  {% include "partials/featured_products_slider.html" with products=recommended_items %}
+  {% include "partials/featured_products_slider.html" with products=related_products %}
 </section>
+{% endif %}
 {% endblock %}
