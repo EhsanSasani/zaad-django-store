@@ -770,9 +770,9 @@ def index(request):
         )
 
     featured_today = (
-        pick_home_products(Category.Section.FLOWERS, 2)
-        + pick_home_products(Category.Section.BAKERY, 2)
-        + pick_home_products(Category.Section.GIFTS, 2)
+        pick_home_products(Category.Section.FLOWERS, 6)
+        + pick_home_products(Category.Section.BAKERY, 1)
+        + pick_home_products(Category.Section.GIFTS, 1)
     )
 
     if len(featured_today) < 6:
@@ -804,6 +804,13 @@ def index(request):
         faq_items=HOME_FAQ,
     )
 
+    home_events = list(
+        Event.objects.filter(
+            status=PublishStatus.PUBLISHED,
+            start_at__gte=timezone.now(),
+        ).order_by("start_at")[:3]
+    )
+
     context.update(
         {
             "featured_today": featured_today,
@@ -814,6 +821,7 @@ def index(request):
             "home_subtitle": "Premium flowers, bakery, and gifts with fast coordination in Mashhad",
             "is_homepage": True,
             "home_hero_slides": _get_active_home_hero_slides(),
+            "home_events": home_events,
         }
     )
 
@@ -1525,6 +1533,7 @@ def events(request):
                 "end_at": now + timedelta(days=7, hours=2),
                 "location": "ZAAD Store, Mashhad",
                 "is_demo": True,
+                "get_absolute_url": reverse("contact"),
             },
             {
                 "title": "Gift Collection Preview",
@@ -1533,6 +1542,7 @@ def events(request):
                 "end_at": now + timedelta(days=14, hours=3),
                 "location": "ZAAD Store, Mashhad",
                 "is_demo": True,
+                "get_absolute_url": reverse("contact"),
             },
         ]
 
@@ -1812,7 +1822,7 @@ def visit(request):
         }
     )
 
-    return render(request, "visit.html", context)
+    return render(request, "Visit.html", context)
 
 
 def contact(request):
@@ -1987,12 +1997,21 @@ def blog_detail(request, slug):
         hero_data = db_hero
 
     context.update(hero_data)
+
+    recommended_category = {"label": "Flowers", "url": reverse("flowers")}
+    related_links = [recommended_category]
+
+    if recommended_subcategory:
+        related_links.append(recommended_subcategory)
+
     context.update(
         {
             "post": post,
-            "recommended_category": {"label": "Flowers", "url": reverse("flowers")},
+            "recommended_category": recommended_category,
             "recommended_subcategory": recommended_subcategory,
             "recommended_items": recommended_items,
+            "related_links": related_links,
+            "related_products": recommended_items,
         }
     )
 

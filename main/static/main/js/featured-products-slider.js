@@ -2,9 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("[data-featured-slider]").forEach((slider) => {
     const viewport = slider.querySelector("[data-featured-viewport]");
     const track = slider.querySelector("[data-featured-track]");
+
+    if (!viewport || !track) return;
+
     const cards = [...track.querySelectorAll(".featured-product-card")];
 
-    if (!viewport || !track || cards.length === 0) return;
+    if (cards.length === 0) return;
 
     const prevBtn = slider.querySelector("[data-featured-prev]");
     const nextBtn = slider.querySelector("[data-featured-next]");

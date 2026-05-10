@@ -124,126 +124,20 @@
   background: var(--hero-overlay);
 }
 
-/* =========================
-   Page hero text polish
-   ========================= */
-
-.page-hero__content--en{
-  position: relative;
-  z-index: 2;
-  min-height: 560px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  text-align: left;
-  padding-bottom: 0;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.page-category .page-hero__content--en,
-.page-subcategory .page-hero__content--en{
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.page-hero__kicker{
-  margin: 0 0 10px;
-  font-family: var(--font-ui-en);
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.9);
-  direction: ltr;
-  text-align: left;
-}
-
-.page-hero__title{
-  max-width: 9ch;
-  margin: 0;
-  font-family: var(--font-brand-en);
-  font-size: clamp(2.2rem, 4vw, 4.1rem);
-  font-weight: 600;
-  line-height: 0.96;
-  letter-spacing: 0.01em;
-  color: #fff;
-  direction: ltr;
-  text-align: left;
-}
-
-.page-hero__desc{
-  max-width: 34ch;
-  margin-top: 12px;
-  font-family: var(--font-ui-en);
-  font-size: 0.92rem;
-  font-weight: 400;
-  line-height: 1.75;
-  color: rgba(255,255,255,0.92);
-  direction: ltr;
-  text-align: left;
-}
-
-.page-home .hero-brand-text,
-.page-hero .hero-brand-text {
+.page-home .hero-brand-text {
   font-family: var(--font-brand-en);
   letter-spacing: 0.02em;
   direction: ltr;
   text-align: left;
 }
 
-.page-home .hero-ui-text,
-.page-hero .hero-ui-text {
+.page-home .hero-ui-text {
   font-family: var(--font-ui-en);
   direction: ltr;
   text-align: left;
 }
-.page-category .page-hero__content--en,
-.page-subcategory .page-hero__content--en{
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.page-category .page-hero__title,
-.page-subcategory .page-hero__title{
-  max-width: 10ch;
-}
-
-.page-category .page-hero__desc,
-.page-subcategory .page-hero__desc{
-  max-width: 38ch;
-}
-
-.page-hero .page-hero__content--en{
-  direction: ltr !important;
-  text-align: left !important;
-  align-items: flex-start !important;
-  justify-content: center !important;
-  padding-left: 64px !important;
-  padding-right: 0 !important;
-}
-
-.page-hero .page-hero__kicker,
-.page-hero .page-hero__title,
-.page-hero .page-hero__desc{
-  direction: ltr !important;
-  text-align: left !important;
-  margin-right: 0 !important;
-  margin-left: 0 !important;
-}
-
-.page-category .page-hero .page-hero__content--en,
-.page-subcategory .page-hero .page-hero__content--en,
-.page-events .page-hero .page-hero__content--en,
-.page-event-detail .page-hero .page-hero__content--en{
-  margin-left: 0 !important;
-  margin-right: auto !important;
-}
 
 /* Final: all heroes are image-only */
-.page-hero__content,
-.page-hero__content--en,
 .hero-slide__content {
   display: none !important;
 }

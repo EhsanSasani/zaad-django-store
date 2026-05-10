@@ -172,7 +172,7 @@
   color: var(--white);
 }
 
-.product-image,
+.product-card__image-wrap,
 .featured-product-card__image-wrap {
   position: relative;
 }
@@ -199,7 +199,7 @@
   background: rgba(199,155,107,0.92);
 }
 
-.product-card--out .product-image img,
+.product-card--out .product-card__image,
 .featured-product-card--out .featured-product-card__image {
   filter: grayscale(0.35);
   opacity: 0.82;
