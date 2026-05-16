@@ -1,26 +1,92 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block body_class %}page-category page-catalog-section{% endblock %}
+{% block body_class %}page-category page-catalog-section{% if section == "flowers" %} page-flowers-world{% endif %}{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
+{% if flower_type_cards %}
+<section class="container section-block flower-world-section flower-world-section--types" id="flower-types">
+  <div class="flower-world-head">
+    <span class="flower-world-head__kicker">FLOWER TYPES</span>
+    <div>
+      <h2 class="section-title-en">Choose by Flower Type</h2>
+      <p>از دسته‌گل‌های روزمره تا چیدمان‌های خاص عروسی، استند، جار گل و گیاه.</p>
+    </div>
+  </div>
 
+  <div class="flower-type-grid">
+    {% for item in flower_type_cards %}
+      <article class="flower-type-card {% if item.children %}flower-type-card--group{% endif %}">
+        <a href="{{ item.url }}" class="flower-type-card__main">
+          <div class="flower-type-card__media">
+            {% if item.image|slice:":7" == "/media/" %}
+              <img src="{{ item.image }}" alt="{{ item.label }}" loading="lazy">
+            {% else %}
+              <img src="{% static item.image %}" alt="{{ item.label }}" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="flower-type-card__overlay"></div>
+          <div class="flower-type-card__content">
+            <span>Explore</span>
+            <h3>{{ item.label }}</h3>
+            {% if item.intro %}<p>{{ item.intro }}</p>{% endif %}
+          </div>
+        </a>
+
+        {% if item.children %}
+          <div class="flower-type-card__children">
+            {% for child in item.children %}
+              <a href="{{ child.url }}">{{ child.label }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if same_day_products %}
+<section class="container section-block flower-world-section flower-world-section--same-day" id="same-day-flowers">
+  <div class="flower-world-head flower-world-head--split">
+    <span class="flower-world-head__kicker">SAME DAY FLOWERS</span>
+    <div>
+      <h2 class="section-title-en">گل‌های منتخب برای امروز</h2>
+      <p>انتخاب‌هایی که برای هماهنگی سریع‌تر و ارسال روز مناسب‌تر هستند.</p>
+    </div>
+    <a href="{% url 'mashhad_flower_delivery' %}" class="section-link">راهنمای ارسال</a>
+  </div>
+
+  {% include "partials/featured_products_slider.html" with products=same_day_products %}
+</section>
+{% endif %}
 
 {% if occasion_cards %}
-<section class="container section-block catalog-primary-section">
-  <div class="catalog-card-grid">
+<section class="container section-block flower-world-section flower-world-section--moments" id="flower-moments">
+  <div class="flower-world-head">
+    <span class="flower-world-head__kicker">CHOOSE BY MOMENT</span>
+    <div>
+      <h2 class="section-title-en">گل برای هر حال‌وهوا</h2>
+      <p>از تولد و عاشقانه تا یونیک، ترحیم، خواستگاری و بدون مناسبت.</p>
+    </div>
+  </div>
+
+  <div class="flower-moment-grid">
     {% for item in occasion_cards %}
-      <a href="{{ item.url }}" class="catalog-image-card catalog-image-card--quiet">
-        <div class="catalog-image-card__media">
+      <a href="{{ item.url }}" class="flower-moment-card">
+        <div class="flower-moment-card__media">
           {% if item.image|slice:":7" == "/media/" %}
             <img src="{{ item.image }}" alt="{{ item.label }}" loading="lazy">
           {% else %}
             <img src="{% static item.image %}" alt="{{ item.label }}" loading="lazy">
           {% endif %}
         </div>
-        <div class="catalog-image-card__overlay"></div>
+        <div class="flower-moment-card__body">
+          <h3>{{ item.label }}</h3>
+          {% if item.intro %}<p>{{ item.intro }}</p>{% endif %}
+        </div>
       </a>
     {% endfor %}
   </div>
@@ -40,6 +106,11 @@
           {% endif %}
         </div>
         <div class="catalog-image-card__overlay"></div>
+        <div class="catalog-image-card__content">
+          <span class="catalog-image-card__eyebrow">Explore</span>
+          <h3>{{ item.label }}</h3>
+          {% if item.intro %}<p>{{ item.intro }}</p>{% endif %}
+        </div>
       </a>
     {% endfor %}
   </div>
@@ -47,10 +118,13 @@
 {% endif %}
 
 {% if featured_items %}
-<section class="container section-block featured-products-section">
+<section class="container section-block featured-products-section flower-world-section flower-world-section--selection">
   <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
     <div>
       <h2 class="section-title-en">{{ featured_title|default:"Our Selection" }}</h2>
+      {% if section == "flowers" %}
+        <p class="catalog-section-head__text">چند انتخاب منتخب از گل‌های زاد برای شروع بهتر.</p>
+      {% endif %}
     </div>
     {% if section_more_url %}
       <a href="{{ section_more_url }}" class="section-link">View All</a>

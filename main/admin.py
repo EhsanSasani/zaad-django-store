@@ -134,7 +134,7 @@ class ProductActionsMixin(ActiveActionsMixin):
 
     @admin.action(description="قیمت‌گذاری به حالت استعلامی")
     def make_inquiry_pricing(self, request, queryset):
-        updated = queryset.update(pricing_type=Product.PricingType.INQUIRY, price=None)
+        updated = queryset.update(pricing_type=Product.PricingType.INQUIRY, price=None, price_usd=None)
         self.message_user(request, f"{updated} مورد استعلامی شد.")
 
 
@@ -210,10 +210,13 @@ class ProductAdminForm(forms.ModelForm):
             self.fields["tags"].queryset = Tag.objects.filter(
                 is_active=True
             ).order_by("sort_order", "name")
-            self.fields["tags"].help_text = "مناسبت یا کاربرد محصول؛ مثل تولد، تسلیت، عذرخواهی، خاص، عاشقانه."
+            self.fields["tags"].help_text = "مناسبت یا کاربرد محصول؛ مثل تولد، ترحیم، ارسال روز، عاشقانه، یونیک و ..."
 
         if "price" in self.fields:
             self.fields["price"].help_text = "فقط عدد وارد کن؛ مثلاً 2500000."
+
+        if "price_usd" in self.fields:
+            self.fields["price_usd"].help_text = "اختیاری است؛ اگر قیمت دلاری نداری خالی بگذار."
 
         if "sort_order" in self.fields:
             self.fields["sort_order"].help_text = "عدد کمتر یعنی محصول بالاتر نمایش داده می‌شود."
@@ -223,9 +226,11 @@ class ProductAdminForm(forms.ModelForm):
 
         pricing_type = cleaned_data.get("pricing_type")
         price = cleaned_data.get("price")
+        price_usd = cleaned_data.get("price_usd")
 
         if pricing_type == Product.PricingType.INQUIRY:
             cleaned_data["price"] = None
+            cleaned_data["price_usd"] = None
 
         if pricing_type == Product.PricingType.FIXED and price is None:
             self.add_error(
@@ -235,6 +240,9 @@ class ProductAdminForm(forms.ModelForm):
 
         if price is not None and price < 0:
             self.add_error("price", "قیمت نمی‌تواند منفی باشد.")
+
+        if price_usd is not None and price_usd < 0:
+            self.add_error("price_usd", "قیمت دلاری نمی‌تواند منفی باشد.")
 
         return cleaned_data
 
@@ -436,7 +444,7 @@ class TagAdmin(ActiveActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
         (
             "۱. برچسب",
             {
-                "description": "برچسب یعنی مناسبت یا کاربرد محصول؛ مثل تولد، تسلیت، عذرخواهی، خاص، عاشقانه.",
+                "description": "برچسب یعنی مناسبت یا کاربرد محصول؛ مثل تولد، ترحیم، ارسال روز، عاشقانه، یونیک و ...",
                 "fields": (
                     "cover_image",
                     "image_preview",
@@ -578,6 +586,7 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
                 "fields": (
                     "pricing_type",
                     "price",
+                    "price_usd",
                     "stock_status",
                 ),
             },
@@ -654,9 +663,14 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
                 "استعلام قیمت",
             )
 
+        price_parts = [format_toman(obj.price)]
+
+        if obj.price_usd:
+            price_parts.append(f"{int(obj.price_usd):,} USD")
+
         return format_html(
             '<span class="zaad-price">{}</span>',
-            format_toman(obj.price),
+            " · ".join(price_parts),
         )
 
     def get_changeform_initial_data(self, request):
@@ -717,6 +731,7 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
     def save_model(self, request, obj, form, change):
         if obj.pricing_type == Product.PricingType.INQUIRY:
             obj.price = None
+            obj.price_usd = None
 
         super().save_model(request, obj, form, change)
 
@@ -755,6 +770,7 @@ class FlowerAdmin(BaseProductAdmin):
                 "fields": (
                     "pricing_type",
                     "price",
+                    "price_usd",
                     "stock_status",
                 ),
             },
@@ -773,7 +789,7 @@ class FlowerAdmin(BaseProductAdmin):
         (
             "۴. نوع گل و مناسبت",
             {
-                "description": "زیر‌دسته مثل دسته گل، سبد، استند یا باکس است. برچسب مثل تولد، تسلیت، عذرخواهی، خاص یا عاشقانه است.",
+                "description": "زیر‌دسته مثل دسته گل، باکس گل، بوکت، استند، جار گل یا گیاه است. برچسب مثل تولد، عاشقانه، یونیک، ترحیم یا ارسال روز است.",
                 "fields": (
                     "category",
                     "tags",
@@ -824,6 +840,7 @@ class BakeryItemAdmin(BaseProductAdmin):
                 "fields": (
                     "pricing_type",
                     "price",
+                    "price_usd",
                     "stock_status",
                 ),
             },
@@ -842,7 +859,7 @@ class BakeryItemAdmin(BaseProductAdmin):
         (
             "۴. نوع بیکری و مناسبت",
             {
-                "description": "زیر‌دسته مثل کیک تولد یا کوکی است. برچسب مثل تولد، خاص یا عاشقانه است.",
+                "description": "زیر‌دسته مثل کیک تولد یا کوکی است. برچسب مثل تولد، تبریک، یونیک یا بدون مناسبت است.",
                 "fields": (
                     "category",
                     "tags",
@@ -893,6 +910,7 @@ class GiftItemAdmin(BaseProductAdmin):
                 "fields": (
                     "pricing_type",
                     "price",
+                    "price_usd",
                     "stock_status",
                 ),
             },
@@ -911,7 +929,7 @@ class GiftItemAdmin(BaseProductAdmin):
         (
             "۴. نوع هدیه و مناسبت",
             {
-                "description": "زیر‌دسته مثل شمع، سفال یا سایر است. برچسب مثل تولد، خاص یا عاشقانه است.",
+                "description": "زیر‌دسته مثل شمع، سفال یا سایر است. برچسب مثل تولد، تبریک، یونیک یا بدون مناسبت است.",
                 "fields": (
                     "category",
                     "tags",

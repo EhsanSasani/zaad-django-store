@@ -59,23 +59,45 @@
   <header class="site-header">
   <div class="container nav-wrap">
     <a class="brand brand--text" href="{% url 'index' %}" aria-label="ZAAD Home">
-      <span class="brand__name">ZAAD</span>
+      <span class="brand__name">ZAD</span>
       <span class="brand__sub">flowerstore</span>
     </a>
 
-    <nav class="main-nav" aria-label="Main navigation">
-      <div class="main-nav__center">
-        <a href="{% url 'index' %}" class="{% if active_nav == 'home' %}is-active{% endif %}">خانه</a>
-        <a href="{% url 'flowers' %}" class="{% if active_nav == 'flowers' %}is-active{% endif %}">گل</a>
-        <a href="{% url 'bakery' %}" class="{% if active_nav == 'bakery' %}is-active{% endif %}">بیکری</a>
-        <a href="{% url 'gifts' %}" class="{% if active_nav == 'gifts' %}is-active{% endif %}">هدیه</a>
-        <a href="{% url 'events' %}" class="{% if active_nav == 'events' %}is-active{% endif %}">رویدادها</a>
-      </div>
+    <nav class="main-nav" aria-label="ناوبری اصلی">
+  <div class="main-nav__center">
 
-      <a href="{% url 'about' %}" class="main-nav__about {% if active_nav == 'about' %}is-active{% endif %}">
-        درباره زاد
-      </a>
-    </nav>
+    
+
+    <a href="{% url 'index' %}" class="{% if active_nav == 'home' %}is-active{% endif %}">
+      خانه
+    </a>
+
+    <div class="nav-dropdown" data-nav-dropdown>
+  <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger>
+    محصولات
+  </button>
+
+  <div class="nav-dropdown__menu" data-nav-dropdown-menu>
+    <a href="{% url 'flowers' %}">گل</a>
+    <a href="{% url 'bakery' %}">بیکری</a>
+    <a href="{% url 'gifts' %}">کانسپت استور</a>
+  </div>
+</div>
+
+    <a href="{% url 'occasions' %}" class="{% if active_nav == 'occasions' %}is-active{% endif %}">
+      مناسبت‌ها
+    </a>
+
+    <a href="{% url 'events' %}" class="{% if active_nav == 'events' %}is-active{% endif %}">
+      رویدادها
+    </a>
+
+  </div>
+
+  <a href="{% url 'about' %}" class="main-nav__about {% if active_nav == 'about' %}is-active{% endif %}">
+    درباره زاد
+  </a>
+</nav>
   </div>
 </header>
 
@@ -95,6 +117,7 @@
 
     <div class="page-hero__overlay"></div>
   </section>
+  
 
   {% if page_type != "item" %}
     <section class="container section-block page-hero-mood">
@@ -190,6 +213,7 @@
 
   <script src="{% static 'main/js/analytics.js' %}"></script>
 <script src="{% static 'main/js/featured-products-slider.js' %}?v=10000"></script>
+<script src="{% static 'main/js/navbar.js' %}"></script>
 
 {% block extra_js %}{% endblock %}
   

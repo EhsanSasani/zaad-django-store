@@ -8,16 +8,21 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
+from django.db.models import Q
 
 from .forms import LeadRequestForm
 from .models import (
     Category,
     Event,
+    FLOWER_CATEGORY_SLUGS,
+    FLOWER_OCCASION_TAG_SLUGS,
+    FLOWER_WEDDING_CATEGORY_SLUGS,
     Flower,
     HomeHeroSlide,
     NewsPost,
     Product,
     PublishStatus,
+    SAME_DAY_TAG_SLUG,
     SiteHero,
     Tag,
 )
@@ -93,76 +98,100 @@ SECTION_CONTENT = {
 
 
 CATEGORY_CONTENT_OVERRIDES = {
-    "bouquet": {
-        "label": "Bouquets",
-        "meta_title": "Luxury Bouquets in Mashhad | ZAAD",
-        "meta_description": "Minimal and premium ZAAD bouquets with fast coordination in Mashhad.",
-        "intro": "Softly made for gifting.",
+    "hand-bouquet": {
+        "label": "دسته گل",
+        "meta_title": "دسته گل لوکس در مشهد | ZAD",
+        "meta_description": "دسته گل‌های زاد برای هدیه، تولد، عاشقانه و لحظه‌های روزمره در مشهد.",
+        "intro": "انتخابی نرم و روشن برای هدیه‌های روزمره و لحظه‌های خاص.",
         "image": "main/img/sub-bouquet.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
     "box": {
-        "label": "Flower Boxes",
-        "meta_title": "Flower Boxes in Mashhad | ZAAD",
-        "meta_description": "Premium ZAAD flower boxes with elegant styling and quick coordination.",
-        "intro": "Elegant and easy to gift.",
+        "label": "باکس گل",
+        "meta_title": "باکس گل لوکس در مشهد | ZAD",
+        "meta_description": "باکس گل‌های زاد با چیدمان مینیمال، مناسب هدیه و سفارش سریع در مشهد.",
+        "intro": "هدیه‌ای مرتب، شیک و آماده برای ارسال.",
         "image": "main/img/sub-box.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
-    "basket": {
-        "label": "Flower Baskets",
-        "meta_title": "Flower Baskets in Mashhad | ZAAD",
-        "meta_description": "Special ZAAD flower baskets for gifting, events, and warm moments.",
-        "intro": "Warm, full and beautifully arranged.",
-        "image": "main/img/sub-plant.jpg",
+    "bouquet": {
+        "label": "بوکت",
+        "meta_title": "بوکت گل خاص در مشهد | ZAD",
+        "meta_description": "بوکت‌های طراحی‌شده زاد برای انتخاب‌های خاص‌تر و لوکس‌تر.",
+        "intro": "چیدمانی طراحی‌شده‌تر برای وقتی که انتخاب باید خاص‌تر باشد.",
+        "image": "main/img/sub-bouquet.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
     "stand": {
-        "label": "Stands & Wreaths",
-        "meta_title": "Floral Stands & Wreaths in Mashhad | ZAAD",
-        "meta_description": "Formal floral stands and wreaths with quick coordination in Mashhad.",
-        "intro": "Thoughtful flowers for formal moments.",
+        "label": "استند گل",
+        "meta_title": "استند گل در مشهد | ZAD",
+        "meta_description": "استندهای گل رسمی زاد برای مراسم، ترحیم، افتتاحیه و لحظه‌های تشریفاتی.",
+        "intro": "برای موقعیت‌های رسمی، محترمانه و پررنگ‌تر.",
         "image": "main/img/sub-stand.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
-    "bridal-car-decoration": {
-    "label": "Bridal Car Decoration",
-    "meta_title": "Bridal Car Decoration | ZAAD",
-    "meta_description": "ZAAD floral styling for bridal cars in Mashhad.",
-    "intro": "Floral styling for bridal cars.",
-    "image": "main/img/sub-bridal-car.jpg",
-    "hero_image": "main/img/hero-subcategory.jpg",
+    "bridal-car": {
+        "label": "ماشین عروس",
+        "meta_title": "گل‌آرایی ماشین عروس در مشهد | ZAD",
+        "meta_description": "گل‌آرایی ماشین عروس با سبک ظریف و هماهنگ با فضای مراسم.",
+        "intro": "جزئیات گل‌آرایی برای شروعی نرم و به‌یادماندنی.",
+        "image": "main/img/sub-bridal-car.jpg",
+        "hero_image": "main/img/hero-subcategory.jpg",
     },
     "bridal-bouquet": {
-        "label": "Bridal Bouquet",
-        "meta_title": "Bridal Bouquet | ZAAD",
-        "meta_description": "ZAAD bridal bouquets with elegant floral styling in Mashhad.",
-        "intro": "Soft bridal bouquets for wedding moments.",
+        "label": "دسته گل عروس",
+        "meta_title": "دسته گل عروس در مشهد | ZAD",
+        "meta_description": "دسته گل عروس زاد با چیدمان لطیف، مینیمال و هماهنگ با مراسم.",
+        "intro": "دسته‌گلی لطیف برای یکی از مهم‌ترین لحظه‌ها.",
         "image": "main/img/sub-bridal-bouquet.jpg",
+        "hero_image": "main/img/hero-subcategory.jpg",
+    },
+    "jar": {
+        "label": "جار گل",
+        "meta_title": "جار گل در مشهد | ZAD",
+        "meta_description": "جار گل‌های زاد برای دکور، هدیه‌های خاص و انتخاب‌های متفاوت.",
+        "intro": "فرمی متفاوت و دکوراتیو برای انتخاب‌های خاص‌تر.",
+        "image": "main/img/sub-box.jpg",
+        "hero_image": "main/img/hero-subcategory.jpg",
+    },
+    "plants": {
+        "label": "گیاه",
+        "meta_title": "گیاه هدیه‌ای در مشهد | ZAD",
+        "meta_description": "گیاه‌های انتخاب‌شده زاد برای هدیه، خانه و لحظه‌های آرام‌تر.",
+        "intro": "انتخابی ماندگارتر برای خانه، میز کار و هدیه‌های آرام‌تر.",
+        "image": "main/img/sub-plant.jpg",
+        "hero_image": "main/img/hero-subcategory.jpg",
+    },
+    "basket": {
+        "label": "سبد گل",
+        "meta_title": "سبد گل در مشهد | ZAD",
+        "meta_description": "سبد گل‌های زاد برای هدیه و مراسم.",
+        "intro": "یک دسته‌بندی قدیمی که فعلاً فقط برای سازگاری نگه داشته شده است.",
+        "image": "main/img/sub-plant.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
     "birthday-cakes": {
         "label": "Birthday Cakes",
-        "meta_title": "Birthday Cakes | ZAAD",
-        "meta_description": "ZAAD birthday cakes for warm celebrations and soft moments.",
+        "meta_title": "Birthday Cakes | ZAD",
+        "meta_description": "ZAD birthday cakes for warm celebrations and soft moments.",
         "intro": "Soft cakes for warm birthday moments.",
         "image": "main/img/sub-birthday-cakes.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
     "cookies": {
         "label": "Cookies",
-        "meta_title": "Cookies | ZAAD",
-        "meta_description": "ZAAD cookies for gifting, gatherings and sweet little details.",
+        "meta_title": "Cookies | ZAD",
+        "meta_description": "ZAD cookies for gifting, gatherings and sweet little details.",
         "intro": "Small sweet bites for gentle celebrations.",
         "image": "main/img/sub-cookies.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
-    }
-    
+}
 
 CATEGORY_SLUG_ALIASES = {
-    "plant": "basket",
+    "plant": "plants",
     "wreath": "stand",
+    "bridal-car-decoration": "bridal-car",
 }
 
 
@@ -174,9 +203,9 @@ PAGE_HERO_CONTENT = {
         "image": "main/img/hero-occasions.jpg",
     },
     "flowers": {
-        "kicker": "ZAAD Flowers",
-        "title": "For Every Feeling",
-        "text": "Flowers for love, care and quiet beautiful moments.",
+        "kicker": "ZAD Flowers",
+        "title": "Flowers by ZAD",
+        "text": "انتخاب گل برای لحظه‌های خاص، سفارش‌های فوری و چیدمان‌های اختصاصی.",
         "image": "main/img/hero-flowers.jpg",
     },
     "bakery": {
@@ -613,41 +642,90 @@ SECTION_CATEGORY_ROUTE_NAMES = {
 }
 
 OCCASION_CARD_CONTENT = {
+    "tavalod": {
+        "title": "تولد",
+        "hero_title": "گل تولد",
+        "intro": "روشن، گرم و مناسب تبریک‌های صمیمی.",
+        "image": "main/img/occasions/birthday.jpg",
+    },
+    "asheghane": {
+        "title": "عاشقانه",
+        "hero_title": "گل عاشقانه",
+        "intro": "برای حرف‌هایی که با گل نرم‌تر گفته می‌شوند.",
+        "image": "main/img/occasions/romantic.jpg",
+    },
+    "unique": {
+        "title": "یونیک",
+        "hero_title": "گل‌های یونیک",
+        "intro": "برای وقتی که انتخاب معمولی کافی نیست.",
+        "image": "main/img/occasions/special.jpg",
+    },
+    "tabrik": {
+        "title": "تبریک",
+        "hero_title": "گل تبریک",
+        "intro": "برای شروع‌ها، موفقیت‌ها و خبرهای خوب.",
+        "image": "main/img/occasions/special.jpg",
+    },
+    "mazerat-khahi": {
+        "title": "معذرت‌خواهی",
+        "hero_title": "گل معذرت‌خواهی",
+        "intro": "یک راه آرام برای گفتن ببخشید.",
+        "image": "main/img/occasions/apology.jpg",
+    },
+    "tarhim": {
+        "title": "ترحیم",
+        "hero_title": "گل ترحیم",
+        "intro": "انتخابی محترمانه برای لحظه‌های سخت.",
+        "image": "main/img/occasions/condolence.jpg",
+    },
+    "khastegari": {
+        "title": "خواستگاری",
+        "hero_title": "گل خواستگاری",
+        "intro": "چیدمانی رسمی‌تر برای شروع یک قرار مهم.",
+        "image": "main/img/occasions/wedding.jpg",
+    },
+    "bale-boroon": {
+        "title": "بله‌برون",
+        "hero_title": "گل بله‌برون",
+        "intro": "برای مراسمی گرم، خانوادگی و به‌یادماندنی.",
+        "image": "main/img/occasions/wedding.jpg",
+    },
+    "bedoone-monasebat": {
+        "title": "بدون مناسبت",
+        "hero_title": "گل بدون مناسبت",
+        "intro": "برای وقتی که فقط دلت می‌خواهد حال کسی را خوب کنی.",
+        "image": "main/img/occasions/special.jpg",
+    },
+    # Legacy slugs kept for old data until seed_catalog is run.
     "birthday": {
-        "title": "Birthday",
-        "hero_title": "Birthday Mood",
-        "intro": "A soft little joy for a beautiful birthday.",
+        "title": "تولد",
+        "hero_title": "گل تولد",
+        "intro": "روشن، گرم و مناسب تبریک‌های صمیمی.",
         "image": "main/img/occasions/birthday.jpg",
     },
     "romantic": {
-        "title": "Romantic",
-        "hero_title": "Romantic Mood",
-        "intro": "For words that feel softer with flowers.",
+        "title": "عاشقانه",
+        "hero_title": "گل عاشقانه",
+        "intro": "برای حرف‌هایی که با گل نرم‌تر گفته می‌شوند.",
         "image": "main/img/occasions/romantic.jpg",
     },
     "apology": {
-        "title": "Apology",
-        "hero_title": "Gentle Apology",
-        "intro": "A quiet way to say sorry with care.",
+        "title": "معذرت‌خواهی",
+        "hero_title": "گل معذرت‌خواهی",
+        "intro": "یک راه آرام برای گفتن ببخشید.",
         "image": "main/img/occasions/apology.jpg",
     },
     "condolence": {
-        "title": "Condolence",
-        "hero_title": "Quiet Sympathy",
-        "intro": "Graceful flowers for difficult moments.",
+        "title": "ترحیم",
+        "hero_title": "گل ترحیم",
+        "intro": "انتخابی محترمانه برای لحظه‌های سخت.",
         "image": "main/img/occasions/condolence.jpg",
     },
     "special": {
-        "title": "Special",
-        "hero_title": "Something Special",
-        "intro": "For moments that need a little more care.",
+        "title": "یونیک",
+        "hero_title": "گل‌های یونیک",
+        "intro": "برای وقتی که انتخاب معمولی کافی نیست.",
         "image": "main/img/occasions/special.jpg",
-    },
-    "wedding": {
-        "title": "Wedding",
-        "hero_title": "Wedding Flowers",
-        "intro": "Soft floral details for bridal moments.",
-        "image": "main/img/occasions/wedding.jpg",
     },
 }
 
@@ -699,6 +777,7 @@ def _active_occasion_tags(limit=None):
     queryset = Tag.objects.filter(
         is_occasion=True,
         is_active=True,
+        slug__in=FLOWER_OCCASION_TAG_SLUGS,
     ).order_by("sort_order", "name")
 
     if limit:
@@ -750,6 +829,58 @@ def _filter_links_for_categories(base_url, categories, selected_slug=None):
     return links
 
 
+def _flower_type_cards():
+    categories = {
+        category.slug: category
+        for category in Category.objects.filter(
+            section=Category.Section.FLOWERS,
+            is_active=True,
+            slug__in=FLOWER_CATEGORY_SLUGS,
+        ).order_by("sort_order", "name")
+    }
+
+    cards = []
+
+    for slug in ("hand-bouquet", "box", "bouquet", "stand"):
+        category = categories.get(slug)
+        if category:
+            cards.append(_category_card(category))
+
+    wedding_children = [
+        _category_card(categories[slug])
+        for slug in FLOWER_WEDDING_CATEGORY_SLUGS
+        if slug in categories
+    ]
+
+    if wedding_children:
+        cards.append(
+            {
+                "slug": "wedding",
+                "label": "عروسی",
+                "url": wedding_children[0]["url"],
+                "image": wedding_children[0]["image"],
+                "intro": "ماشین عروس و دسته گل عروس با چیدمان هماهنگ.",
+                "children": wedding_children,
+            }
+        )
+
+    for slug in ("jar", "plants"):
+        category = categories.get(slug)
+        if category:
+            cards.append(_category_card(category))
+
+    return cards
+
+
+def _flower_same_day_products(limit=12):
+    return list(
+        _published_products_for_section(Category.Section.FLOWERS)
+        .filter(tags__slug=SAME_DAY_TAG_SLUG)
+        .distinct()
+        .order_by("-featured", "sort_order", "-created_at")[:limit]
+    )
+
+
 # =========================
 # Home
 # =========================
@@ -788,12 +919,7 @@ def index(request):
 
         featured_today += fallback_products
 
-    occasion_tags = list(
-        Tag.objects.filter(
-            is_occasion=True,
-            is_active=True,
-        ).order_by("sort_order", "name")[:8]
-    )
+    occasion_tags = _active_occasion_tags(limit=8)
 
     context = _default_context(
         request,
@@ -810,7 +936,17 @@ def index(request):
             start_at__gte=timezone.now(),
         ).order_by("start_at")[:3]
     )
-
+    home_same_day_products = (
+    Product.objects
+    .filter(
+        Q(tags__slug=SAME_DAY_TAG_SLUG) | Q(tags__slug="same-day") | Q(tags__name="ارسال روز") | Q(tags__name="ارسال فوری"),
+        category__section=Category.Section.FLOWERS,
+    )
+    .select_related("category")
+    .prefetch_related("tags")
+    .distinct()
+    .order_by("sort_order", "-created_at")[:12]
+)
     context.update(
         {
             "featured_today": featured_today,
@@ -822,6 +958,7 @@ def index(request):
             "is_homepage": True,
             "home_hero_slides": _get_active_home_hero_slides(),
             "home_events": home_events,
+            "home_same_day_products": home_same_day_products,
         }
     )
 
@@ -837,7 +974,7 @@ def _category_page(request, section):
     products_qs = _published_products_for_section(section)
 
     if section == Category.Section.FLOWERS:
-        products_qs = products_qs.exclude(tags__slug="condolence").distinct()
+        products_qs = products_qs.exclude(tags__slug__in=["tarhim", "condolence", "sympathy"]).distinct()
 
     products_qs = products_qs.order_by(
     "-featured",
@@ -869,11 +1006,15 @@ def _category_page(request, section):
 
     occasion_cards = []
     subcategory_links = []
+    flower_type_cards = []
+    same_day_products = []
 
     if section == Category.Section.FLOWERS:
+        flower_type_cards = _flower_type_cards()
+        same_day_products = _flower_same_day_products(limit=12)
         occasion_cards = [
             _occasion_card(tag, for_flowers=True)
-            for tag in _active_occasion_tags(limit=8)
+            for tag in _active_occasion_tags(limit=9)
         ]
     else:
         subcategory_links = [
@@ -889,6 +1030,8 @@ def _category_page(request, section):
             "featured_items": featured_items,
             "occasion_cards": occasion_cards,
             "subcategory_links": subcategory_links,
+            "flower_type_cards": flower_type_cards,
+            "same_day_products": same_day_products,
             "section_more_url": _section_all_url(section),
             "featured_title": "Our Selection",
             "lead_form": LeadRequestForm(initial_lead_type=config["lead_type"]),

@@ -609,3 +609,38 @@
     padding: 18px;
   }
 }
+
+@media (max-width: 760px) {
+  .brand--nav {
+    display: inline-flex !important;
+    font-size: 0.9rem;
+    min-width: max-content;
+  }
+
+  .brand--nav span {
+    font-size: 0.5rem;
+  }
+.nav-dropdown {
+    position: relative;
+  }
+
+  .nav-dropdown__menu {
+    top: calc(100% + 8px);
+    right: 50%;
+    display: grid !important;
+    min-width: 150px;
+  }
+
+  .nav-dropdown:hover .nav-dropdown__menu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(50%, 8px);
+  }
+
+  .nav-dropdown.is-open .nav-dropdown__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(50%, 0);
+  }
+  
+}

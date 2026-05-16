@@ -6,6 +6,41 @@ from django.urls import reverse
 from django.utils.text import slugify
 
 
+# =========================
+# Catalog constants
+# =========================
+
+FLOWER_CATEGORY_SLUGS = (
+    "hand-bouquet",
+    "box",
+    "bouquet",
+    "stand",
+    "bridal-car",
+    "bridal-bouquet",
+    "jar",
+    "plants",
+)
+
+FLOWER_WEDDING_CATEGORY_SLUGS = (
+    "bridal-car",
+    "bridal-bouquet",
+)
+
+FLOWER_OCCASION_TAG_SLUGS = (
+    "tavalod",
+    "asheghane",
+    "unique",
+    "tabrik",
+    "mazerat-khahi",
+    "tarhim",
+    "khastegari",
+    "bale-boroon",
+    "bedoone-monasebat",
+)
+
+SAME_DAY_TAG_SLUG = "ersale-rooz"
+
+
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField("زمان ایجاد", auto_now_add=True)
     updated_at = models.DateTimeField("آخرین ویرایش", auto_now=True)
@@ -15,7 +50,7 @@ class TimeStampedModel(models.Model):
 
 
 def make_unique_slug(instance, value, slug_field_name="slug", queryset=None):
-    slug = slugify(value, allow_unicode=True)
+    slug = slugify(value or "", allow_unicode=True)
 
     if not slug:
         slug = f"item-{uuid.uuid4().hex[:8]}"
@@ -93,6 +128,14 @@ class Category(TimeStampedModel):
     def __str__(self) -> str:
         return f"{self.get_section_display()} / {self.name}"
 
+    @property
+    def is_flower_category(self):
+        return self.section == self.Section.FLOWERS
+
+    @property
+    def is_wedding_flower_category(self):
+        return self.section == self.Section.FLOWERS and self.slug in FLOWER_WEDDING_CATEGORY_SLUGS
+
     def save(self, *args, **kwargs):
         if not self.slug:
             queryset = Category.objects.filter(section=self.section)
@@ -143,6 +186,14 @@ class Tag(TimeStampedModel):
 
     def __str__(self) -> str:
         return self.name
+
+    @property
+    def is_flower_occasion(self):
+        return self.slug in FLOWER_OCCASION_TAG_SLUGS
+
+    @property
+    def is_same_day(self):
+        return self.slug == SAME_DAY_TAG_SLUG
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -196,11 +247,11 @@ class Product(TimeStampedModel):
         help_text="فقط عدد وارد کن؛ مثلاً 2500000. اگر قیمت استعلامی باشد، این فیلد خالی می‌ماند.",
     )
     price_usd = models.DecimalField(
-    "قیمت دلاری",
-    max_digits=8,
-    decimal_places=2,
-    null=True,
-    blank=True,
+        "قیمت دلاری",
+        max_digits=8,
+        decimal_places=2,
+        null=True,
+        blank=True,
     )
 
     cover_image = models.ImageField(
@@ -223,7 +274,7 @@ class Product(TimeStampedModel):
         verbose_name="برچسب‌ها",
         related_name="products",
         blank=True,
-        help_text="مناسبت یا کاربرد محصول؛ مثل تولد، تسلیت، عذرخواهی، خاص، عاشقانه.",
+        help_text="مناسبت یا کاربرد محصول؛ مثل تولد، ترحیم، ارسال روز، عاشقانه، یونیک و ...",
     )
 
     is_active = models.BooleanField("فعال باشد؟", default=True, db_index=True)
@@ -284,20 +335,60 @@ class Product(TimeStampedModel):
         return self.is_active and self.publish_status == self.PublishStatus.PUBLISHED
 
     @property
+    def is_flower(self):
+        return self.category_id and self.category.section == Category.Section.FLOWERS
+
+    @property
+    def is_bakery(self):
+        return self.category_id and self.category.section == Category.Section.BAKERY
+
+    @property
+    def is_gift(self):
+        return self.category_id and self.category.section == Category.Section.GIFTS
+
+    @property
+    def is_fixed_price(self):
+        return self.pricing_type == self.PricingType.FIXED
+
+    @property
+    def has_price(self):
+        return self.is_fixed_price and self.price is not None
+
+    @property
     def display_price(self):
-        if self.pricing_type == self.PricingType.INQUIRY or self.price is None:
+        if not self.has_price:
+            return "استعلام قیمت"
+
+        price_parts = [f"{int(self.price):,} تومان"]
+
+        if self.price_usd:
+            price_parts.append(f"{int(self.price_usd):,} USD")
+
+        return " · ".join(price_parts)
+
+    @property
+    def display_price_en(self):
+        if not self.has_price:
             return "Call for Price"
 
         price_parts = [f"{int(self.price):,} IRT"]
 
         if self.price_usd:
-            price_parts.append(f"{int(self.price_usd)} USD")
+            price_parts.append(f"{int(self.price_usd):,} USD")
 
         return " · ".join(price_parts)
+
+    @property
+    def is_same_day(self):
+        if not self.pk:
+            return False
+
+        return self.tags.filter(slug=SAME_DAY_TAG_SLUG).exists()
 
     def save(self, *args, **kwargs):
         if self.pricing_type == self.PricingType.INQUIRY:
             self.price = None
+            self.price_usd = None
 
         if not self.slug:
             self.slug = make_unique_slug(self, self.name)
