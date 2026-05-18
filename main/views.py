@@ -1044,9 +1044,198 @@ def _category_page(request, section):
     return render(request, "category.html", context)
 
 
-def flowers(request):
-    return _category_page(request, Category.Section.FLOWERS)
+FLOWER_TYPE_SLUGS = [
+    "hand-bouquet",
+    "box",
+    "bouquet",
+    "stand",
+    "jar",
+    "plants",
+]
 
+FLOWER_OCCASION_SLUGS = [
+    "tavalod",
+    "asheghane",
+    "unique",
+    "tabrik",
+    "mazerat-khahi",
+    "tarhim",
+    "khastegari",
+    "bale-boroon",
+    "bedoone-monasebat",
+]
+
+SAME_DAY_TAG_SLUGS = [
+    "ersale-rooz",
+    "same-day",
+]
+
+
+FLOWER_TYPE_FALLBACK_IMAGES = {
+    "hand-bouquet": "main/img/sub-bouquet.jpg",
+    "box": "main/img/sub-box.jpg",
+    "bouquet": "main/img/sub-bouquet.jpg",
+    "stand": "main/img/sub-stand.jpg",
+    "jar": "main/img/sub-plant.jpg",
+    "plants": "main/img/sub-plant.jpg",
+    "wedding": "main/img/sub-bridal-bouquet.jpg",
+}
+
+
+OCCASION_FALLBACK_IMAGES = {
+    "tavalod": "main/img/occasions/birthday.jpg",
+    "asheghane": "main/img/occasions/romantic.jpg",
+    "unique": "main/img/occasions/special.jpg",
+    "tabrik": "main/img/occasions/special.jpg",
+    "mazerat-khahi": "main/img/occasions/apology.jpg",
+    "tarhim": "main/img/occasions/condolence.jpg",
+    "khastegari": "main/img/occasions/wedding.jpg",
+    "bale-boroon": "main/img/occasions/wedding.jpg",
+    "bedoone-monasebat": "main/img/occasions/special.jpg",
+}
+
+
+def _sort_by_slug_order(items, slug_order):
+    order_map = {slug: index for index, slug in enumerate(slug_order)}
+    return sorted(items, key=lambda item: order_map.get(item.slug, 999))
+
+
+def _flower_type_cards():
+    categories = list(
+        Category.objects.filter(
+            section=Category.Section.FLOWERS,
+            is_active=True,
+            slug__in=FLOWER_TYPE_SLUGS,
+        ).order_by("sort_order", "name")
+    )
+
+    categories = _sort_by_slug_order(categories, FLOWER_TYPE_SLUGS)
+
+    cards = []
+
+    for category in categories:
+        cards.append(
+            {
+                "slug": category.slug,
+                "label": category.name,
+                "url": reverse("flower_subcategory", args=[category.slug]),
+                "image": (
+                    category.cover_image.url
+                    if category.cover_image
+                    else FLOWER_TYPE_FALLBACK_IMAGES.get(category.slug, "main/img/sub-bouquet.jpg")
+                ),
+                "is_wide": False,
+            }
+        )
+
+    bridal_category = (
+        Category.objects.filter(
+            section=Category.Section.FLOWERS,
+            is_active=True,
+            slug__in=["bridal-bouquet", "bridal-car"],
+        )
+        .order_by("sort_order", "name")
+        .first()
+    )
+
+    if bridal_category:
+        cards.insert(
+            4,
+            {
+                "slug": "wedding",
+                "label": "عروسی",
+                "url": reverse("flower_subcategory", args=[bridal_category.slug]),
+                "image": (
+                    bridal_category.cover_image.url
+                    if bridal_category.cover_image
+                    else FLOWER_TYPE_FALLBACK_IMAGES["wedding"]
+                ),
+                "is_wide": True,
+            },
+        )
+
+    return cards
+
+
+def _flower_occasion_cards():
+    tags = list(
+        Tag.objects.filter(
+            is_active=True,
+            is_occasion=True,
+            slug__in=FLOWER_OCCASION_SLUGS,
+        ).order_by("sort_order", "name")
+    )
+
+    tags = _sort_by_slug_order(tags, FLOWER_OCCASION_SLUGS)
+
+    cards = []
+
+    for tag in tags:
+        cards.append(
+            {
+                "slug": tag.slug,
+                "label": tag.name,
+                "url": reverse("flower_occasion", args=[tag.slug]),
+                "image": (
+                    tag.cover_image.url
+                    if tag.cover_image
+                    else OCCASION_FALLBACK_IMAGES.get(tag.slug, "main/img/occasions/special.jpg")
+                ),
+            }
+        )
+
+    return cards
+
+
+def _same_day_flower_products(limit=12):
+    queryset = (
+        _published_products_for_section(Category.Section.FLOWERS)
+        .filter(tags__slug__in=SAME_DAY_TAG_SLUGS)
+        .distinct()
+        .order_by("sort_order", "-created_at")
+    )
+
+    products = list(queryset[:limit])
+
+    if products:
+        return products
+
+    return list(
+        _published_products_for_section(Category.Section.FLOWERS)
+        .order_by("-featured", "sort_order", "-created_at")[:limit]
+    )
+
+
+def flowers(request):
+    context = _default_context(
+        request,
+        page_type="flowers_landing",
+        active_nav="flowers",
+        meta_title="Flowers by ZAD | گل‌های زاد",
+        meta_description="گل‌های زاد برای لحظه‌های ماندگار، سفارش‌های فوری، مناسبت‌ها و انتخاب‌های اختصاصی.",
+        breadcrumbs=None,
+        faq_items=SECTION_CONTENT["flowers"].get("faq") or None,
+    )
+
+    hero_data = _hero_from_key("flowers")
+    db_hero = _get_site_hero("flowers")
+
+    if db_hero:
+        hero_data = db_hero
+
+    context.update(hero_data)
+
+    context.update(
+        {
+            "flower_type_cards": _flower_type_cards(),
+            "same_day_products": _same_day_flower_products(limit=12),
+            "occasion_cards": _flower_occasion_cards(),
+            "lead_form": LeadRequestForm(initial_lead_type="flower"),
+            "lead_default_type": "flower",
+        }
+    )
+
+    return render(request, "flowers_landing.html", context)
 
 def bakery(request):
     return _category_page(request, Category.Section.BAKERY)
