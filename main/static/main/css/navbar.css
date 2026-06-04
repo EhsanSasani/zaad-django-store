@@ -343,3 +343,156 @@
   background: rgba(199, 155, 107, 0.10);
   transform: translateY(-1px);
 }
+
+
+
+/* =========================
+   Home overlay header
+   ========================= */
+
+.page-home .top-notice-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 200;
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.page-home .site-header {
+  position: fixed;
+  top: 44px;
+  left: 0;
+  width: 100%;
+  z-index: 300;
+
+  background: transparent;
+  border-bottom: none;
+  box-shadow: none;
+  backdrop-filter: none;
+
+  transition:
+    background .35s ease,
+    box-shadow .35s ease,
+    top .35s ease;
+}
+
+.page-home .site-header.is-scrolled {
+  top: 0;
+
+  background: rgba(251,248,244,.95);
+  backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid rgba(45,42,39,.08);
+
+  box-shadow:
+    0 10px 30px rgba(38,26,16,.05);
+}
+
+.page-home .site-header:not(.is-scrolled)
+.main-nav__center a,
+
+.page-home .site-header:not(.is-scrolled)
+.main-nav__about,
+
+.page-home .site-header:not(.is-scrolled)
+.brand__name,
+
+.page-home .site-header:not(.is-scrolled)
+.brand__sub {
+  color: #fff;
+}
+
+
+.page-home .top-notice-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 200;
+
+  background: rgba(38, 26, 16, 0.34);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.page-home .top-notice-bar__link {
+  color: rgba(255, 255, 255, 0.86);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.28);
+}
+
+.page-home .site-header {
+  background: rgba(38, 26, 16, 0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.page-home .site-header:not(.is-scrolled) .main-nav__center a,
+.page-home .site-header:not(.is-scrolled) .main-nav__about,
+.page-home .site-header:not(.is-scrolled) .nav-dropdown__trigger,
+.page-home .site-header:not(.is-scrolled) .brand__name {
+  color: rgba(255, 255, 255, 0.96);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.30);
+}
+
+.page-home .site-header:not(.is-scrolled) .brand__sub {
+  color: rgba(255, 255, 255, 0.74);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.26);
+}
+
+.page-home .site-header:not(.is-scrolled) .main-nav__center a.is-active {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.page-home .site-header:not(.is-scrolled) .main-nav__about {
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.10);
+}
+
+
+.page-home .site-header:not(.is-scrolled) .nav-dropdown__menu {
+  background: rgba(255, 250, 244, 0.92);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* =========================
+   Home overlay nav mobile polish
+   ========================= */
+
+@media (max-width: 760px) {
+  .page-home .site-header {
+    top: 42px;
+    background: rgba(38, 26, 16, 0.34);
+  }
+
+  .page-home .site-header.is-scrolled {
+    top: 0;
+  }
+
+  .page-home .top-notice-bar__link {
+    font-size: 0.72rem;
+    line-height: 1.7;
+    padding: 7px 12px;
+  }
+
+  .page-home .nav-wrap {
+    min-height: 50px !important;
+    padding: 4px 0 !important;
+  }
+
+  .page-home .main-nav__center a,
+  .page-home .main-nav__about,
+  .page-home .nav-dropdown__trigger {
+    font-size: 0.78rem !important;
+    min-height: 32px !important;
+    padding: 6px 9px !important;
+  }
+}

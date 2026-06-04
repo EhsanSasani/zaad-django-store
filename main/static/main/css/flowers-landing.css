@@ -74,16 +74,26 @@
 
 .flowers-hero__title span {
   display: block;
+
+  margin-top: 6px;
+
   font-style: italic;
   font-weight: 400;
+
+  color: #8d6d60;
 }
 
 .flowers-hero__text {
-  max-width: 390px;
-  margin: 26px 0 0;
-  color: var(--fl-muted);
+  max-width: 420px;
+
+  margin: 28px 0 0;
+
+  color: #75665c;
+
   font-size: 1rem;
-  line-height: 2.05;
+  line-height: 2.15;
+
+  opacity: 0.92;
 }
 
 .flowers-hero__actions {
@@ -98,20 +108,43 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 46px;
+
+  min-height: 48px;
+
   padding: 0 24px;
+
   border-radius: 999px;
-  border: 1px solid rgba(98, 104, 79, 0.28);
-  background: var(--fl-olive);
+
+  border:
+    1px solid rgba(127,132,101,0.20);
+
+  background:
+    rgba(127,132,101,0.92);
+
   color: #fff;
+
   text-decoration: none;
+
   font-size: 0.92rem;
-  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+
+  box-shadow:
+    0 12px 26px rgba(90, 98, 70, 0.18);
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
 }
+
 
 .flowers-btn:hover {
   transform: translateY(-2px);
-  background: var(--fl-olive-dark);
+
+  background:
+    rgba(98,104,79,0.96);
+
+  box-shadow:
+    0 16px 32px rgba(90,98,70,0.24);
 }
 
 .flowers-btn--ghost {
@@ -121,36 +154,92 @@
 
 .flowers-hero__media {
   position: relative;
-  min-height: 430px;
+
+  min-height: 620px;
+
+  overflow: hidden;
+
+  border-radius: 34px 42px 42px 34px;
 }
 
 .flowers-hero__media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
-}
 
+  object-fit: cover;
+
+  display: block;
+
+  transform: scale(1.03);
+
+  filter:
+    saturate(0.94)
+    contrast(1.02)
+    brightness(0.98);
+
+  transition:
+    transform 1200ms ease,
+    filter 600ms ease;
+}
+.flowers-hero__media::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    radial-gradient(
+      rgba(255,255,255,0.06) 0.7px,
+      transparent 0.7px
+    );
+
+  background-size: 4px 4px;
+
+  mix-blend-mode: soft-light;
+
+  opacity: 0.22;
+
+  pointer-events: none;
+}
 /* Sections */
 
 .flowers-panel {
-  margin-top: 26px;
-  padding: clamp(26px, 4vw, 44px);
-  border: 1px solid var(--fl-line);
-  border-radius: 30px;
-  background: var(--fl-panel);
+  position: relative;
+  margin-top: 42px;
+  padding: clamp(30px, 4vw, 52px);
+  border: 1px solid rgba(121, 99, 84, 0.10);
+  border-radius: 38px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.72),
+      rgba(255,255,255,0.58)
+    );
+
   backdrop-filter: blur(14px);
-  box-shadow: 0 18px 60px rgba(76, 55, 42, 0.06);
+
+  box-shadow:
+    0 24px 70px rgba(89, 63, 47, 0.05),
+    inset 0 1px 0 rgba(255,255,255,0.58);
 }
 
 .flowers-panel--flat {
-  background: rgba(255, 252, 248, 0.58);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 251, 247, 0.86),
+      rgba(255, 248, 244, 0.72)
+    );
 }
 
 .flowers-panel--tinted {
   background:
-    linear-gradient(135deg, rgba(237, 222, 211, 0.88), rgba(250, 246, 240, 0.82)),
-    #efe2d8;
+    linear-gradient(
+      135deg,
+      rgba(233, 220, 212, 0.84),
+      rgba(248, 241, 235, 0.74)
+    );
 }
 
 .flowers-section-head {
@@ -195,193 +284,410 @@
 
 .flower-types-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: 1.15fr 1fr 1fr 1.15fr;
+  gap: 18px;
+  align-items: stretch;
 }
 
 .flower-type-card {
   position: relative;
   overflow: hidden;
-  min-height: 188px;
-  border: 1px solid var(--fl-line);
-  border-radius: 24px;
-  background: #fffaf5;
+
+  min-height: 260px;
+
+  border: 1px solid rgba(118, 94, 78, 0.12);
+  border-radius: 30px;
+
+  background: #f8efe7;
+
   text-decoration: none;
-  color: var(--fl-text);
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  color: #fff;
+
+  box-shadow:
+    0 18px 54px rgba(73, 50, 38, 0.07);
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
 }
 
 .flower-type-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 44px rgba(76, 55, 42, 0.12);
+  transform: translateY(-6px);
+  border-color: rgba(127, 132, 101, 0.24);
+  box-shadow:
+    0 26px 70px rgba(73, 50, 38, 0.13);
 }
 
 .flower-type-card__image {
-  height: 138px;
+  position: absolute;
+  inset: 0;
+  height: auto;
   overflow: hidden;
 }
 
 .flower-type-card__image img {
   width: 100%;
   height: 100%;
+
   object-fit: cover;
   display: block;
-  transition: transform 500ms ease;
+
+  filter:
+    saturate(0.92)
+    contrast(1.02)
+    brightness(0.88);
+
+  transform: scale(1.02);
+
+  transition:
+    transform 700ms ease,
+    filter 400ms ease;
 }
 
 .flower-type-card:hover img {
-  transform: scale(1.045);
+  transform: scale(1.075);
+
+  filter:
+    saturate(1)
+    contrast(1.04)
+    brightness(0.94);
+}
+.flower-type-card::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to top,
+      rgba(42, 32, 28, 0.62),
+      rgba(42, 32, 28, 0.16) 54%,
+      rgba(255, 255, 255, 0.04)
+    );
+
+  z-index: 1;
+  pointer-events: none;
 }
 
 .flower-type-card__body {
+  position: absolute;
+  z-index: 2;
+
+  inset-inline: 18px;
+  bottom: 18px;
+
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: space-between;
-  gap: 8px;
-  min-height: 50px;
-  padding: 0 16px;
+  gap: 14px;
+
+  min-height: auto;
+  padding: 0;
 }
 
 .flower-type-card__title {
-  font-size: 1rem;
+  font-size: 1.12rem;
   font-weight: 600;
+  line-height: 1.5;
+
+  text-shadow: 0 8px 22px rgba(0,0,0,0.24);
 }
 
 .flower-type-card__arrow {
-  width: 30px;
-  height: 30px;
+  flex: 0 0 auto;
+
+  width: 34px;
+  height: 34px;
+
   display: grid;
   place-items: center;
+
   border-radius: 50%;
-  background: rgba(127, 132, 101, 0.12);
-  color: var(--fl-olive-dark);
+
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255,255,255,0.22);
 }
 
 .flower-type-card--wide {
   grid-column: span 2;
-  min-height: 210px;
+  min-height: 300px;
 }
 
-.flower-type-card--wide .flower-type-card__image {
-  height: 160px;
-}
+
 
 /* Product rail */
 
 .flowers-product-rail {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(190px, 1fr);
-  gap: 16px;
+  grid-auto-columns: minmax(230px, 280px);
+  gap: 18px;
+
   overflow-x: auto;
-  padding: 4px 2px 12px;
+  overflow-y: hidden;
+
+  padding: 8px 2px 18px;
+
   scroll-snap-type: x mandatory;
 }
 
 .flowers-product-rail::-webkit-scrollbar {
-  height: 7px;
+  height: 6px;
+}
+
+.flowers-product-rail::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.38);
+  border-radius: 999px;
 }
 
 .flowers-product-rail::-webkit-scrollbar-thumb {
-  background: rgba(127, 132, 101, 0.28);
+  background: rgba(127, 132, 101, 0.24);
   border-radius: 999px;
 }
 
 .flowers-product-card {
   scroll-snap-align: start;
+
   overflow: hidden;
-  border: 1px solid var(--fl-line);
-  border-radius: 22px;
-  background: rgba(255, 252, 248, 0.86);
+
+  border: 1px solid rgba(115, 92, 76, 0.12);
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.72),
+      rgba(250,244,238,0.88)
+    );
+
   text-decoration: none;
-  color: var(--fl-text);
+  color: #3c332d;
+
+  box-shadow:
+    0 20px 58px rgba(78, 55, 41, 0.07);
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+.flowers-product-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(127, 132, 101, 0.22);
+  box-shadow:
+    0 28px 74px rgba(78, 55, 41, 0.12);
 }
 
 .flowers-product-card__image {
   position: relative;
-  aspect-ratio: 4 / 3;
-  background: #eadfd5;
+
+  aspect-ratio: 4 / 4.6;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(135deg, #eadfd5, #f8efe7);
 }
 
 .flowers-product-card__image img {
   width: 100%;
   height: 100%;
+
   display: block;
   object-fit: cover;
+
+  filter:
+    saturate(0.94)
+    contrast(1.01)
+    brightness(0.98);
+
+  transition:
+    transform 700ms ease,
+    filter 400ms ease;
+}
+.flowers-product-card:hover .flowers-product-card__image img {
+  transform: scale(1.045);
+  filter:
+    saturate(1)
+    contrast(1.03)
+    brightness(1);
 }
 
 .flowers-product-card__badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 5px 10px;
+  top: 12px;
+  right: 12px;
+
+  padding: 6px 11px;
+
   border-radius: 999px;
-  background: rgba(127, 132, 101, 0.9);
-  color: #fff;
-  font-size: 0.75rem;
+
+  background: rgba(255, 250, 245, 0.76);
+  color: #5f654d;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+
+  border: 1px solid rgba(255,255,255,0.44);
+  backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 8px 22px rgba(44, 34, 28, 0.10);
 }
 
 .flowers-product-card__body {
-  padding: 14px 14px 16px;
+  padding: 16px 16px 18px;
 }
 
 .flowers-product-card__name {
   margin: 0;
-  font-size: 0.94rem;
-  line-height: 1.7;
+
+  color: #3a302a;
+
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.75;
 }
 
 .flowers-product-card__price {
-  margin: 8px 0 0;
-  color: var(--fl-muted);
+  margin: 9px 0 0;
+
+  color: #7a6a60;
+
   font-size: 0.84rem;
+  line-height: 1.6;
 }
 
 /* Occasions */
 
 .flowers-occasion-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 14px;
 }
 
 .flowers-occasion-card {
   position: relative;
   overflow: hidden;
-  min-height: 150px;
-  border-radius: 22px;
-  border: 1px solid var(--fl-line);
+
+  min-height: 210px;
+
+  border-radius: 28px;
+  border: 1px solid rgba(118, 94, 78, 0.12);
+
   text-decoration: none;
   color: #fff;
-  background: #cdb9ad;
-}
 
+  background: #d8c4b8;
+
+  box-shadow:
+    0 18px 54px rgba(73, 50, 38, 0.07);
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+.flowers-occasion-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(127,132,101,0.22);
+  box-shadow:
+    0 26px 72px rgba(73,50,38,0.13);
+}
 .flowers-occasion-card img {
   width: 100%;
   height: 100%;
-  min-height: 150px;
+  min-height: 210px;
+
   object-fit: cover;
   display: block;
-}
 
+  filter:
+    saturate(0.92)
+    contrast(1.02)
+    brightness(0.88);
+
+  transform: scale(1.02);
+
+  transition:
+    transform 700ms ease,
+    filter 400ms ease;
+}
+.flowers-occasion-card:hover img {
+  transform: scale(1.07);
+
+  filter:
+    saturate(1)
+    contrast(1.04)
+    brightness(0.94);
+}
 .flowers-occasion-card::after {
   content: "";
+
   position: absolute;
   inset: 0;
+
   background:
-    linear-gradient(to top, rgba(43, 34, 30, 0.52), rgba(43, 34, 30, 0.06)),
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.12), transparent 42%);
+    linear-gradient(
+      to top,
+      rgba(42, 32, 28, 0.66),
+      rgba(42, 32, 28, 0.16) 58%,
+      rgba(255,255,255,0.04)
+    ),
+    radial-gradient(
+      circle at 18% 16%,
+      rgba(255,255,255,0.14),
+      transparent 36%
+    );
+
+  z-index: 1;
+  pointer-events: none;
 }
 
 .flowers-occasion-card__label {
   position: absolute;
   z-index: 2;
-  right: 14px;
-  bottom: 12px;
-  font-size: 0.96rem;
+
+  right: 16px;
+  bottom: 14px;
+
+  max-width: calc(100% - 32px);
+
+  font-size: 1rem;
   font-weight: 600;
+  line-height: 1.5;
+
+  text-shadow:
+    0 8px 24px rgba(0,0,0,0.28);
+}
+.flowers-occasion-card:nth-child(1),
+.flowers-occasion-card:nth-child(3) {
+  grid-column: span 2;
 }
 
+.flowers-occasion-card:nth-child(2),
+.flowers-occasion-card:nth-child(4),
+.flowers-occasion-card:nth-child(5),
+.flowers-occasion-card:nth-child(6),
+.flowers-occasion-card:nth-child(7),
+.flowers-occasion-card:nth-child(8),
+.flowers-occasion-card:nth-child(9) {
+  grid-column: span 1;
+}
+
+.flowers-occasion-card:nth-child(1) {
+  min-height: 260px;
+}
+
+.flowers-occasion-card:nth-child(3) {
+  min-height: 260px;
+}
 /* CTA */
 
 .flowers-cta {
@@ -446,18 +752,97 @@
   }
 
   .flowers-hero {
-    grid-template-columns: 1fr;
-    min-height: 0;
-    border-radius: 26px;
-  }
+  position: relative;
+  overflow: hidden;
+
+  min-height: 620px;
+
+  display: grid;
+  grid-template-columns: 0.92fr 1.18fr;
+  align-items: stretch;
+
+  border:
+    1px solid rgba(120, 95, 76, 0.10);
+
+  border-radius: 42px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(248, 241, 234, 0.96) 0%,
+      rgba(248, 241, 234, 0.84) 34%,
+      rgba(248, 241, 234, 0.18) 100%
+    ),
+    #ead8cc;
+
+  box-shadow:
+    0 30px 90px rgba(84, 58, 44, 0.10);
+
+  isolation: isolate;
+}
+.flowers-hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(255,255,255,0.52),
+      transparent 28%
+    ),
+
+    radial-gradient(
+      circle at 78% 22%,
+      rgba(216, 181, 168, 0.24),
+      transparent 34%
+    ),
+
+    radial-gradient(
+      circle at 88% 78%,
+      rgba(127,132,101,0.12),
+      transparent 26%
+    );
+
+  pointer-events: none;
+  z-index: 1;
+}
 
   .flowers-hero__copy {
-    padding: 30px 24px 24px;
-  }
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding:
+    clamp(46px, 6vw, 90px)
+    clamp(34px, 5vw, 72px);
+
+  direction: rtl;
+}
 
   .flowers-hero__title {
-    font-size: clamp(3.1rem, 17vw, 5.2rem);
-  }
+  margin: 0;
+
+  max-width: 520px;
+
+  font-size:
+    clamp(4rem, 8vw, 8rem);
+
+  line-height: 0.88;
+
+  letter-spacing: -0.08em;
+
+  color: #332923;
+
+  direction: ltr;
+  text-align: left;
+
+  text-wrap: balance;
+}
 
   .flowers-hero__media {
     min-height: 270px;
@@ -504,9 +889,9 @@
   }
 
   .flowers-occasion-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
 
   .flowers-occasion-card,
   .flowers-occasion-card img {
@@ -520,6 +905,16 @@
   .flowers-cta__image {
     order: -1;
   }
+  .flowers-occasion-card,
+.flowers-occasion-card:nth-child(1),
+.flowers-occasion-card:nth-child(3) {
+  grid-column: auto;
+  min-height: 150px;
+}
+
+.flowers-occasion-card img {
+  min-height: 150px;
+}
 }
 
 @media (max-width: 520px) {

@@ -64,18 +64,32 @@ class AdminImagePreviewMixin:
             )
 
         return format_html(
+                '''
+                <img src="{}" class="zaad-admin-image-preview" />
+                ''',
+                image.url,
+            )
+    @admin.display(description="نمای بزرگ عکس")
+    def large_image_preview(self, obj):
+        image = None
+
+        if obj and hasattr(obj, "cover_image") and obj.cover_image:
+            image = obj.cover_image
+        elif obj and hasattr(obj, "image") and obj.image:
+            image = obj.image
+
+        if not image:
+            return "بدون عکس"
+
+        return format_html(
             '''
-            <img src="{}" style="
-                width:44px !important;
-                height:44px !important;
-                object-fit:cover !important;
-                border-radius:10px !important;
-                display:block !important;
-            " />
+            <a href="{}" target="_blank" class="zaad-admin-large-image-link">
+                <img src="{}" class="zaad-admin-large-image-preview" />
+            </a>
             ''',
             image.url,
+            image.url,
         )
-
 
 class ActiveActionsMixin:
     actions = ("activate_selected", "deactivate_selected")
@@ -183,27 +197,41 @@ class TagAdminForm(forms.ModelForm):
             ),
         }
 
+class PersianImageInput(forms.ClearableFileInput):
+    initial_text = "عکس فعلی"
+    input_text = "تغییر عکس"
+    clear_checkbox_label = "حذف عکس فعلی"
 
 class ProductAdminForm(forms.ModelForm):
     class Meta:
         fields = "__all__"
         widgets = {
-            "tags": forms.CheckboxSelectMultiple,
-            "description": forms.Textarea(
-                attrs={
-                    "rows": 4,
-                    "placeholder": "توضیح کوتاه و احساسی بنویس؛ اگر خالی بماند مشکلی نیست.",
-                }
-            ),
-        }
+                "cover_image": PersianImageInput,
+                "tags": forms.CheckboxSelectMultiple,
+                "description": forms.Textarea(
+                    attrs={
+                        "rows": 4,
+                        "placeholder": "توضیح کوتاه و احساسی بنویس؛ اگر خالی بماند مشکلی نیست.",
+                    }
+                ),
+            }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         if "category" in self.fields:
-            self.fields["category"].queryset = Category.objects.filter(
-                is_active=True
-            ).order_by("section", "sort_order", "name")
+            section_filter = getattr(self, "section_filter", None)
+
+            category_queryset = Category.objects.filter(is_active=True)
+
+            if section_filter:
+                category_queryset = category_queryset.filter(section=section_filter)
+
+            self.fields["category"].queryset = category_queryset.order_by(
+                "section",
+                "sort_order",
+                "name",
+            )
             self.fields["category"].help_text = "نوع فیزیکی محصول را انتخاب کن؛ مثل باکس، دسته گل، کیک تولد، شمع."
 
         if "tags" in self.fields:
@@ -498,50 +526,67 @@ class TagAdmin(ActiveActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
             return obj.products_total
 
         return obj.products.count()
+class SectionCategoryFilter(admin.SimpleListFilter):
+    title = "زیردسته"
+    parameter_name = "category"
+
+    def lookups(self, request, model_admin):
+        queryset = Category.objects.filter(is_active=True)
+
+        if getattr(model_admin, "section_filter", None):
+            queryset = queryset.filter(section=model_admin.section_filter)
+
+        return [
+            (category.pk, category.name)
+            for category in queryset.order_by("sort_order", "name")
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(category_id=self.value())
+
+        return queryset
 
 
 class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
     form = ProductAdminForm
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        form_class = super().get_form(request, obj, change, **kwargs)
+        form_class.section_filter = self.section_filter
+        return form_class
     section_filter = None
 
     list_display = (
-        "image_preview",
-        "name",
-        "section_name",
-        "category",
-        "tags_summary",
-        "price_toman",
-        "pricing_type",
-        "stock_status",
-        "publish_status",
-        "is_active",
-        "featured",
-        "sort_order",
-        "updated_at",
-    )
-
+    "image_preview",
+    "product_code",
+    "name",
+    "price_toman",
+    "stock_status",
+)
     list_filter = (
-        "publish_status",
-        "is_active",
-        "featured",
-        "pricing_type",
-        "stock_status",
-        "category",
-        "tags",
-    )
+    SectionCategoryFilter,
+    "tags",
+    "stock_status",
+    "publish_status",
+    "is_active",
+)
 
     search_fields = (
-        "name",
-        "slug",
-        "description",
-        "category__name",
-        "tags__name",
-    )
+    "product_code",
+    "name",
+    "slug",
+    "category__name",
+    "tags__name",
+    
+)
 
     readonly_fields = (
+        "product_code",
         "created_at",
         "updated_at",
         "image_preview",
+        "large_image_preview",
+        
     )
 
     ordering = (
@@ -549,18 +594,11 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
         "-updated_at",
     )
 
-    list_editable = (
-        "pricing_type",
-        "stock_status",
-        "publish_status",
-        "is_active",
-        "featured",
-        "sort_order",
-    )
+    list_editable = ()
 
     inlines = [ProductImageInline]
 
-    date_hierarchy = "updated_at"
+    # date_hierarchy = "updated_at"
     list_select_related = ("category",)
     list_per_page = 25
     save_on_top = True
@@ -575,6 +613,7 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
                 "fields": (
                     "cover_image",
                     "image_preview",
+                    "large_image_preview",
                     "name",
                 ),
             },
@@ -626,6 +665,7 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
             "تنظیمات پیشرفته",
             {
                 "fields": (
+                    "product_code",
                     "slug",
                     "created_at",
                     "updated_at",
@@ -759,8 +799,8 @@ class FlowerAdmin(BaseProductAdmin):
             {
                 "fields": (
                     "cover_image",
-                    "image_preview",
-                    "name",
+                    "large_image_preview",
+                    "name", 
                 ),
             },
         ),
@@ -829,7 +869,7 @@ class BakeryItemAdmin(BaseProductAdmin):
             {
                 "fields": (
                     "cover_image",
-                    "image_preview",
+                    "large_image_preview",
                     "name",
                 ),
             },
@@ -899,7 +939,7 @@ class GiftItemAdmin(BaseProductAdmin):
             {
                 "fields": (
                     "cover_image",
-                    "image_preview",
+                    "large_image_preview",
                     "name",
                 ),
             },

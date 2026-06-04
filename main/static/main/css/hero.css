@@ -210,3 +210,77 @@
   line-height: 2;
   text-align: center;
 }
+.page-home .hero-slides {
+  min-height: 92vh;
+}
+
+.page-home .hero-slide img {
+  height: 100vh;
+  object-fit: cover;
+
+  object-position: center 20%;
+}
+
+/* =========================
+   Home hero responsive crop fix
+   ========================= */
+
+@media (max-width: 980px) {
+  .page-home .hero-slides {
+    min-height: 78vh;
+  }
+
+  .page-home .hero-slide img {
+    height: 78vh;
+    min-height: 560px;
+    object-fit: cover;
+    object-position: 28% center;
+  }
+}
+
+@media (max-width: 760px) {
+  .page-home .hero-slides {
+    min-height: 72vh;
+  }
+
+  .page-home .hero-slide img {
+    height: 72vh;
+    min-height: 540px;
+    object-fit: cover;
+    object-position: 23% center;
+  }
+
+  .page-home .hero-slider__dots {
+    bottom: 18px;
+  }
+}
+
+@media (max-width: 520px) {
+  .page-home .hero-slides {
+    min-height: 68vh;
+  }
+
+  .page-home .hero-slide img {
+    height: 68vh;
+    min-height: 500px;
+    object-position: 20% center;
+  }
+}
+
+@media (max-width: 760px) {
+  .page-home .hero-slides {
+    min-height: 100vh;
+  }
+
+  .page-home .hero-slide img {
+    width: 100%;
+    height: 100vh;
+    min-height: 720px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .page-home .hero-slider__dots {
+    bottom: 22px;
+  }
+}

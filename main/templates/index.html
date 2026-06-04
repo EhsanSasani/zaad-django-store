@@ -9,18 +9,34 @@
   <div class="hero-slides" id="heroSlides">
     {% for slide in home_hero_slides %}
       <div class="hero-slide {% if forloop.first %}is-active{% endif %}">
-        {% if slide.image_url %}
-          <img src="{{ slide.image_url }}" alt="{{ slide.title|default:'ZAD' }}">
-        {% else %}
-          <img src="{{ slide.image.url }}" alt="{{ slide.title|default:'ZAD' }}">
-        {% endif %}
+
+        <picture>
+          {% if forloop.counter == 1 %}
+            <source media="(max-width:760px)" srcset="{% static 'main/img/hero-mobile-1.jpg' %}">
+          {% elif forloop.counter == 2 %}
+            <source media="(max-width:760px)" srcset="{% static 'main/img/hero-mobile-2.jpg' %}">
+          {% elif forloop.counter == 3 %}
+            <source media="(max-width:760px)" srcset="{% static 'main/img/hero-mobile-3.jpg' %}">
+          {% endif %}
+
+          {% if slide.image_url %}
+            <img src="{{ slide.image_url }}" alt="{{ slide.title|default:'ZAD' }}">
+          {% else %}
+            <img src="{{ slide.image.url }}" alt="{{ slide.title|default:'ZAD' }}">
+          {% endif %}
+        </picture>
 
         <div class="hero-slide__overlay"></div>
         <div class="hero-slide__content hero-slide__content--left-bottom container"></div>
       </div>
+
     {% empty %}
       <div class="hero-slide is-active">
-        <img src="{% static 'main/img/hero-1.jpg' %}" alt="ZAD Concept Store">
+        <picture>
+          <source media="(max-width:760px)" srcset="{% static 'main/img/hero-mobile-1.webp' %}">
+          <img src="{% static 'main/img/hero-1.jpg' %}" alt="ZAD Concept Store">
+        </picture>
+
         <div class="hero-slide__overlay"></div>
         <div class="hero-slide__content hero-slide__content--left-bottom container"></div>
       </div>
@@ -137,13 +153,13 @@
       {% for product in home_same_day_products %}
         <a class="home-sameday-card" href="{{ product.get_absolute_url }}">
           {% if product.cover_image %}
-            <img src="{{ product.cover_image.url }}" alt="{{ product.name }}">
+            <img src="{{ product.cover_image.url }}" alt="{{ product.display_name }}">
           {% else %}
-            <img src="{% static 'main/img/sub-bouquet.jpg' %}" alt="{{ product.name }}">
+            <img src="{% static 'main/img/sub-bouquet.jpg' %}" alt="{{ product.display_name }}">
           {% endif %}
 
           <div class="home-sameday-card__body">
-            <strong>{{ product.name }}</strong>
+            <strong>{{ product.display_name }}</strong>
             <span>←</span>
           </div>
         </a>

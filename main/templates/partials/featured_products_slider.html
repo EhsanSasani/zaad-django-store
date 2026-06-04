@@ -10,7 +10,7 @@
           <a href="{{ product.get_absolute_url }}" class="featured-product-card {% if product.stock_status == 'out_of_stock' %}featured-product-card--out{% endif %}">
             <div class="featured-product-card__image-wrap">
               {% if product.cover_image %}
-                <img src="{{ product.cover_image.url }}" alt="{{ product.name }}" class="featured-product-card__image" loading="lazy">
+                <img src="{{ product.cover_image.url }}" alt="{{  product.display_name  }}" class="featured-product-card__image" loading="lazy">
               {% else %}
                 <div class="featured-product-card__placeholder">No image yet</div>
               {% endif %}
@@ -23,7 +23,7 @@
             </div>
 
             <div class="featured-product-card__body">
-              <h3 class="featured-product-card__title">{{ product.name }}</h3>
+              <h3 class="featured-product-card__title">{{  product.display_name  }}</h3>
               <p class="featured-product-card__price {% if not product.price %}featured-product-card__price--muted{% endif %}">
                 {{ product.display_price }}
               </p>

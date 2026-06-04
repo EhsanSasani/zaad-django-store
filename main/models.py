@@ -218,7 +218,14 @@ class Product(TimeStampedModel):
         DRAFT = "draft", "پیش‌نویس"
         PUBLISHED = "published", "منتشرشده"
 
-    name = models.CharField("نام محصول", max_length=120)
+    name = models.CharField("نام محصول", max_length=120, blank=True)
+    product_code = models.CharField(
+    "کد محصول",
+    unique=True,
+    max_length=40,
+    blank=True,
+    editable=False,
+)
     slug = models.SlugField(
         "اسلاگ",
         max_length=160,
@@ -316,7 +323,7 @@ class Product(TimeStampedModel):
         ]
 
     def __str__(self):
-        return self.name
+        return self.display_name
 
     @property
     def section(self):
@@ -333,6 +340,10 @@ class Product(TimeStampedModel):
     @property
     def is_published(self):
         return self.is_active and self.publish_status == self.PublishStatus.PUBLISHED
+    @property
+    def display_name(self):
+        clean_name = self.name.strip() if self.name else ""
+        return clean_name or self.product_code or f"ZAD-{self.pk or 'NEW'}"
 
     @property
     def is_flower(self):
@@ -390,12 +401,29 @@ class Product(TimeStampedModel):
             self.price = None
             self.price_usd = None
 
-        if not self.slug:
-            self.slug = make_unique_slug(self, self.name)
-        else:
-            self.slug = slugify(self.slug, allow_unicode=True)
+        if self.pk:
+            if not self.product_code:
+                section = self.category.section.upper()[:3] if self.category_id else "PRD"
+                self.product_code = f"{self.pk:04d}"
+
+            if not self.slug:
+                self.slug = make_unique_slug(self, self.name or self.product_code)
+            else:
+                self.slug = slugify(self.slug, allow_unicode=True)
+
+            super().save(*args, **kwargs)
+            return
 
         super().save(*args, **kwargs)
+
+        if not self.product_code:
+            section = self.category.section.upper()[:3] if self.category_id else "PRD"
+            self.product_code = f"ZAD-{section}-{self.pk:04d}"
+
+        if not self.slug:
+            self.slug = make_unique_slug(self, self.name or self.product_code)
+
+        super().save(update_fields=["product_code", "slug"])
 
     def get_absolute_url(self):
         return reverse("product_detail", args=[self.pk, self.slug])
@@ -473,7 +501,7 @@ class ProductImage(TimeStampedModel):
         ]
 
     def __str__(self) -> str:
-        return f"{self.product.name} - image {self.ordering}"
+        return f"{self.product.display_name} - image {self.ordering}"
 
 
 class PublishStatus(models.TextChoices):
@@ -608,7 +636,7 @@ class LeadRequest(TimeStampedModel):
     def __str__(self) -> str:
         base = f"{self.full_name} - {self.get_lead_type_display()}"
         if self.product:
-            return f"{base} - {self.product.name}"
+            return f"{base} - {self.product.display_name}"
         return base
 
 

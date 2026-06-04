@@ -11,7 +11,7 @@
     <article class="item-detail__media">
       <div class="item-detail__image-frame">
         {% if product.cover_image %}
-          <img src="{{ product.cover_image.url }}" alt="{{ product.name }}" width="1100" height="1300">
+          <img src="{{ product.cover_image.url }}" alt="{{  product.display_name  }}" width="1100" height="1300">
         {% else %}
           <div class="item-detail__placeholder">تصویر هنوز اضافه نشده</div>
         {% endif %}
@@ -30,13 +30,13 @@
           <div class="item-detail__thumbs" aria-label="Product gallery">
             {% if product.cover_image %}
               <span class="item-detail__thumb is-active">
-                <img src="{{ product.cover_image.url }}" alt="{{ product.name }}">
+                <img src="{{ product.cover_image.url }}" alt="{{  product.display_name }}">
               </span>
             {% endif %}
 
             {% for image in gallery|slice:":5" %}
               <span class="item-detail__thumb">
-                <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.name }}">
+                <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.display_name }}">
               </span>
             {% endfor %}
           </div>
@@ -47,7 +47,7 @@
     <aside class="item-detail__info">
       <p class="item-detail__eyebrow">ZAAD {{ section_label|default:"Collection" }}</p>
 
-      <h1>{{ product.name }}</h1>
+      <h1>{{  product.display_name  }}</h1>
 
       <div class="item-detail__chips">
         {% if product.category %}
