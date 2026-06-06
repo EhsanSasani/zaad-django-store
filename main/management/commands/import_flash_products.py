@@ -23,7 +23,7 @@ FOLDER_CATEGORY_MAP = {
     "bouquets": "bouquet",
     "box": "box",
     "daste gol": "hand-bouquet",
-    "jarl": "jarl",
+    "jarll": "jarll",
     "stand": "stand",
     "wedding": "wedding",
 }

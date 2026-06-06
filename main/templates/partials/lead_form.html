@@ -1,7 +1,7 @@
 <section class="lead-box" id="lead-form">
   <div class="lead-head">
     <h2>{{ lead_title|default:"Request Guidance" }}</h2>
-    <p>{{ lead_subtitle|default:"Leave a short request and the ZAAD team will coordinate with you." }}</p>
+    <p>{{ lead_subtitle|default:"Leave a short request and the zad team will coordinate with you." }}</p>
   </div>
 
   <form method="post" action="{% url 'lead_request' %}" class="lead-form" data-track-lead-form data-cta-position="{{ cta_position|default:'inline' }}" data-default-lead-type="{{ lead_default_type|default:'flower' }}">

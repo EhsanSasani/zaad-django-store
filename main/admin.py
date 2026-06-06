@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.db.models import Count
 from django.utils import timezone
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from .models import (
     BakeryItem,
@@ -65,7 +66,7 @@ class AdminImagePreviewMixin:
 
         return format_html(
                 '''
-                <img src="{}" class="zaad-admin-image-preview" />
+                <img src="{}" class="zad-admin-image-preview" />
                 ''',
                 image.url,
             )
@@ -83,8 +84,8 @@ class AdminImagePreviewMixin:
 
         return format_html(
             '''
-            <a href="{}" target="_blank" class="zaad-admin-large-image-link">
-                <img src="{}" class="zaad-admin-large-image-preview" />
+            <a href="{}" target="_blank" class="zad-admin-large-image-link">
+                <img src="{}" class="zad-admin-large-image-preview" />
             </a>
             ''',
             image.url,
@@ -438,8 +439,6 @@ class TagAdmin(ActiveActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
         "is_active",
         "sort_order",
         "product_count",
-        "slug",
-        "updated_at",
     )
     list_filter = (
         "is_occasion",
@@ -472,7 +471,7 @@ class TagAdmin(ActiveActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
         (
             "۱. برچسب",
             {
-                "description": "برچسب یعنی مناسبت یا کاربرد محصول؛ مثل تولد، ترحیم، ارسال روز، عاشقانه، یونیک و ...",
+                "description": "برچسب یعنی مناسبت یا کاربرد محصول؛ مثل تولد، عاشقانه، تبریک، ترحیم یا ارسال روز.",
                 "fields": (
                     "cover_image",
                     "image_preview",
@@ -484,7 +483,7 @@ class TagAdmin(ActiveActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
         (
             "۲. کارت مناسبتی",
             {
-                "description": "اگر این گزینه روشن باشد، این برچسب می‌تواند در کارت‌های مناسبتی سایت نمایش داده شود.",
+                "description": "اگر روشن باشد، این برچسب می‌تواند در کارت‌های مناسبتی سایت نمایش داده شود.",
                 "fields": (
                     "is_occasion",
                     "description",
@@ -526,6 +525,56 @@ class TagAdmin(ActiveActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
             return obj.products_total
 
         return obj.products.count()
+    @admin.display(description="کد", ordering="product_code")
+    def product_code_display(self, obj):
+        if not obj.product_code:
+            return "-"
+
+        return format_html(
+            '<strong style="font-size:13px;letter-spacing:.04em;">{}</strong>',
+            to_persian_digits(obj.product_code),
+        )
+
+
+@admin.display(description="نام محصول", ordering="name")
+def name_display(self, obj):
+    if not obj.name:
+        return "-"
+
+    return obj.name
+
+
+@admin.display(description="نوع", ordering="category__name")
+def category_display(self, obj):
+    if not obj.category_id:
+        return "-"
+
+    return obj.category.name
+
+
+@admin.display(description="موجودی", ordering="stock_status")
+def stock_badge(self, obj):
+    label_map = {
+        Product.StockStatus.IN_STOCK: "موجود",
+        Product.StockStatus.OUT_OF_STOCK: "ناموجود",
+        Product.StockStatus.PREORDER: "پیش‌سفارش",
+    }
+
+    return label_map.get(obj.stock_status, "-")
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.annotate(products_total=Count("products"))
+
+    @admin.display(description="تعداد محصول")
+    def product_count(self, obj):
+        if not obj.pk:
+            return 0
+
+        if hasattr(obj, "products_total"):
+            return obj.products_total
+
+        return obj.products.count()
 class SectionCategoryFilter(admin.SimpleListFilter):
     title = "زیردسته"
     parameter_name = "category"
@@ -550,35 +599,31 @@ class SectionCategoryFilter(admin.SimpleListFilter):
 
 class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
     form = ProductAdminForm
-    def get_form(self, request, obj=None, change=False, **kwargs):
-        form_class = super().get_form(request, obj, change, **kwargs)
-        form_class.section_filter = self.section_filter
-        return form_class
     section_filter = None
 
     list_display = (
-    "image_preview",
-    "product_code",
-    "name",
-    "price_toman",
-    "stock_status",
-)
+        "image_preview",
+        "product_code_display",
+        "name_display",
+        "price_toman",
+        "category_display",
+        "stock_badge",
+        "featured",
+    )
+
     list_filter = (
-    SectionCategoryFilter,
-    "tags",
-    "stock_status",
-    "publish_status",
-    "is_active",
-)
+        SectionCategoryFilter,
+        "stock_status",
+        "featured",
+        "is_active",
+    )
 
     search_fields = (
-    "product_code",
-    "name",
-    "slug",
-    "category__name",
-    "tags__name",
-    
-)
+        "product_code",
+        "name",
+        "category__name",
+        "tags__name",
+    )
 
     readonly_fields = (
         "product_code",
@@ -586,7 +631,6 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
         "updated_at",
         "image_preview",
         "large_image_preview",
-        
     )
 
     ordering = (
@@ -595,10 +639,7 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
     )
 
     list_editable = ()
-
     inlines = [ProductImageInline]
-
-    # date_hierarchy = "updated_at"
     list_select_related = ("category",)
     list_per_page = 25
     save_on_top = True
@@ -609,7 +650,7 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
         (
             "۱. عکس و نام محصول",
             {
-                "description": "این بخش مثل کاور پست اینستاگرام است؛ اول عکس و اسم محصول را وارد کن.",
+                "description": "اول عکس اصلی و اسم محصول را وارد کن.",
                 "fields": (
                     "cover_image",
                     "image_preview",
@@ -619,9 +660,9 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
             },
         ),
         (
-            "۲. قیمت و فروش",
+            "۲. قیمت و موجودی",
             {
-                "description": "قیمت را فقط عددی و به تومان وارد کن. اگر قیمت قطعی نیست، نوع قیمت‌گذاری را استعلامی بگذار.",
+                "description": "اگر قیمت قطعی نیست، نوع قیمت‌گذاری را استعلامی بگذار.",
                 "fields": (
                     "pricing_type",
                     "price",
@@ -631,9 +672,9 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
             },
         ),
         (
-            "۳. انتشار در سایت",
+            "۳. نمایش در سایت",
             {
-                "description": "برای نمایش محصول در سایت، منتشرشده و فعال باید روشن باشند.",
+                "description": "برای دیده شدن در سایت، محصول باید فعال و منتشرشده باشد.",
                 "fields": (
                     "publish_status",
                     "is_active",
@@ -643,9 +684,8 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
             },
         ),
         (
-            "۴. زیر‌دسته و برچسب‌ها",
+            "۴. نوع محصول و مناسبت",
             {
-                "description": "زیر‌دسته مشخص می‌کند محصول چیست؛ برچسب‌ها مشخص می‌کنند برای چه مناسبتی است.",
                 "fields": (
                     "category",
                     "tags",
@@ -653,7 +693,7 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
             },
         ),
         (
-            "۵. توضیح کوتاه",
+            "۵. توضیح",
             {
                 "fields": (
                     "description",
@@ -675,31 +715,46 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
         ),
     )
 
-    @admin.display(description="بخش اصلی", ordering="category__section")
-    def section_name(self, obj):
-        if not obj.category_id:
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        form_class = super().get_form(request, obj, change, **kwargs)
+        form_class.section_filter = self.section_filter
+        return form_class
+
+    def get_queryset(self, request):
+        queryset = (
+            super()
+            .get_queryset(request)
+            .select_related("category")
+            .prefetch_related("tags")
+        )
+
+        if self.section_filter:
+            queryset = queryset.filter(category__section=self.section_filter)
+
+        return queryset
+
+    @admin.display(description="کد", ordering="product_code")
+    def product_code_display(self, obj):
+        if not obj.product_code:
             return "-"
-        return obj.category.get_section_display()
 
-    @admin.display(description="برچسب‌ها")
-    def tags_summary(self, obj):
-        tags = list(obj.tags.all()[:4])
+        return format_html(
+            '<strong style="font-size:13px;letter-spacing:.04em;">{}</strong>',
+            to_persian_digits(obj.product_code),
+        )
 
-        if not tags:
+    @admin.display(description="نام محصول", ordering="name")
+    def name_display(self, obj):
+        if not obj.name:
             return "-"
 
-        names = "، ".join(tag.name for tag in tags)
-
-        if obj.tags.count() > 4:
-            names += " ..."
-
-        return names
+        return obj.name
 
     @admin.display(description="قیمت", ordering="price")
     def price_toman(self, obj):
         if obj.pricing_type == Product.PricingType.INQUIRY or not obj.price:
             return format_html(
-                '<span class="zaad-price zaad-price--inquiry">{}</span>',
+                '<span class="zad-price zad-price--inquiry">{}</span>',
                 "استعلام قیمت",
             )
 
@@ -709,9 +764,26 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
             price_parts.append(f"{int(obj.price_usd):,} USD")
 
         return format_html(
-            '<span class="zaad-price">{}</span>',
+            '<span class="zad-price">{}</span>',
             " · ".join(price_parts),
         )
+
+    @admin.display(description="نوع", ordering="category__name")
+    def category_display(self, obj):
+        if not obj.category_id:
+            return "-"
+
+        return obj.category.name
+
+    @admin.display(description="موجودی", ordering="stock_status")
+    def stock_badge(self, obj):
+        label_map = {
+            Product.StockStatus.IN_STOCK: "موجود",
+            Product.StockStatus.OUT_OF_STOCK: "ناموجود",
+            Product.StockStatus.PREORDER: "پیش‌سفارش",
+        }
+
+        return label_map.get(obj.stock_status, "-")
 
     def get_changeform_initial_data(self, request):
         initial = {
@@ -738,19 +810,6 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
 
         return initial
 
-    def get_queryset(self, request):
-        queryset = (
-            super()
-            .get_queryset(request)
-            .select_related("category")
-            .prefetch_related("tags")
-        )
-
-        if self.section_filter:
-            queryset = queryset.filter(category__section=self.section_filter)
-
-        return queryset
-
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "category":
             queryset = Category.objects.filter(is_active=True)
@@ -764,7 +823,10 @@ class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelA
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "tags":
-            kwargs["queryset"] = Tag.objects.filter(is_active=True).order_by("sort_order", "name")
+            kwargs["queryset"] = Tag.objects.filter(is_active=True).order_by(
+                "sort_order",
+                "name",
+            )
 
         return super().formfield_for_manytomany(db_field, request, **kwargs)
 

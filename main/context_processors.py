@@ -4,26 +4,26 @@ from django.conf import settings
 
 
 def site_defaults(request):
-    site_url = getattr(settings, "ZAAD_SITE_URL", "https://zaad.ir").rstrip("/")
-    phone_display = getattr(settings, "ZAAD_PHONE_DISPLAY", "۰۹۱۲ ۱۲۳ ۴۵۶۷")
-    phone_e164 = getattr(settings, "ZAAD_PHONE_E164", "+989121234567")
-    opening_hours_text = getattr(settings, "ZAAD_OPENING_HOURS_TEXT", "Every day, 10:00–22:00")
-    response_time_text = getattr(settings, "ZAAD_RESPONSE_TIME_TEXT", "Average response time: about 15 minutes")
+    site_url = getattr(settings, "zad_SITE_URL", "https://zad.ir").rstrip("/")
+    phone_display = getattr(settings, "zad_PHONE_DISPLAY", "۰۹۱۲ ۱۲۳ ۴۵۶۷")
+    phone_e164 = getattr(settings, "zad_PHONE_E164", "+989121234567")
+    opening_hours_text = getattr(settings, "zad_OPENING_HOURS_TEXT", "Every day, 10:00–22:00")
+    response_time_text = getattr(settings, "zad_RESPONSE_TIME_TEXT", "Average response time: about 15 minutes")
 
-    address_street = getattr(settings, "ZAAD_ADDRESS_STREET", "Sajjad Blvd, No. 22")
-    address_locality = getattr(settings, "ZAAD_ADDRESS_LOCALITY", "Mashhad")
-    address_region = getattr(settings, "ZAAD_ADDRESS_REGION", "Razavi Khorasan")
-    address_country = getattr(settings, "ZAAD_ADDRESS_COUNTRY", "IR")
-    address_postal = getattr(settings, "ZAAD_ADDRESS_POSTAL_CODE", "9183811111")
+    address_street = getattr(settings, "zad_ADDRESS_STREET", "Sajjad Blvd, No. 22")
+    address_locality = getattr(settings, "zad_ADDRESS_LOCALITY", "Mashhad")
+    address_region = getattr(settings, "zad_ADDRESS_REGION", "Razavi Khorasan")
+    address_country = getattr(settings, "zad_ADDRESS_COUNTRY", "IR")
+    address_postal = getattr(settings, "zad_ADDRESS_POSTAL_CODE", "9183811111")
 
-    telegram_url = getattr(settings, "ZAAD_TELEGRAM_URL", "https://t.me/zaad_store")
-    instagram_url = getattr(settings, "ZAAD_INSTAGRAM_URL", "https://instagram.com/zaad.store")
-    email = getattr(settings, "ZAAD_EMAIL", "info@zaadconcept.com")
+    telegram_url = getattr(settings, "zad_TELEGRAM_URL", "https://t.me/zad_store")
+    instagram_url = getattr(settings, "zad_INSTAGRAM_URL", "https://instagram.com/zad.store")
+    email = getattr(settings, "zad_EMAIL", "info@zadconcept.com")
 
     local_business_schema = {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
-        "name": "ZAAD",
+        "name": "zad",
         "url": site_url,
         "telephone": phone_e164,
         "address": {

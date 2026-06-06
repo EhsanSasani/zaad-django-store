@@ -123,27 +123,27 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --- اطلاعات پایه کسب‌وکار برای SEO/CTA ---
-ZAAD_SITE_URL = os.getenv("ZAAD_SITE_URL", "https://zaad.ir")
-ZAAD_PHONE_DISPLAY = os.getenv("ZAAD_PHONE_DISPLAY", "۰۹۱۲ ۱۲۳ ۴۵۶۷")
-ZAAD_PHONE_E164 = os.getenv("ZAAD_PHONE_E164", "+989121234567")
-ZAAD_TELEGRAM_URL = os.getenv("ZAAD_TELEGRAM_URL", "https://t.me/zaad_store")
-ZAAD_EMAIL = os.getenv("ZAAD_EMAIL", "info@zaadconcept.com")
-ZAAD_INSTAGRAM_URL = os.getenv("ZAAD_INSTAGRAM_URL", "https://instagram.com/zaad.store")
-ZAAD_OPENING_HOURS_TEXT = os.getenv("ZAAD_OPENING_HOURS_TEXT", "هر روز ۱۰:۰۰ تا ۲۲:۰۰")
-ZAAD_RESPONSE_TIME_TEXT = os.getenv("ZAAD_RESPONSE_TIME_TEXT", "زمان متوسط پاسخ‌گویی: حدود ۱۵ دقیقه")
-ZAAD_ADDRESS_STREET = os.getenv("ZAAD_ADDRESS_STREET", "بلوار سجاد، پلاک ۲۲")
-ZAAD_ADDRESS_LOCALITY = os.getenv("ZAAD_ADDRESS_LOCALITY", "Mashhad")
-ZAAD_ADDRESS_REGION = os.getenv("ZAAD_ADDRESS_REGION", "Razavi Khorasan")
-ZAAD_ADDRESS_COUNTRY = os.getenv("ZAAD_ADDRESS_COUNTRY", "IR")
-ZAAD_ADDRESS_POSTAL_CODE = os.getenv("ZAAD_ADDRESS_POSTAL_CODE", "9183811111")
+zad_SITE_URL = os.getenv("zad_SITE_URL", "https://zad.ir")
+zad_PHONE_DISPLAY = os.getenv("zad_PHONE_DISPLAY", "۰۹۱۲ ۱۲۳ ۴۵۶۷")
+zad_PHONE_E164 = os.getenv("zad_PHONE_E164", "+989121234567")
+zad_TELEGRAM_URL = os.getenv("zad_TELEGRAM_URL", "https://t.me/zad_store")
+zad_EMAIL = os.getenv("zad_EMAIL", "info@zadconcept.com")
+zad_INSTAGRAM_URL = os.getenv("zad_INSTAGRAM_URL", "https://instagram.com/zad.store")
+zad_OPENING_HOURS_TEXT = os.getenv("zad_OPENING_HOURS_TEXT", "هر روز ۱۰:۰۰ تا ۲۲:۰۰")
+zad_RESPONSE_TIME_TEXT = os.getenv("zad_RESPONSE_TIME_TEXT", "زمان متوسط پاسخ‌گویی: حدود ۱۵ دقیقه")
+zad_ADDRESS_STREET = os.getenv("zad_ADDRESS_STREET", "بلوار سجاد، پلاک ۲۲")
+zad_ADDRESS_LOCALITY = os.getenv("zad_ADDRESS_LOCALITY", "Mashhad")
+zad_ADDRESS_REGION = os.getenv("zad_ADDRESS_REGION", "Razavi Khorasan")
+zad_ADDRESS_COUNTRY = os.getenv("zad_ADDRESS_COUNTRY", "IR")
+zad_ADDRESS_POSTAL_CODE = os.getenv("zad_ADDRESS_POSTAL_CODE", "9183811111")
 
 
 JAZZMIN_SETTINGS = {
-    "site_title": "ZAAD Admin",
-    "site_header": "ZAAD",
-    "site_brand": "ZAAD Admin",
+    "site_title": "zad Admin",
+    "site_header": "zad",
+    "site_brand": "zad Admin",
     "welcome_sign": "خوش آمدید به پنل مدیریت زاد",
-    "copyright": "ZAAD Concept Store",
+    "copyright": "zad Concept Store",
     "search_model": [
         "main.Product",
         

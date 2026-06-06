@@ -15,31 +15,27 @@ FLOWER_CATEGORY_SLUGS = (
     "box",
     "bouquet",
     "stand",
-    "bridal-car",
-    "bridal-bouquet",
-    "jar",
+    "jarll",
+    "wedding",
     "plants",
 )
 
 FLOWER_WEDDING_CATEGORY_SLUGS = (
-    "bridal-car",
-    "bridal-bouquet",
+    "wedding",
 )
 
 FLOWER_OCCASION_TAG_SLUGS = (
-    "tavalod",
-    "asheghane",
-    "unique",
-    "tabrik",
-    "mazerat-khahi",
-    "tarhim",
-    "khastegari",
-    "bale-boroon",
-    "bedoone-monasebat",
+    "birthday",
+    "romantic",
+    "congratulation",
+    "apology",
+    "condolence",
+    "proposal",
+    "engagement",
+    "no-occasion",
 )
 
-SAME_DAY_TAG_SLUG = "ersale-rooz"
-
+SAME_DAY_TAG_SLUG = "same-day"
 
 class TimeStampedModel(models.Model):
     created_at = models.DateTimeField("زمان ایجاد", auto_now_add=True)
@@ -343,7 +339,7 @@ class Product(TimeStampedModel):
     @property
     def display_name(self):
         clean_name = self.name.strip() if self.name else ""
-        return clean_name or self.product_code or f"ZAD-{self.pk or 'NEW'}"
+        return clean_name or self.product_code or f"{self.pk or 'NEW'}"
 
     @property
     def is_flower(self):
@@ -403,7 +399,6 @@ class Product(TimeStampedModel):
 
         if self.pk:
             if not self.product_code:
-                section = self.category.section.upper()[:3] if self.category_id else "PRD"
                 self.product_code = f"{self.pk:04d}"
 
             if not self.slug:
@@ -416,17 +411,20 @@ class Product(TimeStampedModel):
 
         super().save(*args, **kwargs)
 
+        update_fields = []
+
         if not self.product_code:
-            section = self.category.section.upper()[:3] if self.category_id else "PRD"
-            self.product_code = f"ZAD-{section}-{self.pk:04d}"
+            self.product_code = f"{self.pk:04d}"
+            update_fields.append("product_code")
 
         if not self.slug:
             self.slug = make_unique_slug(self, self.name or self.product_code)
+            update_fields.append("slug")
 
-        super().save(update_fields=["product_code", "slug"])
-
-    def get_absolute_url(self):
-        return reverse("product_detail", args=[self.pk, self.slug])
+        if update_fields:
+            super().save(update_fields=update_fields)
+        def get_absolute_url(self):
+            return reverse("product_detail", args=[self.pk, self.slug])
 
 
 class FlowerManager(models.Manager):

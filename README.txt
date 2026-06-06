@@ -1,9 +1,9 @@
-ZAAD – Django Catalog Website
+zad – Django Catalog Website
 =================================
 
 Overview
 --------
-ZAAD is a catalog-based website built with Django.
+zad is a catalog-based website built with Django.
 This version is focused on product presentation and daily admin updates.
 There is no shopping cart, authentication system, or payment integration.
 The admin panel is the primary interface for managing content.
@@ -111,7 +111,7 @@ Example .env:
 SECRET_KEY=your-secret-key
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
-SITE_NAME=ZAAD
+SITE_NAME=zad
 CONTACT_EMAIL=info@example.com
 
 

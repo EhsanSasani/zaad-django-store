@@ -289,7 +289,7 @@ a.button:hover {
     font-weight: 900;
 }
 
-.zaad-admin-preview {
+.zad-admin-preview {
     display: block;
     width: 78px;
     height: 78px;
@@ -300,19 +300,19 @@ a.button:hover {
     background: #f8f4ef;
 }
 
-.change-form .zaad-admin-preview {
+.change-form .zad-admin-preview {
     width: 190px;
     height: 190px;
     border-radius: 32px;
 }
 
-.inline-group .zaad-admin-preview {
+.inline-group .zad-admin-preview {
     width: 150px;
     height: 150px;
     border-radius: 28px;
 }
 
-.zaad-empty-image {
+.zad-empty-image {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -407,13 +407,13 @@ a:hover {
         border-radius: 18px;
     }
 
-    .change-form .zaad-admin-preview {
+    .change-form .zad-admin-preview {
         width: 140px;
         height: 140px;
         border-radius: 24px;
     }
 }
-.zaad-price {
+.zad-price {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -426,12 +426,12 @@ a:hover {
     white-space: nowrap;
 }
 
-.zaad-price--inquiry {
+.zad-price--inquiry {
     background: rgba(47, 73, 109, 0.10);
     color: #2f496d;
 }
 
-.zaad-admin-preview {
+.zad-admin-preview {
     display: block;
     width: 78px;
     height: 78px;
@@ -442,13 +442,13 @@ a:hover {
     background: #f8f4ef;
 }
 
-.change-form .zaad-admin-preview {
+.change-form .zad-admin-preview {
     width: 190px;
     height: 190px;
     border-radius: 32px;
 }
 
-.zaad-admin-hero-preview {
+.zad-admin-hero-preview {
     display: block;
     width: 150px;
     height: 86px;
@@ -458,7 +458,7 @@ a:hover {
     box-shadow: 0 12px 28px rgba(47, 73, 109, 0.13);
 }
 
-.zaad-admin-mobile-preview {
+.zad-admin-mobile-preview {
     display: block;
     width: 86px;
     height: 150px;
@@ -468,7 +468,7 @@ a:hover {
     box-shadow: 0 12px 28px rgba(47, 73, 109, 0.13);
 }
 
-.zaad-empty-image {
+.zad-empty-image {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -489,7 +489,7 @@ a:hover {
    ========================= */
 
 /* داخل لیست محصولات */
-.zaad-admin-preview {
+.zad-admin-preview {
     width: 96px !important;
     height: 120px !important;
     object-fit: cover !important;
@@ -497,7 +497,7 @@ a:hover {
 }
 
 /* داخل فرم افزودن/ویرایش محصول */
-.change-form .zaad-admin-preview {
+.change-form .zad-admin-preview {
     width: 220px !important;
     height: 280px !important;
     object-fit: cover !important;
@@ -505,7 +505,7 @@ a:hover {
 }
 
 /* عکس‌های گالری داخل محصول */
-.inline-group .zaad-admin-preview {
+.inline-group .zad-admin-preview {
     width: 180px !important;
     height: 220px !important;
     object-fit: cover !important;
@@ -513,7 +513,7 @@ a:hover {
 }
 
 /* هیروها چون افقی‌اند */
-.zaad-admin-hero-preview {
+.zad-admin-hero-preview {
     width: 220px !important;
     height: 120px !important;
     object-fit: cover !important;
@@ -521,7 +521,7 @@ a:hover {
 }
 
 /* تصویر موبایل هیرو */
-.zaad-admin-mobile-preview {
+.zad-admin-mobile-preview {
     width: 110px !important;
     height: 180px !important;
     object-fit: cover !important;
@@ -529,7 +529,7 @@ a:hover {
 }
 
 /* وقتی عکس ندارد */
-.zaad-empty-image {
+.zad-empty-image {
     min-width: 96px !important;
     min-height: 120px !important;
     border-radius: 18px !important;

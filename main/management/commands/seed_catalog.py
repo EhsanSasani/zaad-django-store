@@ -4,7 +4,7 @@ from main.models import Category, Product, Tag
 
 
 class Command(BaseCommand):
-    help = "Seed/sync ZAAD catalog categories and tags safely."
+    help = "Seed/sync zad catalog categories and tags safely."
 
     FLOWER_CATEGORIES = [
         {
@@ -32,18 +32,18 @@ class Command(BaseCommand):
         },
         {
             "name": "ماشین عروس",
-            "slug": "bridal-car",
+            "slug": "wedding",
             "sort_order": 50,
-            "legacy_slugs": ["bridal-car-decoration"],
+            "legacy_slugs": ["wedding-decoration"],
         },
         {
             "name": "دسته گل عروس",
-            "slug": "bridal-bouquet",
+            "slug": "wedding",
             "sort_order": 60,
         },
         {
             "name": "جار گل",
-            "slug": "jar",
+            "slug": "jarl",
             "sort_order": 70,
         },
         {
@@ -90,13 +90,13 @@ class Command(BaseCommand):
     TAGS = [
         {
             "name": "تولد",
-            "slug": "tavalod",
+            "slug": "birthday",
             "sort_order": 10,
             "legacy_slugs": ["birthday"],
         },
         {
             "name": "عاشقانه",
-            "slug": "asheghane",
+            "slug": "romantic",
             "sort_order": 20,
             "legacy_slugs": ["romantic"],
         },
@@ -109,44 +109,44 @@ class Command(BaseCommand):
         },
         {
             "name": "تبریک",
-            "slug": "tabrik",
+            "slug": "congratulation",
             "sort_order": 40,
             "legacy_slugs": ["congratulations"],
         },
         {
             "name": "معذرت خواهی",
-            "slug": "mazerat-khahi",
+            "slug": "apology",
             "sort_order": 50,
             "legacy_slugs": ["apology"],
             "legacy_names": ["عذرخواهی"],
         },
         {
             "name": "ترحیم",
-            "slug": "tarhim",
+            "slug": "condolence",
             "sort_order": 60,
             "legacy_slugs": ["condolence", "sympathy"],
             "legacy_names": ["تسلیت"],
         },
         {
             "name": "خواستگاری",
-            "slug": "khastegari",
+            "slug": "proposal",
             "sort_order": 70,
             "legacy_slugs": ["proposal"],
         },
         {
             "name": "بله برون",
-            "slug": "bale-boroon",
+            "slug": "engagement",
             "sort_order": 80,
         },
         {
             "name": "بدون مناسبت",
-            "slug": "bedoone-monasebat",
+            "slug": "no-occasion",
             "sort_order": 90,
             "legacy_slugs": ["no-occasion"],
         },
         {
             "name": "ارسال روز",
-            "slug": "ersale-rooz",
+            "slug": "same-day",
             "sort_order": 100,
             "is_occasion": False,
             "legacy_slugs": ["same-day"],

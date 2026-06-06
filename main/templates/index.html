@@ -143,42 +143,86 @@
 <section class="home-sameday-section section-block">
   <div class="container">
     <div class="home-sameday-head">
+      <i class="bi bi-truck"></i>
       <span>Same Day Delivery</span>
       <h2>ارسال فوری برای امروز</h2>
-      <p>انتخاب‌هایی آماده برای سفارش‌های همین امروز</p>
+      <p>سفارش‌های ثبت‌شده در شهر مشهد، در همان روز با عشق به دست شما می‌رسند.</p>
       <div class="home-sameday-head__line"></div>
     </div>
 
     <div class="home-sameday-row" data-sameday-slider>
       {% for product in home_same_day_products %}
         <a class="home-sameday-card" href="{{ product.get_absolute_url }}">
-          {% if product.cover_image %}
-            <img src="{{ product.cover_image.url }}" alt="{{ product.display_name }}">
-          {% else %}
-            <img src="{% static 'main/img/sub-bouquet.jpg' %}" alt="{{ product.display_name }}">
-          {% endif %}
+          <div class="home-sameday-card__media">
+            {% if product.cover_image %}
+              <img src="{{ product.cover_image.url }}" alt="{{ product.display_name }}">
+            {% else %}
+              <img src="{% static 'main/img/sub-bouquet.jpg' %}" alt="{{ product.display_name }}">
+            {% endif %}
+
+            <span class="home-sameday-card__badge">
+              ارسال امروز
+              <i class="bi bi-lightning-charge-fill"></i>
+            </span>
+          </div>
 
           <div class="home-sameday-card__body">
             <strong>{{ product.display_name }}</strong>
-            <span>←</span>
+            <span class="home-sameday-card__price">{{ product.display_price }}</span>
+            <em>مشاهده محصول ←</em>
           </div>
         </a>
       {% empty %}
         <a class="home-sameday-card" href="{% url 'flowers' %}">
-          <img src="{% static 'main/img/sub-bouquet.jpg' %}" alt="ارسال فوری">
+          <div class="home-sameday-card__media">
+            <img src="{% static 'main/img/sub-bouquet.jpg' %}" alt="ارسال فوری">
+            <span class="home-sameday-card__badge">
+              ارسال امروز
+              <i class="bi bi-lightning-charge-fill"></i>
+            </span>
+          </div>
+
           <div class="home-sameday-card__body">
             <strong>آماده ارسال امروز</strong>
-            <span>←</span>
+            <span class="home-sameday-card__price">استعلام قیمت</span>
+            <em>مشاهده محصول ←</em>
           </div>
         </a>
       {% endfor %}
     </div>
 
+    <div class="home-sameday-benefits">
+      <div>
+        <i class="bi bi-geo-alt"></i>
+        <strong>ارسال در شهر مشهد</strong>
+        <span>تحویل در همان روز</span>
+      </div>
+
+      <div>
+        <i class="bi bi-clock"></i>
+        <strong>سفارش تا ساعت ۱۸</strong>
+        <span>تحویل در همان روز</span>
+      </div>
+
+      <div>
+        <i class="bi bi-flower1"></i>
+        <strong>گل‌های تازه و باکیفیت</strong>
+        <span>انتخاب روزانه از بهترین‌ها</span>
+      </div>
+
+      <div>
+        <i class="bi bi-shield-check"></i>
+        <strong>ضمانت کیفیت</strong>
+        <span>رضایت شما اولویت ماست</span>
+      </div>
+    </div>
+
     <div class="home-sameday-more">
       <a href="{% url 'occasion_detail' 'same-day' %}">
-        مشاهده آماده‌های امروز
+        مشاهده همه محصولات ارسال امروز
         <span>←</span>
       </a>
+      <small>تعداد محدود در هر روز</small>
     </div>
   </div>
 </section>
@@ -288,15 +332,15 @@
         </div>
       </a>
 
-      <a class="home-occasion-card" href="{% url 'occasion_detail' 'special' %}">
+      <a class="home-occasion-card" href="{% url 'occasion_detail' 'no-occasion' %}">
         <div class="home-occasion-card__media">
           <img src="{% static 'main/img/occasions/special.jpg' %}" alt="خاص">
         </div>
 
         <div class="home-occasion-card__body">
           <div>
-            <strong>خاص</strong>
-            <span>Special</span>
+            <strong>بدون مناسبت</strong>
+            <span>No Occasion</span>
           </div>
           <i>←</i>
         </div>
@@ -333,7 +377,7 @@
         <div class="home-experience__divider"></div>
 
         <p>
-          در ورکشاپ‌های زاد، با لمس گل‌ها و دیدن دنیایی جدیدی از هنر گل‌آرایی را تجربه کنید.
+         در ورکشاپ‌های زاد، گل‌آرایی را از نزدیک تجربه می‌کنید؛ ساده، کاربردی و در فضایی صمیمی.
         </p>
 
         <a class="home-experience__btn" href="{% url 'events' %}">

@@ -37,9 +37,9 @@ SECTION_CONTENT = {
         "title": "Flowers",
         "nav": "flowers",
         "lead_type": "flower",
-        "meta_title": "Luxury Flowers in Mashhad | ZAAD",
+        "meta_title": "Luxury Flowers in Mashhad | zad",
         "meta_description": "Fresh flowers, premium styling, and fast coordination in Mashhad.",
-        "intro": "Premium ZAAD flowers with careful styling and fast coordination in Mashhad.",
+        "intro": "Premium zad flowers with careful styling and fast coordination in Mashhad.",
         "faq": [
             {
                 "question": "Do you offer same-day flower delivery in Mashhad?",
@@ -47,7 +47,7 @@ SECTION_CONTENT = {
             },
             {
                 "question": "Can I check today’s availability before ordering?",
-                "answer": "Yes. Call ZAAD or message us on Telegram to check available pieces and similar options.",
+                "answer": "Yes. Call zad or message us on Telegram to check available pieces and similar options.",
             },
             {
                 "question": "What should I choose for formal or sympathy occasions?",
@@ -63,9 +63,9 @@ SECTION_CONTENT = {
         "title": "Bakery",
         "nav": "bakery",
         "lead_type": "bakery",
-        "meta_title": "Premium Bakery Orders in Mashhad | ZAAD",
-        "meta_description": "Premium ZAAD bakery pieces for gifting, hosting, and daily coordination by phone or Telegram.",
-        "intro": "ZAAD bakery pieces are made for hosting, gifting, and warm daily details.",
+        "meta_title": "Premium Bakery Orders in Mashhad | zad",
+        "meta_description": "Premium zad bakery pieces for gifting, hosting, and daily coordination by phone or Telegram.",
+        "intro": "zad bakery pieces are made for hosting, gifting, and warm daily details.",
         "faq": [
             {
                 "question": "Can I order bakery pieces for today?",
@@ -80,7 +80,7 @@ SECTION_CONTENT = {
                 "answer": "For larger or corporate orders, use the request form or call directly.",
             },
             {
-                "question": "How fast does ZAAD respond?",
+                "question": "How fast does zad respond?",
                 "answer": "During working hours, the first response is usually quick.",
             },
         ],
@@ -89,9 +89,9 @@ SECTION_CONTENT = {
         "title": "Gifts",
         "nav": "gifts",
         "lead_type": "gift",
-        "meta_title": "Curated Gifts & Concept Store | ZAAD Mashhad",
+        "meta_title": "Curated Gifts & Concept Store | zad Mashhad",
         "meta_description": "Minimal curated gifts, concept pieces, and gift coordination in Mashhad.",
-        "intro": "Curated ZAAD gifts for thoughtful, minimal, and premium choices.",
+        "intro": "Curated zad gifts for thoughtful, minimal, and premium choices.",
         "faq": [],
     },
 }
@@ -130,23 +130,23 @@ CATEGORY_CONTENT_OVERRIDES = {
         "image": "main/img/sub-stand.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
-    "bridal-car": {
+    "wedding": {
         "label": "ماشین عروس",
         "meta_title": "گل‌آرایی ماشین عروس در مشهد | ZAD",
         "meta_description": "گل‌آرایی ماشین عروس با سبک ظریف و هماهنگ با فضای مراسم.",
         "intro": "جزئیات گل‌آرایی برای شروعی نرم و به‌یادماندنی.",
-        "image": "main/img/sub-bridal-car.jpg",
+        "image": "main/img/sub-wedding.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
-    "bridal-bouquet": {
+    "wedding": {
         "label": "دسته گل عروس",
         "meta_title": "دسته گل عروس در مشهد | ZAD",
         "meta_description": "دسته گل عروس زاد با چیدمان لطیف، مینیمال و هماهنگ با مراسم.",
         "intro": "دسته‌گلی لطیف برای یکی از مهم‌ترین لحظه‌ها.",
-        "image": "main/img/sub-bridal-bouquet.jpg",
+        "image": "main/img/sub-wedding.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
-    "jar": {
+    "jarl": {
         "label": "جار گل",
         "meta_title": "جار گل در مشهد | ZAD",
         "meta_description": "جار گل‌های زاد برای دکور، هدیه‌های خاص و انتخاب‌های متفاوت.",
@@ -191,13 +191,13 @@ CATEGORY_CONTENT_OVERRIDES = {
 CATEGORY_SLUG_ALIASES = {
     "plant": "plants",
     "wreath": "stand",
-    "bridal-car-decoration": "bridal-car",
+    "wedding-decoration": "wedding",
 }
 
 
 PAGE_HERO_CONTENT = {
     "occasions": {
-        "kicker": "ZAAD Occasions",
+        "kicker": "zad Occasions",
         "title": "Choose the Mood",
         "text": "Soft choices for the feeling you want to send.",
         "image": "main/img/hero-occasions.jpg",
@@ -209,68 +209,68 @@ PAGE_HERO_CONTENT = {
         "image": "main/img/hero-flowers.jpg",
     },
     "bakery": {
-        "kicker": "ZAAD Bakery",
+        "kicker": "zad Bakery",
         "title": "Sweet Little Rituals",
         "text": "Small sweet pieces for warmer celebrations.",
         "image": "main/img/hero-bakery.jpg",
     },
     "gifts": {
-        "kicker": "ZAAD Gifts",
+        "kicker": "zad Gifts",
         "title": "Chosen With Care",
         "text": "Little gifts with warmth, softness and meaning.",
         "image": "main/img/hero-gifts.jpg",
     },
     "subcategory": {
-        "kicker": "ZAAD Collection",
+        "kicker": "zad Collection",
         "title": "Curated Softly",
         "text": "A smaller selection for a more exact feeling.",
         "image": "main/img/hero-subcategory.jpg",
     },
     "item": {
-        "kicker": "ZAAD Item",
+        "kicker": "zad Item",
         "title": "",
         "text": "",
         "image": "main/img/hero-item.jpg",
     },
     "contact": {
-        "kicker": "Contact ZAAD",
+        "kicker": "Contact zad",
         "title": "Let’s Arrange It",
         "text": "For availability, timing and order details.",
         "image": "main/img/hero-contact.jpg",
     },
     "visit": {
-        "kicker": "Visit ZAAD",
+        "kicker": "Visit zad",
         "title": "Come Closer",
         "text": "See the details and choose with more ease.",
         "image": "main/img/hero-visit.jpg",
     },
     "events": {
-        "kicker": "ZAAD Events",
+        "kicker": "zad Events",
         "title": "Gathered With Feeling",
-        "text": "Workshops, gatherings and soft ZAAD experiences.",
+        "text": "Workshops, gatherings and soft zad experiences.",
         "image": "main/img/hero-events.jpg",
     },
     "blog": {
-        "kicker": "ZAAD Journal",
+        "kicker": "zad Journal",
         "title": "Soft Notes",
         "text": "Small ideas for flowers, gifts and moments.",
         "image": "main/img/hero-blog.jpg",
     },
     "faq": {
-        "kicker": "ZAAD Help",
+        "kicker": "zad Help",
         "title": "Little Answers",
         "text": "Simple answers before you call or order.",
         "image": "main/img/hero-faq.jpg",
     },
     "mashhad": {
-        "kicker": "ZAAD Mashhad",
+        "kicker": "zad Mashhad",
         "title": "Made for Mashhad",
         "text": "Fast coordination for special orders in Mashhad.",
         "image": "main/img/hero-mashhad.jpg",
     },
     "about": {
-        "kicker": "ZAAD Concept Store",
-        "title": "The Story of ZAAD",
+        "kicker": "zad Concept Store",
+        "title": "The Story of zad",
         "text": "A closer look at the care behind the brand.",
         "image": "main/img/hero-about.jpg",
     },
@@ -279,8 +279,8 @@ PAGE_HERO_CONTENT = {
 
 HOME_FAQ = [
     {
-        "question": "What can I order from ZAAD?",
-        "answer": "Flowers, bakery pieces, curated gifts, and event coordination are available through ZAAD.",
+        "question": "What can I order from zad?",
+        "answer": "Flowers, bakery pieces, curated gifts, and event coordination are available through zad.",
     },
     {
         "question": "Do you offer same-day delivery in Mashhad?",
@@ -288,7 +288,7 @@ HOME_FAQ = [
     },
     {
         "question": "What is the fastest way to coordinate an order?",
-        "answer": "Calling ZAAD is the fastest path. Telegram is available as the second option.",
+        "answer": "Calling zad is the fastest path. Telegram is available as the second option.",
     },
     {
         "question": "How do I start an event order?",
@@ -303,8 +303,8 @@ VISIT_FAQ = [
         "answer": "For special orders, it is better to call before visiting so the team can prepare faster.",
     },
     {
-        "question": "What are ZAAD’s opening hours?",
-        "answer": "ZAAD is available every day from 10:00 to 22:00 unless announced otherwise.",
+        "question": "What are zad’s opening hours?",
+        "answer": "zad is available every day from 10:00 to 22:00 unless announced otherwise.",
     },
     {
         "question": "What can I do during an in-person visit?",
@@ -312,19 +312,19 @@ VISIT_FAQ = [
     },
     {
         "question": "Can I choose flowers and gifts together?",
-        "answer": "Yes. ZAAD can suggest flower and gift combinations for the same occasion.",
+        "answer": "Yes. zad can suggest flower and gift combinations for the same occasion.",
     },
 ]
 
 
 CONTACT_FAQ = [
     {
-        "question": "How fast does ZAAD respond?",
+        "question": "How fast does zad respond?",
         "answer": "During working hours, the first response is usually quick.",
     },
     {
         "question": "How can I place an order?",
-        "answer": "Call ZAAD, message on Telegram, or submit the short request form.",
+        "answer": "Call zad, message on Telegram, or submit the short request form.",
     },
     {
         "question": "What information is needed for urgent orders?",
@@ -393,7 +393,7 @@ def _with_home(items):
 
 
 def _telegram_href():
-    return getattr(settings, "ZAAD_TELEGRAM_URL", "https://t.me/zaad_store")
+    return getattr(settings, "zad_TELEGRAM_URL", "https://t.me/zad_store")
 
 
 def _item_telegram_href(request, product):
@@ -425,7 +425,7 @@ def _product_jsonld(request, product):
         "@context": "https://schema.org",
         "@type": "Product",
         "name": product.name,
-        "brand": {"@type": "Brand", "name": "ZAAD"},
+        "brand": {"@type": "Brand", "name": "zad"},
         "offers": offer,
     }
 
@@ -448,7 +448,7 @@ def _event_to_iso(dt):
 
 def _hero_defaults(meta_title, meta_description):
     return {
-        "page_hero_kicker": "ZAAD",
+        "page_hero_kicker": "zad",
         "page_hero_title": meta_title,
         "page_hero_text": meta_description,
         "page_hero_image": "main/img/hero-2.jpg",
@@ -459,9 +459,9 @@ def _hero_from_key(key, *, title=None, text=None, image=None):
     hero = PAGE_HERO_CONTENT.get(key, {})
 
     return {
-        "page_hero_kicker": hero.get("kicker", "ZAAD"),
-        "page_hero_title": title or hero.get("title", "ZAAD"),
-        "page_hero_text": text or hero.get("text", "A thoughtful ZAAD selection for flowers, gifts, and special orders"),
+        "page_hero_kicker": hero.get("kicker", "zad"),
+        "page_hero_title": title or hero.get("title", "zad"),
+        "page_hero_text": text or hero.get("text", "A thoughtful zad selection for flowers, gifts, and special orders"),
         "page_hero_image": image or hero.get("image", "main/img/hero-2.jpg"),
     }
 
@@ -477,7 +477,7 @@ def _get_active_home_hero_slides():
     return [
         {
             "title": "Flowers, Bakery & Gifts in Mashhad",
-            "kicker": "ZAAD Concept Store",
+            "kicker": "zad Concept Store",
             "description": "Premium flowers, bakery, and gifts with fast coordination in Mashhad.",
             "image_url": settings.STATIC_URL + "main/img/hero-1.jpg",
             "primary_button_text": "Call Now",
@@ -488,7 +488,7 @@ def _get_active_home_hero_slides():
         {
             "title": "Styled Details for Special Moments",
             "kicker": "Minimal & Premium",
-            "description": "A polished ZAAD experience across flowers, bakery, and gifts.",
+            "description": "A polished zad experience across flowers, bakery, and gifts.",
             "image_url": settings.STATIC_URL + "main/img/hero-2.jpg",
             "primary_button_text": "",
             "primary_button_url": "",
@@ -497,7 +497,7 @@ def _get_active_home_hero_slides():
         },
         {
             "title": "Fast Coordination in Mashhad",
-            "kicker": "ZAAD Mashhad",
+            "kicker": "zad Mashhad",
             "description": "Quick coordination for urgent orders and daily selections.",
             "image_url": settings.STATIC_URL + "main/img/hero-3.jpg",
             "primary_button_text": "",
@@ -521,7 +521,7 @@ def _get_site_hero(target_page, target_slug=""):
 
     if hero:
         return {
-            "page_hero_kicker": hero.kicker or "ZAAD",
+            "page_hero_kicker": hero.kicker or "zad",
             "page_hero_title": hero.title,
             "page_hero_text": hero.description,
             "page_hero_image": hero.image.url if hero.image else "main/img/hero-2.jpg",
@@ -540,7 +540,7 @@ def _get_site_hero(target_page, target_slug=""):
 
         if fallback:
             return {
-                "page_hero_kicker": fallback.kicker or "ZAAD",
+                "page_hero_kicker": fallback.kicker or "zad",
                 "page_hero_title": fallback.title,
                 "page_hero_text": fallback.description,
                 "page_hero_image": fallback.image.url if fallback.image else "main/img/hero-2.jpg",
@@ -617,11 +617,11 @@ def _category_content(category):
 
     return {
         "label": override.get("label") or category.name,
-        "meta_title": override.get("meta_title") or f"{category.name} | ZAAD",
+        "meta_title": override.get("meta_title") or f"{category.name} | zad",
         "meta_description": (
             override.get("meta_description")
             or category.description
-            or f"Explore {category.name} products at ZAAD."
+            or f"Explore {category.name} products at zad."
         ),
         "intro": override.get("intro") or category.description or "A curated selection for this mood.",
         "image": override.get("image") or "main/img/sub-bouquet.jpg",
@@ -642,93 +642,55 @@ SECTION_CATEGORY_ROUTE_NAMES = {
 }
 
 OCCASION_CARD_CONTENT = {
-    "tavalod": {
-        "title": "تولد",
-        "hero_title": "گل تولد",
-        "intro": "روشن، گرم و مناسب تبریک‌های صمیمی.",
-        "image": "main/img/occasions/birthday.jpg",
-    },
-    "asheghane": {
-        "title": "عاشقانه",
-        "hero_title": "گل عاشقانه",
-        "intro": "برای حرف‌هایی که با گل نرم‌تر گفته می‌شوند.",
-        "image": "main/img/occasions/romantic.jpg",
-    },
-    "unique": {
-        "title": "یونیک",
-        "hero_title": "گل‌های یونیک",
-        "intro": "برای وقتی که انتخاب معمولی کافی نیست.",
-        "image": "main/img/occasions/special.jpg",
-    },
-    "tabrik": {
-        "title": "تبریک",
-        "hero_title": "گل تبریک",
-        "intro": "برای شروع‌ها، موفقیت‌ها و خبرهای خوب.",
-        "image": "main/img/occasions/special.jpg",
-    },
-    "mazerat-khahi": {
-        "title": "معذرت‌خواهی",
-        "hero_title": "گل معذرت‌خواهی",
-        "intro": "یک راه آرام برای گفتن ببخشید.",
-        "image": "main/img/occasions/apology.jpg",
-    },
-    "tarhim": {
-        "title": "ترحیم",
-        "hero_title": "گل ترحیم",
-        "intro": "انتخابی محترمانه برای لحظه‌های سخت.",
-        "image": "main/img/occasions/condolence.jpg",
-    },
-    "khastegari": {
-        "title": "خواستگاری",
-        "hero_title": "گل خواستگاری",
-        "intro": "چیدمانی رسمی‌تر برای شروع یک قرار مهم.",
-        "image": "main/img/occasions/wedding.jpg",
-    },
-    "bale-boroon": {
-        "title": "بله‌برون",
-        "hero_title": "گل بله‌برون",
-        "intro": "برای مراسمی گرم، خانوادگی و به‌یادماندنی.",
-        "image": "main/img/occasions/wedding.jpg",
-    },
-    "bedoone-monasebat": {
-        "title": "بدون مناسبت",
-        "hero_title": "گل بدون مناسبت",
-        "intro": "برای وقتی که فقط دلت می‌خواهد حال کسی را خوب کنی.",
-        "image": "main/img/occasions/special.jpg",
-    },
-    # Legacy slugs kept for old data until seed_catalog is run.
     "birthday": {
         "title": "تولد",
         "hero_title": "گل تولد",
-        "intro": "روشن، گرم و مناسب تبریک‌های صمیمی.",
+        "intro": "برای تبریک تولد و هدیه‌های شاد.",
         "image": "main/img/occasions/birthday.jpg",
     },
     "romantic": {
         "title": "عاشقانه",
         "hero_title": "گل عاشقانه",
-        "intro": "برای حرف‌هایی که با گل نرم‌تر گفته می‌شوند.",
+        "intro": "برای هدیه‌های احساسی و خاص.",
         "image": "main/img/occasions/romantic.jpg",
+    },
+    "congratulation": {
+        "title": "تبریک",
+        "hero_title": "گل تبریک",
+        "intro": "برای موفقیت، شروع تازه و خبرهای خوب.",
+        "image": "main/img/occasions/special.jpg",
     },
     "apology": {
         "title": "معذرت‌خواهی",
         "hero_title": "گل معذرت‌خواهی",
-        "intro": "یک راه آرام برای گفتن ببخشید.",
+        "intro": "برای جبران دلخوری با یک انتخاب محترمانه.",
         "image": "main/img/occasions/apology.jpg",
     },
     "condolence": {
         "title": "ترحیم",
         "hero_title": "گل ترحیم",
-        "intro": "انتخابی محترمانه برای لحظه‌های سخت.",
+        "intro": "برای عرض تسلیت و همراهی در لحظه‌های سخت.",
         "image": "main/img/occasions/condolence.jpg",
     },
-    "special": {
-        "title": "یونیک",
-        "hero_title": "گل‌های یونیک",
-        "intro": "برای وقتی که انتخاب معمولی کافی نیست.",
+    "proposal": {
+        "title": "خواستگاری",
+        "hero_title": "گل خواستگاری",
+        "intro": "برای مراسم رسمی و قرارهای خانوادگی.",
+        "image": "main/img/occasions/wedding.jpg",
+    },
+    "engagement": {
+        "title": "بله‌برون",
+        "hero_title": "گل بله‌برون",
+        "intro": "برای مراسم بله‌برون و نامزدی.",
+        "image": "main/img/occasions/wedding.jpg",
+    },
+    "no-occasion": {
+        "title": "بدون مناسبت",
+        "hero_title": "گل بدون مناسبت",
+        "intro": "برای هدیه دادن بدون دلیل خاص.",
         "image": "main/img/occasions/special.jpg",
     },
 }
-
 
 def _section_all_url(section):
     route_name = SECTION_ALL_ROUTE_NAMES.get(section)
@@ -859,12 +821,12 @@ def _flower_type_cards():
                 "label": "عروسی",
                 "url": wedding_children[0]["url"],
                 "image": wedding_children[0]["image"],
-                "intro": "ماشین عروس و دسته گل عروس با چیدمان هماهنگ.",
+                "intro": "دسته‌گل و گل‌آرایی عروسی.",
                 "children": wedding_children,
             }
         )
 
-    for slug in ("jar", "plants"):
+    for slug in ("jarl", "plants"):
         category = categories.get(slug)
         if category:
             cards.append(_category_card(category))
@@ -925,8 +887,8 @@ def index(request):
         request,
         page_type="home",
         active_nav="home",
-        meta_title="ZAAD | Flowers, Bakery & Gifts in Mashhad",
-        meta_description="ZAAD Concept Store in Mashhad for flowers, bakery, gifts, events, and fast coordination.",
+        meta_title="zad | Flowers, Bakery & Gifts in Mashhad",
+        meta_description="zad Concept Store in Mashhad for flowers, bakery, gifts, events, and fast coordination.",
         faq_items=HOME_FAQ,
     )
 
@@ -974,7 +936,7 @@ def _category_page(request, section):
     products_qs = _published_products_for_section(section)
 
     if section == Category.Section.FLOWERS:
-        products_qs = products_qs.exclude(tags__slug__in=["tarhim", "condolence", "sympathy"]).distinct()
+        products_qs = products_qs.exclude(tags__slug__in=["condolence", "condolence", "sympathy"]).distinct()
 
     products_qs = products_qs.order_by(
     "-featured",
@@ -1049,24 +1011,24 @@ FLOWER_TYPE_SLUGS = [
     "box",
     "bouquet",
     "stand",
-    "jar",
+    "jarll",
+    "wedding",
     "plants",
 ]
 
 FLOWER_OCCASION_SLUGS = [
-    "tavalod",
-    "asheghane",
-    "unique",
-    "tabrik",
-    "mazerat-khahi",
-    "tarhim",
-    "khastegari",
-    "bale-boroon",
-    "bedoone-monasebat",
+    "birthday",
+    "romantic",
+    "congratulation",
+    "apology",
+    "condolence",
+    "proposal",
+    "engagement",
+    "no-occasion",
 ]
 
 SAME_DAY_TAG_SLUGS = [
-    "ersale-rooz",
+    "same-day",
     "same-day",
 ]
 
@@ -1076,23 +1038,24 @@ FLOWER_TYPE_FALLBACK_IMAGES = {
     "box": "main/img/sub-box.jpg",
     "bouquet": "main/img/sub-bouquet.jpg",
     "stand": "main/img/sub-stand.jpg",
-    "jar": "main/img/sub-plant.jpg",
+    "jarll": "main/img/sub-plant.jpg",
     "plants": "main/img/sub-plant.jpg",
-    "wedding": "main/img/sub-bridal-bouquet.jpg",
+    "wedding": "main/img/sub-wedding.jpg",
 }
+
 
 
 OCCASION_FALLBACK_IMAGES = {
-    "tavalod": "main/img/occasions/birthday.jpg",
-    "asheghane": "main/img/occasions/romantic.jpg",
-    "unique": "main/img/occasions/special.jpg",
-    "tabrik": "main/img/occasions/special.jpg",
-    "mazerat-khahi": "main/img/occasions/apology.jpg",
-    "tarhim": "main/img/occasions/condolence.jpg",
-    "khastegari": "main/img/occasions/wedding.jpg",
-    "bale-boroon": "main/img/occasions/wedding.jpg",
-    "bedoone-monasebat": "main/img/occasions/special.jpg",
+    "birthday": "main/img/occasions/birthday.jpg",
+    "romantic": "main/img/occasions/romantic.jpg",
+    "congratulation": "main/img/occasions/special.jpg",
+    "apology": "main/img/occasions/apology.jpg",
+    "condolence": "main/img/occasions/condolence.jpg",
+    "proposal": "main/img/occasions/wedding.jpg",
+    "engagement": "main/img/occasions/wedding.jpg",
+    "no-occasion": "main/img/occasions/special.jpg",
 }
+
 
 
 def _sort_by_slug_order(items, slug_order):
@@ -1100,61 +1063,6 @@ def _sort_by_slug_order(items, slug_order):
     return sorted(items, key=lambda item: order_map.get(item.slug, 999))
 
 
-def _flower_type_cards():
-    categories = list(
-        Category.objects.filter(
-            section=Category.Section.FLOWERS,
-            is_active=True,
-            slug__in=FLOWER_TYPE_SLUGS,
-        ).order_by("sort_order", "name")
-    )
-
-    categories = _sort_by_slug_order(categories, FLOWER_TYPE_SLUGS)
-
-    cards = []
-
-    for category in categories:
-        cards.append(
-            {
-                "slug": category.slug,
-                "label": category.name,
-                "url": reverse("flower_subcategory", args=[category.slug]),
-                "image": (
-                    category.cover_image.url
-                    if category.cover_image
-                    else FLOWER_TYPE_FALLBACK_IMAGES.get(category.slug, "main/img/sub-bouquet.jpg")
-                ),
-                "is_wide": False,
-            }
-        )
-
-    bridal_category = (
-        Category.objects.filter(
-            section=Category.Section.FLOWERS,
-            is_active=True,
-            slug__in=["bridal-bouquet", "bridal-car"],
-        )
-        .order_by("sort_order", "name")
-        .first()
-    )
-
-    if bridal_category:
-        cards.insert(
-            4,
-            {
-                "slug": "wedding",
-                "label": "عروسی",
-                "url": reverse("flower_subcategory", args=[bridal_category.slug]),
-                "image": (
-                    bridal_category.cover_image.url
-                    if bridal_category.cover_image
-                    else FLOWER_TYPE_FALLBACK_IMAGES["wedding"]
-                ),
-                "is_wide": True,
-            },
-        )
-
-    return cards
 
 
 def _flower_occasion_cards():
@@ -1283,8 +1191,8 @@ def _section_all_products(request, section):
         request,
         page_type="subcategory",
         active_nav=config["nav"],
-        meta_title=f"{title} | ZAAD",
-        meta_description=f"View all {config['title']} products at ZAAD.",
+        meta_title=f"{title} | zad",
+        meta_description=f"View all {config['title']} products at zad.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -1501,8 +1409,8 @@ def flower_occasion(request, slug):
         request,
         page_type="flower-occasion",
         active_nav="flowers",
-        meta_title=f"{title} | ZAAD",
-        meta_description=f"View {title} at ZAAD with fast order coordination.",
+        meta_title=f"{title} | zad",
+        meta_description=f"View {title} at zad with fast order coordination.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -1510,7 +1418,7 @@ def flower_occasion(request, slug):
         _hero_from_key(
             "flowers",
             title=title,
-            text=occasion.description or card.get("intro", "A soft ZAAD selection for this mood."),
+            text=occasion.description or card.get("intro", "A soft zad selection for this mood."),
             image=card.get("image", "main/img/hero-flowers.jpg"),
         )
     )
@@ -1602,15 +1510,15 @@ def _item_detail_context(request, product):
     description = (
         product.description[:140]
         if product.description
-        else "Call ZAAD for availability, delivery timing, and order coordination."
+        else "Call zad for availability, delivery timing, and order coordination."
     )
 
     context = _default_context(
         request,
         page_type="item",
         active_nav=active_nav,
-        meta_title=f"{product.name} | ZAAD",
-        meta_description=f"View {product.name} at ZAAD. Call for availability, delivery timing, and order coordination.",
+        meta_title=f"{product.name} | zad",
+        meta_description=f"View {product.name} at zad. Call for availability, delivery timing, and order coordination.",
         breadcrumbs=breadcrumbs,
         item_id=product.pk,
     )
@@ -1711,8 +1619,8 @@ def occasions(request):
         request,
         page_type="occasions",
         active_nav="occasions",
-        meta_title="Occasions | ZAAD",
-        meta_description="Explore ZAAD flowers, bakery, and gifts by occasion.",
+        meta_title="Occasions | zad",
+        meta_description="Explore zad flowers, bakery, and gifts by occasion.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -1790,8 +1698,8 @@ def occasion_detail(request, slug):
         request,
         page_type="occasion-detail",
         active_nav="occasions",
-        meta_title=f"{occasion.name} | ZAAD",
-        meta_description=f"ZAAD suggestions for {occasion.name}.",
+        meta_title=f"{occasion.name} | zad",
+        meta_description=f"zad suggestions for {occasion.name}.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -1803,7 +1711,7 @@ def occasion_detail(request, slug):
         
         context.update(
             {
-                "page_hero_kicker": "ZAAD Occasion",
+                "page_hero_kicker": "zad Occasion",
                 "page_hero_title": occasion.name,
                 "page_hero_text": occasion.description or card.get("intro", "Curated selections for this mood."),
                 "page_hero_image": card.get("image", "main/img/hero-occasions.jpg"),
@@ -1840,8 +1748,8 @@ def events(request):
         request,
         page_type="category",
         active_nav="events",
-        meta_title="ZAAD Events | Workshops & Experiences",
-        meta_description="ZAAD events in Mashhad for workshops, launches, and in-person experiences.",
+        meta_title="zad Events | Workshops & Experiences",
+        meta_description="zad events in Mashhad for workshops, launches, and in-person experiences.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -1860,19 +1768,19 @@ def events(request):
         published_events = [
             {
                 "title": "Floral Styling Workshop",
-                "description": "A short floral styling session with a minimal ZAAD approach.",
+                "description": "A short floral styling session with a minimal zad approach.",
                 "start_at": now + timedelta(days=7),
                 "end_at": now + timedelta(days=7, hours=2),
-                "location": "ZAAD Store, Mashhad",
+                "location": "zad Store, Mashhad",
                 "is_demo": True,
                 "get_absolute_url": reverse("contact"),
             },
             {
                 "title": "Gift Collection Preview",
-                "description": "A preview of ZAAD’s new curated gifts and occasion sets.",
+                "description": "A preview of zad’s new curated gifts and occasion sets.",
                 "start_at": now + timedelta(days=14),
                 "end_at": now + timedelta(days=14, hours=3),
-                "location": "ZAAD Store, Mashhad",
+                "location": "zad Store, Mashhad",
                 "is_demo": True,
                 "get_absolute_url": reverse("contact"),
             },
@@ -1911,8 +1819,8 @@ def event_detail(request, slug: str):
         request,
         page_type="category",
         active_nav="events",
-        meta_title=f"{event.title} | ZAAD Events",
-        meta_description=f"Details for {event.title} at ZAAD: time, location, and visit coordination.",
+        meta_title=f"{event.title} | zad Events",
+        meta_description=f"Details for {event.title} at zad: time, location, and visit coordination.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -1941,13 +1849,13 @@ def event_detail(request, slug: str):
         "eventStatus": "https://schema.org/EventScheduled",
         "location": {
             "@type": "Place",
-            "name": "ZAAD",
+            "name": "zad",
             "address": event.location,
         },
         "organizer": {
             "@type": "Organization",
-            "name": "ZAAD",
-            "url": getattr(settings, "ZAAD_SITE_URL", "https://zaad.ir"),
+            "name": "zad",
+            "url": getattr(settings, "zad_SITE_URL", "https://zad.ir"),
         },
         "url": request.build_absolute_uri(event.get_absolute_url()),
     }
@@ -1990,8 +1898,8 @@ def mashhad_hub(request):
         request,
         page_type="local",
         active_nav="mashhad",
-        meta_title="Mashhad Orders | ZAAD",
-        meta_description="ZAAD Mashhad order hub for flowers, same-day delivery, and fast coordination.",
+        meta_title="Mashhad Orders | zad",
+        meta_description="zad Mashhad order hub for flowers, same-day delivery, and fast coordination.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -2017,12 +1925,12 @@ def _local_landing(request, landing_type):
     if landing_type == "order":
         title = "Flower Orders in Mashhad"
         subtitle = "Premium flower selection with fast, clear coordination."
-        meta_title = "Flower Orders in Mashhad | ZAAD"
+        meta_title = "Flower Orders in Mashhad | zad"
         meta_description = "Flower orders in Mashhad with quick response, premium styling, and phone coordination."
     elif landing_type == "delivery":
         title = "Same-day Flower Delivery"
-        subtitle = "Same-day delivery with ZAAD packaging standards."
-        meta_title = "Same-day Flower Delivery in Mashhad | ZAAD"
+        subtitle = "Same-day delivery with zad packaging standards."
+        meta_title = "Same-day Flower Delivery in Mashhad | zad"
         meta_description = "Same-day flower delivery in Mashhad with phone support and curated daily options."
     else:
         raise Http404("Landing page not found")
@@ -2100,7 +2008,7 @@ def _local_landing(request, landing_type):
             "landing_title": title,
             "landing_subtitle": subtitle,
             "curated_items": curated_items,
-            "why_zaad": [
+            "why_zad": [
                 "Premium, minimal styling for the occasion",
                 "Fast response and clear coordination before delivery",
                 "Same-day delivery in key Mashhad areas",
@@ -2128,14 +2036,14 @@ def mashhad_flower_delivery(request):
 # =========================
 
 def visit(request):
-    breadcrumbs = _with_home([{"name": "Visit ZAAD", "url": None}])
+    breadcrumbs = _with_home([{"name": "Visit zad", "url": None}])
 
     context = _default_context(
         request,
         page_type="contact",
         active_nav="",
-        meta_title="Visit ZAAD | Mashhad",
-        meta_description="Address, opening hours, and visit coordination for ZAAD in Mashhad.",
+        meta_title="Visit zad | Mashhad",
+        meta_description="Address, opening hours, and visit coordination for zad in Mashhad.",
         breadcrumbs=breadcrumbs,
         faq_items=VISIT_FAQ,
     )
@@ -2164,8 +2072,8 @@ def contact(request):
         request,
         page_type="contact",
         active_nav="",
-        meta_title="Contact ZAAD | Order Coordination",
-        meta_description="Contact ZAAD for ordering, guidance, availability, and delivery timing.",
+        meta_title="Contact zad | Order Coordination",
+        meta_description="Contact zad for ordering, guidance, availability, and delivery timing.",
         breadcrumbs=breadcrumbs,
         faq_items=CONTACT_FAQ,
     )
@@ -2194,8 +2102,8 @@ def faq(request):
         request,
         page_type="category",
         active_nav="",
-        meta_title="FAQ | ZAAD",
-        meta_description="Common questions about ZAAD orders, delivery, opening hours, and event coordination.",
+        meta_title="FAQ | zad",
+        meta_description="Common questions about zad orders, delivery, opening hours, and event coordination.",
         breadcrumbs=breadcrumbs,
         faq_items=FAQ_PAGE_ITEMS,
     )
@@ -2219,8 +2127,8 @@ def about(request):
         request,
         page_type="about",
         active_nav="about",
-        meta_title="About ZAAD",
-        meta_description="A closer look at ZAAD, the store experience, order preparation, and brand details.",
+        meta_title="About zad",
+        meta_description="A closer look at zad, the store experience, order preparation, and brand details.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -2252,8 +2160,8 @@ def blog(request):
         request,
         page_type="category",
         active_nav="",
-        meta_title="ZAAD Journal | Ideas & Guides",
-        meta_description="ZAAD journal notes about flowers, gifts, and occasion planning.",
+        meta_title="zad Journal | Ideas & Guides",
+        meta_description="zad journal notes about flowers, gifts, and occasion planning.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -2311,15 +2219,15 @@ def blog_detail(request, slug):
         request,
         page_type="category",
         active_nav="",
-        meta_title=f"{post.title} | ZAAD Journal",
-        meta_description=post.excerpt or "Read a note from the ZAAD Journal.",
+        meta_title=f"{post.title} | zad Journal",
+        meta_description=post.excerpt or "Read a note from the zad Journal.",
         breadcrumbs=breadcrumbs,
     )
 
     hero_data = _hero_from_key(
         "blog",
         title=post.title,
-        text=post.excerpt or "Read a note from the ZAAD Journal.",
+        text=post.excerpt or "Read a note from the zad Journal.",
         image=post.cover_image.url if post.cover_image else "main/img/hero-blog.jpg",
     )
 
@@ -2375,7 +2283,7 @@ def submit_lead_request(request):
         lead = form.save(commit=False)
         lead.source_page = request.POST.get("source_page", "")
         lead.save()
-        messages.success(request, "Your request has been submitted. ZAAD will contact you soon.")
+        messages.success(request, "Your request has been submitted. zad will contact you soon.")
     else:
         messages.error(request, "Please complete the form correctly and try again.")
 
