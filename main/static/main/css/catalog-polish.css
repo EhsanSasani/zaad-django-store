@@ -879,3 +879,116 @@
     grid-template-columns: 96px minmax(0, 1fr);
   }
 }
+
+/* =========================
+   Flowers Hero
+   ========================= */
+
+.flowers-hero {
+  padding: 56px 0 72px;
+  background: #f8f4ef;
+}
+
+.flowers-hero__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 36px;
+  align-items: center;
+}
+
+.flowers-hero__media {
+  min-height: 520px;
+  border-radius: 26px;
+  overflow: hidden;
+  background:
+    url("../img/flowers-hero.jpg")
+    center / cover no-repeat;
+}
+
+.flowers-hero__content {
+  max-width: 460px;
+}
+
+.flowers-hero__content span {
+  display: block;
+  margin-bottom: 14px;
+
+  color: #b88958;
+
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .28em;
+
+  text-transform: uppercase;
+}
+
+.flowers-hero__content h1 {
+  margin: 0;
+
+  color: #2d2a27;
+
+  font-size: clamp(3rem,5vw,5.2rem);
+  font-weight: 500;
+  line-height: .95;
+}
+
+.flowers-hero__content p {
+  max-width: 380px;
+
+  margin: 22px 0 28px;
+
+  color: rgba(45,42,39,.70);
+
+  font-size: 1rem;
+  line-height: 2;
+}
+
+.flowers-hero__content a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 210px;
+  height: 48px;
+
+  padding: 0 24px;
+
+  border-radius: 999px;
+
+  background: #312720;
+  color: #fffaf5;
+
+  text-decoration: none;
+  font-weight: 700;
+
+  transition: .2s;
+}
+
+.flowers-hero__content a:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width:900px){
+
+  .flowers-hero{
+    padding:40px 0 50px;
+  }
+
+  .flowers-hero__grid{
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+
+  .flowers-hero__media{
+    min-height:420px;
+  }
+
+  .flowers-hero__content{
+    max-width:none;
+  }
+
+  .flowers-hero__content h1{
+    font-size:clamp(2.3rem,9vw,3.6rem);
+  }
+
+}

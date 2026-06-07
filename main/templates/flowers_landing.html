@@ -4,15 +4,21 @@
 {% block body_class %}page-flowers-landing{% endblock %}
 
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'main/css/flowers-landing.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/flowers-landing.css' %}?v=2">
 {% endblock %}
 
 {% block content %}
 <main class="flowers-shell">
 
-  <section class="flowers-hero">
-    <div class="flowers-hero__copy">
-      <p class="flowers-hero__eyebrow">FLOWERS BY ZAD</p>
+  <section class="flowers-hero" id="flowers-top">
+    <div class="flowers-hero__media" aria-hidden="true">
+      <img src="{% static 'main/img/flowers-hero.jpg' %}" alt="">
+    </div>
+
+    <div class="flowers-hero__overlay"></div>
+
+    <div class="flowers-hero__content">
+      <span class="flowers-hero__eyebrow">FLOWERS BY ZAD</span>
 
       <h1 class="flowers-hero__title">
         Flowers
@@ -20,140 +26,175 @@
       </h1>
 
       <p class="flowers-hero__text">
-        گل‌هایی برای لحظه‌های ماندگار؛ با انتخابی نرم، خاص و هماهنگی سریع.
+        گل‌هایی تازه، خوش‌چیدمان و انتخاب‌شده برای لحظه‌هایی که ارزش ماندگار شدن دارند.
       </p>
 
-      <div class="flowers-hero__actions">
-        <a href="{% url 'flowers_all' %}" class="flowers-btn">مشاهده محصولات</a>
-        <a href="{% url 'contact' %}" class="flowers-btn flowers-btn--ghost">هماهنگی سفارش</a>
-      </div>
-    </div>
-
-    <div class="flowers-hero__media">
-      {% if page_hero_image %}
-        {% if page_hero_image|slice:":7" == "/media/" %}
-          <img src="{{ page_hero_image }}" alt="Flowers by ZAD">
-        {% else %}
-          <img src="{% static page_hero_image %}" alt="Flowers by ZAD">
-        {% endif %}
-      {% else %}
-        <img src="{% static 'main/img/hero-flowers.jpg' %}" alt="Flowers by ZAD">
-      {% endif %}
+      <a href="#flowers-collection" class="flowers-hero__btn">
+        مشاهده مجموعه گل‌ها
+        <span>↓</span>
+      </a>
     </div>
   </section>
 
-  {% if flower_type_cards %}
-    <section class="flowers-panel flowers-panel--flat">
-      <div class="flowers-section-head">
-        <div>
-          <p class="flowers-section-kicker">FLOWER TYPES</p>
-          <h2 class="flowers-section-title">نوع گل را انتخاب کنید</h2>
-          <p class="flowers-section-note">از دسته گل و باکس تا استند، جار گل، گیاه و سفارش‌های عروسی.</p>
+  <section class="flowers-collection" id="flowers-collection">
+    <div class="flowers-container">
+
+      <div class="flowers-collection__head">
+        <span>FLOWER COLLECTION</span>
+        <h2>انتخاب گل بر اساس نوع</h2>
+        <p>
+          از دسته‌گل و باکس تا استند، جار گل و گیاه؛ همه در یک مجموعه تمیز و قابل فیلتر.
+        </p>
+      </div>
+
+      {% with products=flower_products|default:same_day_products %}
+  {% if products %}
+    <div class="flowers-filter" data-flower-filter>
+      <button type="button" class="flowers-filter__chip is-active" data-filter="all">
+        همه
+      </button>
+
+      {% for category in flower_filter_categories %}
+      <button
+        type="button"
+        class="flowers-filter__chip"
+        data-filter="{{ category.slug }}"
+      >
+        {{ category.name }}
+      </button>
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+      {% with products=flower_products|default:same_day_products %}
+        {% if products %}
+          <div class="flowers-grid" data-flowers-grid>
+            {% for product in products %}
+              <a
+                href="{{ product.get_absolute_url }}"
+                class="flowers-product-card"
+                data-flower-card
+                data-category="{{ product.category.slug|default:'uncategorized' }}"
+              >
+                <div class="flowers-product-card__media">
+                  {% if product.cover_image %}
+                    <img src="{{ product.cover_image.url }}" alt="{{ product.display_name }}" loading="lazy">
+                  {% else %}
+                    <img src="{% static 'main/img/product-placeholder.jpg' %}" alt="{{ product.display_name }}" loading="lazy">
+                  {% endif %}
+
+                  {% if product.stock_status == "preorder" %}
+                    <span class="flowers-product-card__badge">پیش‌سفارش</span>
+                  {% elif product.stock_status == "out_of_stock" %}
+                    <span class="flowers-product-card__badge flowers-product-card__badge--muted">ناموجود</span>
+                  {% endif %}
+                </div>
+
+                <div class="flowers-product-card__body">
+                  <div>
+                    <h3>{{ product.display_name }}</h3>
+                    <p>{{ product.display_price }}</p>
+                  </div>
+                  <span class="flowers-product-card__arrow">←</span>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="flowers-empty">
+            هنوز محصولی برای نمایش ثبت نشده است.
+          </div>
+        {% endif %}
+      {% endwith %}
+
+    </div>
+  </section>
+
+  <section class="flowers-why">
+    <div class="flowers-container">
+      <div class="flowers-why__grid">
+        <div class="flowers-why__item">
+          <i class="bi bi-flower1"></i>
+          <strong>گل‌های تازه</strong>
+          <span>انتخاب روزانه و چیدمان با دقت</span>
         </div>
 
-        <a href="{% url 'flowers_all' %}" class="flowers-section-link">مشاهده همه</a>
-      </div>
-
-      <div class="flower-types-grid">
-        {% for item in flower_type_cards %}
-          <a href="{{ item.url }}" class="flower-type-card{% if item.is_wide %} flower-type-card--wide{% endif %}">
-            <div class="flower-type-card__image">
-              {% if item.image|slice:":7" == "/media/" %}
-                <img src="{{ item.image }}" alt="{{ item.label }}" loading="lazy">
-              {% else %}
-                <img src="{% static item.image %}" alt="{{ item.label }}" loading="lazy">
-              {% endif %}
-            </div>
-
-            <div class="flower-type-card__body">
-              <span class="flower-type-card__title">{{ item.label }}</span>
-              <span class="flower-type-card__arrow">←</span>
-            </div>
-          </a>
-        {% endfor %}
-      </div>
-    </section>
-  {% endif %}
-
-  {% if same_day_products %}
-    <section class="flowers-panel flowers-panel--tinted">
-      <div class="flowers-section-head">
-        <div>
-          <p class="flowers-section-kicker">SAME-DAY FLOWERS</p>
-          <h2 class="flowers-section-title">گل‌های امروز، برای امروز</h2>
-          <p class="flowers-section-note">انتخاب‌هایی که برای هماهنگی سریع‌تر و ارسال روز مناسب‌تر هستند.</p>
+        <div class="flowers-why__item">
+          <i class="bi bi-gift"></i>
+          <strong>بسته‌بندی شیک</strong>
+          <span>هماهنگ با حس و مناسبت سفارش</span>
         </div>
 
-        <a href="{% url 'flowers_all' %}" class="flowers-section-link">مشاهده همه</a>
-      </div>
-
-      <div class="flowers-product-rail">
-        {% for product in same_day_products %}
-          <a href="{{ product.get_absolute_url }}" class="flowers-product-card">
-            <div class="flowers-product-card__image">
-              {% if product.cover_image %}
-                <img src="{{ product.cover_image.url }}" alt="{{  product.display_name  }}" loading="lazy">
-              {% else %}
-                <img src="{% static 'main/img/product-placeholder.jpg' %}" alt="{{  product.display_name  }}" loading="lazy">
-              {% endif %}
-              <span class="flowers-product-card__badge">امروز</span>
-            </div>
-
-            <div class="flowers-product-card__body">
-              <h3 class="flowers-product-card__name">{{  product.display_name  }}</h3>
-              <p class="flowers-product-card__price">{{ product.display_price }}</p>
-            </div>
-          </a>
-        {% endfor %}
-      </div>
-    </section>
-  {% endif %}
-
-  {% if occasion_cards %}
-    <section class="flowers-panel flowers-panel--flat">
-      <div class="flowers-section-head">
-        <div>
-          <p class="flowers-section-kicker">OCCASION / MOOD</p>
-          <h2 class="flowers-section-title">مناسبت‌ها و حال‌وهوا</h2>
-          <p class="flowers-section-note">برای تولد، عاشقانه، یونیک، ترحیم، خواستگاری و انتخاب‌های بدون مناسبت.</p>
+        <div class="flowers-why__item">
+          <i class="bi bi-truck"></i>
+          <strong>ارسال در مشهد</strong>
+          <span>هماهنگی سریع برای تحویل مطمئن</span>
         </div>
       </div>
-
-      <div class="flowers-occasion-grid">
-        {% for item in occasion_cards %}
-          <a href="{{ item.url }}" class="flowers-occasion-card">
-            {% if item.image|slice:":7" == "/media/" %}
-              <img src="{{ item.image }}" alt="{{ item.label }}" loading="lazy">
-            {% else %}
-              <img src="{% static item.image %}" alt="{{ item.label }}" loading="lazy">
-            {% endif %}
-            <span class="flowers-occasion-card__label">{{ item.label }}</span>
-          </a>
-        {% endfor %}
-      </div>
-    </section>
-  {% endif %}
+    </div>
+  </section>
 
   <section class="flowers-cta">
-    <div class="flowers-cta__inner">
-      <div>
-        <h2>سفارشی، دقیقاً مطابق سلیقه شما</h2>
-        <p>
-          برای سفارش‌های اختصاصی، انتخاب رنگ، زمان ارسال و هماهنگی سریع،
-          با ما تماس بگیرید یا در تلگرام پیام بدهید.
-        </p>
+    <div class="flowers-container">
+      <div class="flowers-cta__inner">
+        <div class="flowers-cta__content">
+          <span>CUSTOM ORDER</span>
+          <h2>دسته‌گل اختصاصی، دقیقاً مطابق سلیقه شما</h2>
+          <p>
+            برای انتخاب رنگ، سبک چیدمان، بودجه و زمان ارسال، با ما تماس بگیرید یا در تلگرام پیام بدهید.
+          </p>
 
-        <div class="flowers-cta__actions">
-          <a href="{% url 'contact' %}" class="flowers-btn">تماس با ما</a>
-          <a href="{{ site_telegram_url|default:'#' }}" target="_blank" rel="noopener" class="flowers-btn flowers-btn--ghost">هماهنگی در تلگرام</a>
+          <div class="flowers-cta__actions">
+            <a href="{% url 'contact' %}" class="flowers-btn">تماس با ما</a>
+            <a href="{{ site_telegram_url|default:'#' }}" target="_blank" rel="noopener" class="flowers-btn flowers-btn--ghost">
+              هماهنگی در تلگرام
+            </a>
+          </div>
         </div>
-      </div>
 
-      <div class="flowers-cta__image">
-        <img src="{% static 'main/img/flowers-cta.jpg' %}" alt="سفارش اختصاصی گل" loading="lazy">
+        <div class="flowers-cta__media">
+          <img src="{% static 'main/img/flowers-cta.jpg' %}" alt="سفارش اختصاصی گل" loading="lazy">
+        </div>
       </div>
     </div>
   </section>
 
 </main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function () {
+    const filterRoot = document.querySelector("[data-flower-filter]");
+    const cards = Array.from(document.querySelectorAll("[data-flower-card]"));
+
+    if (!filterRoot || !cards.length) return;
+
+    const buttons = Array.from(filterRoot.querySelectorAll("[data-filter]"));
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+
+        buttons.forEach((item) => item.classList.remove("is-active"));
+        button.classList.add("is-active");
+
+        cards.forEach((card) => {
+          const isMatch = filter === "all" || card.dataset.category === filter;
+
+          card.classList.toggle("is-hidden", !isMatch);
+
+          window.setTimeout(() => {
+            card.hidden = !isMatch;
+          }, isMatch ? 0 : 180);
+
+          if (isMatch) {
+            card.hidden = false;
+          }
+        });
+      });
+    });
+  })();
+</script>
 {% endblock %}

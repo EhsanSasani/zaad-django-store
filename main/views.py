@@ -129,15 +129,8 @@ CATEGORY_CONTENT_OVERRIDES = {
         "intro": "برای موقعیت‌های رسمی، محترمانه و پررنگ‌تر.",
         "image": "main/img/sub-stand.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
-    },
-    "wedding": {
-        "label": "ماشین عروس",
-        "meta_title": "گل‌آرایی ماشین عروس در مشهد | ZAD",
-        "meta_description": "گل‌آرایی ماشین عروس با سبک ظریف و هماهنگ با فضای مراسم.",
-        "intro": "جزئیات گل‌آرایی برای شروعی نرم و به‌یادماندنی.",
-        "image": "main/img/sub-wedding.jpg",
-        "hero_image": "main/img/hero-subcategory.jpg",
-    },
+        },
+
     "wedding": {
         "label": "دسته گل عروس",
         "meta_title": "دسته گل عروس در مشهد | ZAD",
@@ -1011,7 +1004,7 @@ FLOWER_TYPE_SLUGS = [
     "box",
     "bouquet",
     "stand",
-    "jarll",
+    "jarl",
     "wedding",
     "plants",
 ]
@@ -1038,7 +1031,7 @@ FLOWER_TYPE_FALLBACK_IMAGES = {
     "box": "main/img/sub-box.jpg",
     "bouquet": "main/img/sub-bouquet.jpg",
     "stand": "main/img/sub-stand.jpg",
-    "jarll": "main/img/sub-plant.jpg",
+    "jarl": "main/img/sub-plant.jpg",
     "plants": "main/img/sub-plant.jpg",
     "wedding": "main/img/sub-wedding.jpg",
 }
@@ -1131,6 +1124,24 @@ def flowers(request):
     if db_hero:
         hero_data = db_hero
 
+    flower_products = (
+    _published_products_for_section(Category.Section.FLOWERS)
+    .order_by(
+        "-featured",
+        "sort_order",
+        "-created_at",
+    )
+)
+    flower_filter_categories = list(
+    Category.objects.filter(
+        section=Category.Section.FLOWERS,
+        is_active=True,
+        products__is_active=True,
+        products__publish_status=Product.PublishStatus.PUBLISHED,
+    )
+    .distinct()
+    .order_by("sort_order", "name")
+)
     context.update(hero_data)
 
     context.update(
@@ -1140,6 +1151,8 @@ def flowers(request):
             "occasion_cards": _flower_occasion_cards(),
             "lead_form": LeadRequestForm(initial_lead_type="flower"),
             "lead_default_type": "flower",
+            "flower_products": flower_products,
+            "flower_filter_categories": flower_filter_categories,
         }
     )
 

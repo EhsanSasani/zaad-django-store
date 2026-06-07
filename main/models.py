@@ -15,7 +15,7 @@ FLOWER_CATEGORY_SLUGS = (
     "box",
     "bouquet",
     "stand",
-    "jarll",
+    "jarl",
     "wedding",
     "plants",
 )
