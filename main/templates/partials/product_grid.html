@@ -1,12 +1,34 @@
+{% load static %}
+
 <div class="product-grid">
   {% if products %}
     {% for product in products %}
-      <a href="{{ product.get_absolute_url }}" class="product-card {% if product.stock_status == 'out_of_stock' %}product-card--out{% endif %}">
+      <a
+        href="{{ product.get_absolute_url }}"
+        class="product-card {% if product.stock_status == 'out_of_stock' %}product-card--out{% endif %}"
+        data-zad-modal-card
+        data-product-type="{{ product.category.slug|default:'collection' }}"
+        data-product-code="{{ product.product_code }}"
+        data-product-name="{{ product.name|default:'' }}"
+        data-product-price="{% if product.price %}{{ product.display_price }}{% else %}استعلام قیمت{% endif %}"
+      >
         <div class="product-card__image-wrap">
           {% if product.cover_image %}
-            <img src="{{ product.cover_image.url }}" alt="{{  product.display_name  }}" class="product-card__image" loading="lazy">
+            <img
+              src="{{ product.cover_image.url }}"
+              alt="{{ product.display_name }}"
+              class="product-card__image"
+              loading="lazy"
+              data-product-image
+            >
           {% else %}
-            <div class="product-card__placeholder">No image yet</div>
+            <img
+              src="{% static 'main/img/product-placeholder.jpg' %}"
+              alt="{{ product.display_name }}"
+              class="product-card__image"
+              loading="lazy"
+              data-product-image
+            >
           {% endif %}
 
           {% if product.stock_status == "out_of_stock" %}
@@ -17,9 +39,18 @@
         </div>
 
         <div class="product-card__body">
-          <h3 class="product-card__title">{{  product.display_name  }}</h3>
+          {% if product.name %}
+            <h3 class="product-card__title">{{ product.name }}</h3>
+          {% else %}
+            <h3 class="product-card__title">{{ product.product_code }}</h3>
+          {% endif %}
+
           <p class="product-card__price {% if not product.price %}product-card__price--muted{% endif %}">
-            {{ product.display_price }}
+            {% if product.price %}
+              {{ product.display_price }}
+            {% else %}
+              استعلام قیمت
+            {% endif %}
           </p>
         </div>
       </a>

@@ -484,3 +484,30 @@
     font-size: 0.74rem !important;
   }
 }
+@media (max-width:768px){
+
+    .flowers-hero__media img{
+        filter:
+            saturate(1.08)
+            brightness(1.18);
+    }
+
+    .flowers-hero__overlay{
+        background:
+            linear-gradient(
+                180deg,
+                rgba(0,0,0,.02),
+                rgba(0,0,0,.10)
+            );
+    }
+
+    .flowers-hero__brand{
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .flowers-hero__title{
+        font-size: clamp(3rem,13vw,5rem);
+    }
+
+}

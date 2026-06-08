@@ -1003,9 +1003,9 @@ FLOWER_TYPE_SLUGS = [
     "hand-bouquet",
     "box",
     "bouquet",
-    "stand",
     "jarl",
     "wedding",
+    "stand",
     "plants",
 ]
 
@@ -1131,6 +1131,7 @@ def flowers(request):
         "sort_order",
         "-created_at",
     )
+    
 )
     flower_filter_categories = list(
     Category.objects.filter(
@@ -1142,6 +1143,41 @@ def flowers(request):
     .distinct()
     .order_by("sort_order", "name")
 )
+    
+    FLOWER_FILTER_ORDER = [
+        "hand-bouquet",
+        "box",
+        "bouquet",
+        "jarl",
+        "wedding",
+        "stand",
+        "plants",
+    ]
+
+    flower_filter_categories = list(
+        Category.objects.filter(
+            section=Category.Section.FLOWERS,
+            is_active=True,
+            products__is_active=True,
+            products__publish_status=Product.PublishStatus.PUBLISHED,
+        )
+        .distinct()
+    )
+
+    flower_filter_categories = sorted(
+        flower_filter_categories,
+        key=lambda category: FLOWER_FILTER_ORDER.index(category.slug)
+        if category.slug in FLOWER_FILTER_ORDER
+        else 999,
+    )
+
+    flower_products = sorted(
+        flower_products,
+        key=lambda product: FLOWER_FILTER_ORDER.index(product.category.slug)
+        if product.category.slug in FLOWER_FILTER_ORDER
+        else 999,
+    )
+
     context.update(hero_data)
 
     context.update(
@@ -1239,6 +1275,31 @@ def _section_all_products(request, section):
 
     return render(request, "subcategory.html", context)
 
+def flowers_same_day(request):
+    products = (
+        Product.objects.filter(
+            category__section=Category.Section.FLOWERS,
+            is_active=True,
+            publish_status=Product.PublishStatus.PUBLISHED,
+            tags__slug__in=SAME_DAY_TAG_SLUGS,
+        )
+        .select_related("category")
+        .prefetch_related("tags")
+        .distinct()
+        .order_by("sort_order", "-updated_at")
+    )
+
+    context = {
+        "page_type": "catalog",
+        "active_nav": "flowers",
+        "page_hero_title": "ارسال امروز",
+        "page_hero_text": "گل‌های آماده برای ارسال سریع در شهر مشهد.",
+        "collection_title": "Same Day Delivery",
+        "subcategory_label": "ارسال امروز",
+        "items": products,
+    }
+
+    return render(request, "subcategory.html", context)
 
 def flowers_all(request):
     return _section_all_products(request, Category.Section.FLOWERS)

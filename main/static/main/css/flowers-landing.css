@@ -32,12 +32,13 @@
 
 .flowers-hero {
   position: relative;
-  min-height: 88vh;
+  min-height: 40vh;
   overflow: hidden;
   display: flex;
   align-items: center;
   isolation: isolate;
   background: #171210;
+  border-radius: 0%;
 }
 
 .flowers-hero__media {
@@ -60,9 +61,17 @@
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(circle at 72% 44%, rgba(255, 248, 238, 0.18), transparent 34%),
-    linear-gradient(90deg, rgba(17, 13, 11, 0.10) 0%, rgba(17, 13, 11, 0.34) 48%, rgba(17, 13, 11, 0.72) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.22));
+    linear-gradient(
+      90deg,
+      rgba(255, 246, 235, 0.10) 0%,
+      rgba(255, 246, 235, 0.06) 42%,
+      rgba(40, 28, 20, 0.28) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.02),
+      rgba(0, 0, 0, 0.10)
+    );
 }
 
 .flowers-hero__content {
@@ -73,30 +82,8 @@
   text-align: right;
 }
 
-.flowers-hero__eyebrow {
-  display: block;
-  margin-bottom: 18px;
-  color: rgba(255, 250, 244, 0.72);
-  font-family: var(--font-ui-en);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  direction: ltr;
-}
 
-.flowers-hero__title {
-  margin: 0;
-  color: #fffaf4;
-  font-family: var(--font-brand-en);
-  font-size: clamp(4.8rem, 10vw, 10.8rem);
-  font-weight: 500;
-  line-height: 0.82;
-  letter-spacing: -0.055em;
-  direction: ltr;
-  text-align: right;
-  text-shadow: 0 20px 58px rgba(0, 0, 0, 0.24);
-}
+
 
 .flowers-hero__title span {
   display: block;
@@ -105,38 +92,11 @@
   font-weight: 400;
 }
 
-.flowers-hero__text {
-  max-width: 460px;
-  margin: 28px 0 0 auto;
-  color: rgba(255, 250, 244, 0.82);
-  font-size: 1rem;
-  line-height: 2.05;
-}
 
-.flowers-hero__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 48px;
-  margin-top: 30px;
-  padding: 0 28px;
-  border: 1px solid rgba(255, 250, 244, 0.28);
-  border-radius: 999px;
-  background: rgba(255, 250, 244, 0.14);
-  color: #fffaf4;
-  font-size: 0.9rem;
-  font-weight: 800;
-  text-decoration: none;
-  backdrop-filter: blur(12px);
-  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
-}
 
-.flowers-hero__btn:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 250, 244, 0.22);
-  border-color: rgba(255, 250, 244, 0.42);
-}
+
+
+
 
 /* =========================
    Collection
@@ -192,14 +152,16 @@
   z-index: 20;
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 7px;
   max-width: max-content;
   margin: 0 auto 34px;
-  padding: 8px;
+  padding: 7px;
   border: 1px solid rgba(157, 111, 63, 0.12);
   border-radius: 999px;
-  background: rgba(255, 250, 244, 0.82);
-  box-shadow: 0 16px 42px rgba(70, 50, 35, 0.08);
+  background: rgba(255, 250, 244, 0.88);
+  box-shadow:
+    0 18px 46px rgba(70, 50, 35, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(16px);
 }
 
@@ -207,29 +169,67 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 38px;
-  padding: 0 18px;
+  flex-direction: row-reverse;
+  gap: 9px;
+
+  min-height: 42px;
+  padding: 0 20px;
+
   border: 0;
   border-radius: 999px;
+
   background: transparent;
-  color: rgba(45, 42, 39, 0.68);
+  color: rgba(45, 42, 39, 0.62);
+
   font-family: var(--font-fa);
   font-size: 0.84rem;
   font-weight: 800;
+
   white-space: nowrap;
   cursor: pointer;
-  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.flowers-filter__chip svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.58;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
 }
 
 .flowers-filter__chip:hover {
   transform: translateY(-1px);
   color: var(--fl-text);
-  background: rgba(185, 138, 87, 0.10);
+  background: rgba(185, 138, 87, 0.09);
+}
+
+.flowers-filter__chip:hover svg {
+  opacity: 1;
+  transform: scale(1.08);
 }
 
 .flowers-filter__chip.is-active {
   color: #fffaf4;
-  background: #2f251f;
+  background: linear-gradient(135deg, #2f251f 0%, #1f1713 100%);
+  box-shadow:
+    0 10px 24px rgba(47, 37, 31, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);}
+
+.flowers-filter__chip.is-active svg {
+  opacity: 1;
 }
 
 /* =========================
@@ -308,12 +308,12 @@
 }
 
 .flowers-product-card__body {
-  min-height: 96px;
+  min-height: 108px;
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 14px;
-  padding: 16px 18px;
+  padding: 18px 20px;
   background: linear-gradient(180deg, #fffaf4 0%, #f5ecdf 100%);
 }
 
@@ -333,23 +333,34 @@
 }
 
 .flowers-product-card__arrow {
+  width: 42px;
+  height: 42px;
+
   display: inline-flex;
-  color: var(--fl-gold);
-  font-size: 1.2rem;
-  transition: transform 160ms ease;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(157, 111, 63, 0.18);
+  border-radius: 50%;
+
+  color: #8c6138;
+  background: rgba(255,250,244,.55);
+
+  transition: .25s;
+}
+
+.flowers-product-card__arrow span {
+  transition: .25s;
 }
 
 .flowers-product-card:hover .flowers-product-card__arrow {
-  transform: translateX(-3px);
+  background: #2f251f;
+  color: #fff;
+  border-color: #2f251f;
 }
 
-.flowers-empty {
-  padding: 42px 20px;
-  border: 1px dashed rgba(157, 111, 63, 0.28);
-  border-radius: 24px;
-  background: rgba(255, 250, 244, 0.62);
-  color: var(--fl-muted);
-  text-align: center;
+.flowers-product-card:hover .flowers-product-card__arrow span {
+  transform: translateX(-2px);
 }
 
 /* =========================
@@ -516,7 +527,7 @@
 
 @media (max-width: 900px) {
   .flowers-hero {
-    min-height: 78vh;
+    min-height: 52vh;
   }
 
   .flowers-hero__content {
@@ -589,11 +600,12 @@
   }
 
   .flowers-hero {
-    min-height: 72vh;
+    min-height: 58vh;
   }
 
   .flowers-hero__media img {
     object-position: 42% center;
+    
   }
 
   .flowers-hero__overlay {
@@ -720,4 +732,189 @@
     padding: 0 15px;
     font-size: 0.78rem;
   }
+}
+
+.flowers-hero {
+  position: relative;
+  min-height: 40vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  isolation: isolate;
+  background: #eaf6ff;
+}
+
+.flowers-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.flowers-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.08) brightness(1.08);
+  transform: scale(1.01);
+}
+
+.flowers-hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: none;
+}
+
+
+.flowers-hero__content {
+  width: min(1380px, 90%);
+  margin-inline: auto;
+  padding-top: 0;
+  color: #243447;
+  text-align: left;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flowers-hero__brand {
+  max-width: 420px;
+  direction: ltr;
+  margin-left: 7%;
+  margin-top: 10px;
+}
+
+.flowers-hero__small {
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(36, 52, 71, 0.65);
+  font-family: var(--font-ui-en);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+}
+
+
+.flowers-hero__title {
+  margin: 0;
+  color: #243447;
+  font-family: var(--font-brand-en);
+  font-size: clamp(4.4rem, 8vw, 8rem);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-align: left;
+  text-shadow: none;
+}
+
+.flowers-hero__subtitle {
+  margin: 14px 0 0;
+  color: rgba(36, 52, 71, 0.58);
+  font-family: var(--font-ui-en);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+@media (max-width: 560px) {
+  .flowers-hero__media img {
+    object-position: 54% center;
+    filter: saturate(1.08) brightness(1.12);
+  }
+
+  .flowers-hero__overlay {
+    background: none;
+  }
+
+  .flowers-hero__content {
+    width: 90%;
+    align-items: flex-start;
+    padding-top: 56px;
+  }
+
+  .flowers-hero__brand {
+    max-width: 260px;
+    margin-left: 0;
+    margin-top: 0;
+  }
+
+  .flowers-hero__title {
+    font-size: clamp(3.6rem, 18vw, 5rem);
+  }
+}
+
+.flowers-collection__divider {
+    width: 56px;
+    height: 1px;
+    margin: 18px auto 24px;
+    background: rgba(185, 138, 87, 0.28);
+    position: relative;
+}
+
+.flowers-collection__divider::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #b98a57;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.flowers-filter__chip {
+    transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.flowers-filter__chip:active {
+    transform: scale(.97);
+}
+
+.flowers-product-card__code {
+  direction: rtl;
+  color: #342b26;
+  font-family: var(--font-fa);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.flowers-product-card__price-muted {
+  color: rgba(45, 42, 39, 0.48);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.flowers-product-card__type {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: rgba(45,42,39,.42);
+
+  font-family: var(--font-ui-en);
+  font-size: .64rem;
+  font-weight: 700;
+
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.flowers-product-card__code {
+  font-family: var(--font-ui-en);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+
+.flowers-product-card__price-muted {
+  margin-top: 6px;
+  color: rgba(45,42,39,.48);
+  font-size: .78rem;
 }
