@@ -21,15 +21,16 @@
   <section class="flowers-collection" id="flowers-collection">
     <div class="flowers-container">
 
-      <div class="flowers-collection__head">
-        <span>FLOWER COLLECTION</span>
-        <h2>کالکشن گل‌ها</h2>
-        <p>
-          از دسته‌گل‌های ظریف تا باکس‌ها و استندهای باشکوه؛ مجموعه ZAD را بر اساس سبک مورد نظر خود مرور کنید.
-        </p>
-      </div>
+      <section class="flowers-collection-banner">
+  <div class="flowers-collection-banner__bg" aria-hidden="true">
+    <img src="{% static 'main/img/footer-floral.jpg' %}" alt="">
+  </div>
 
-      <div class="flowers-collection__divider"></div>
+  <div class="flowers-collection-banner__content">
+    <span>FLOWER COLLECTION</span>
+    <h2>گل‌های زاد</h2>
+  </div>
+</section>
 
       {% with products=flower_products|default:same_day_products %}
         {% if products %}
@@ -132,7 +133,7 @@
                     >
                   {% else %}
                     <img
-                      src="{% static 'main/img/product-placeholder.jpg' %}"
+                      src="{% static 'main/img/cat-flowers.jpg' %}"
                       alt="{{ product.display_name }}"
                       loading="lazy"
                       data-product-image
@@ -241,7 +242,7 @@
         </div>
 
         <div class="flowers-cta__media">
-          <img src="{% static 'main/img/flowers-cta.jpg' %}" alt="سفارش اختصاصی گل" loading="lazy">
+          <img src="{% static 'main/img/footer-floral.jpg' %}" alt="سفارش اختصاصی گل" loading="lazy">
         </div>
       </div>
     </div>

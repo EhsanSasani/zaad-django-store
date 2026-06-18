@@ -136,7 +136,7 @@ CATEGORY_CONTENT_OVERRIDES = {
         "meta_title": "دسته گل عروس در مشهد | ZAD",
         "meta_description": "دسته گل عروس زاد با چیدمان لطیف، مینیمال و هماهنگ با مراسم.",
         "intro": "دسته‌گلی لطیف برای یکی از مهم‌ترین لحظه‌ها.",
-        "image": "main/img/sub-wedding.jpg",
+        "image": "main/img/sub-bridal-bouquet.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
     "jarl": {
@@ -168,7 +168,7 @@ CATEGORY_CONTENT_OVERRIDES = {
         "meta_title": "Birthday Cakes | ZAD",
         "meta_description": "ZAD birthday cakes for warm celebrations and soft moments.",
         "intro": "Soft cakes for warm birthday moments.",
-        "image": "main/img/sub-birthday-cakes.jpg",
+        "image": "main/img/cat-bakery.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
     "cookies": {
@@ -176,7 +176,7 @@ CATEGORY_CONTENT_OVERRIDES = {
         "meta_title": "Cookies | ZAD",
         "meta_description": "ZAD cookies for gifting, gatherings and sweet little details.",
         "intro": "Small sweet bites for gentle celebrations.",
-        "image": "main/img/sub-cookies.jpg",
+        "image": "main/img/cat-bakery.jpg",
         "hero_image": "main/img/hero-subcategory.jpg",
     },
 }
@@ -190,16 +190,16 @@ CATEGORY_SLUG_ALIASES = {
 
 PAGE_HERO_CONTENT = {
     "occasions": {
-        "kicker": "zad Occasions",
-        "title": "Choose the Mood",
-        "text": "Soft choices for the feeling you want to send.",
+        "kicker": "ZAD OCCASIONS",
+        "title": "Occasions by ZAD",
+        "text": "انتخاب‌هایی برای تولد، عشق، تبریک، دلجویی و لحظه‌هایی که باید ماندگار شوند.",
         "image": "main/img/hero-occasions.jpg",
     },
     "flowers": {
         "kicker": "ZAD Flowers",
         "title": "Flowers by ZAD",
         "text": "انتخاب گل برای لحظه‌های خاص، سفارش‌های فوری و چیدمان‌های اختصاصی.",
-        "image": "main/img/hero-flowers.jpg",
+        "image": "main/img/flowers-hero.jpg",
     },
     "bakery": {
         "kicker": "zad Bakery",
@@ -223,7 +223,7 @@ PAGE_HERO_CONTENT = {
         "kicker": "zad Item",
         "title": "",
         "text": "",
-        "image": "main/img/hero-item.jpg",
+        "image": "main/img/hero-gifts.jpg",
     },
     "contact": {
         "kicker": "Contact zad",
@@ -247,7 +247,7 @@ PAGE_HERO_CONTENT = {
         "kicker": "zad Journal",
         "title": "Soft Notes",
         "text": "Small ideas for flowers, gifts and moments.",
-        "image": "main/img/hero-blog.jpg",
+        "image": "main/img/hero-contact.jpg",
     },
     "faq": {
         "kicker": "zad Help",
@@ -552,6 +552,7 @@ def _default_context(
     breadcrumbs=None,
     faq_items=None,
     item_id=None,
+    enable_product_modal=False,
 ):
     context = {
         "page_type": page_type,
@@ -562,6 +563,7 @@ def _default_context(
         "item_id": item_id,
         "extra_jsonld": [],
         "is_homepage": False,
+        "enable_product_modal": enable_product_modal,
         **_hero_defaults(meta_title, meta_description),
     }
 
@@ -638,53 +640,69 @@ OCCASION_CARD_CONTENT = {
     "birthday": {
         "title": "تولد",
         "hero_title": "گل تولد",
-        "intro": "برای تبریک تولد و هدیه‌های شاد.",
+        "intro": "برای شادی‌های روشن.",
         "image": "main/img/occasions/birthday.jpg",
     },
     "romantic": {
         "title": "عاشقانه",
         "hero_title": "گل عاشقانه",
-        "intro": "برای هدیه‌های احساسی و خاص.",
+        "intro": "برای لحظه‌های نزدیک.",
         "image": "main/img/occasions/romantic.jpg",
     },
     "congratulation": {
         "title": "تبریک",
         "hero_title": "گل تبریک",
-        "intro": "برای موفقیت، شروع تازه و خبرهای خوب.",
+        "intro": "برای خبرهای خوب.",
         "image": "main/img/occasions/special.jpg",
     },
     "apology": {
         "title": "معذرت‌خواهی",
         "hero_title": "گل معذرت‌خواهی",
-        "intro": "برای جبران دلخوری با یک انتخاب محترمانه.",
-        "image": "main/img/occasions/apology.jpg",
+        "intro": "برای دلجویی آرام.",
+        "image": "main/img/occasions/special.jpg",
     },
     "condolence": {
         "title": "ترحیم",
         "hero_title": "گل ترحیم",
-        "intro": "برای عرض تسلیت و همراهی در لحظه‌های سخت.",
+        "intro": "برای همراهی محترمانه.",
         "image": "main/img/occasions/condolence.jpg",
     },
     "proposal": {
         "title": "خواستگاری",
         "hero_title": "گل خواستگاری",
-        "intro": "برای مراسم رسمی و قرارهای خانوادگی.",
-        "image": "main/img/occasions/wedding.jpg",
+        "intro": "برای شروعی رسمی.",
+        "image": "main/img/occasions/special.jpg",
     },
     "engagement": {
         "title": "بله‌برون",
         "hero_title": "گل بله‌برون",
-        "intro": "برای مراسم بله‌برون و نامزدی.",
-        "image": "main/img/occasions/wedding.jpg",
+        "intro": "برای پیمان‌های شیرین.",
+        "image": "main/img/occasions/special.jpg",
     },
     "no-occasion": {
         "title": "بدون مناسبت",
         "hero_title": "گل بدون مناسبت",
-        "intro": "برای هدیه دادن بدون دلیل خاص.",
+        "intro": "برای بی‌دلیل دوست داشتن.",
         "image": "main/img/occasions/special.jpg",
     },
+    "wedding": {
+    "title": "عروسی",
+    "hero_title": "گل عروسی",
+    "intro": "برای روزهای سپید.",
+    "image": "main/img/occasions/special.jpg",
+},
 }
-
+OCCASION_EN_LABELS = {
+    "birthday": "Birthday",
+    "romantic": "Romantic",
+    "congratulation": "Congratulations",
+    "apology": "Apology",
+    "condolence": "Sympathy",
+    "proposal": "Proposal",
+    "engagement": "Engagement",
+    "no-occasion": "Just Because",
+    "wedding": "Wedding",
+}
 def _section_all_url(section):
     route_name = SECTION_ALL_ROUTE_NAMES.get(section)
 
@@ -722,9 +740,24 @@ def _occasion_card(tag, *, for_flowers=False):
     return {
         "slug": tag.slug,
         "label": content.get("title") or tag.name,
+        "label_en": OCCASION_EN_LABELS.get(
+            tag.slug,
+            tag.slug.replace("-", " ").title(),
+        ),
         "url": reverse(url_name, args=[tag.slug]),
-        "image": tag.cover_image.url if tag.cover_image else content.get("image", "main/img/occasions/special.jpg"),
-        "intro": tag.description or content.get("intro", "Curated ideas for this occasion."),
+        "image": (
+            tag.cover_image.url
+            if tag.cover_image
+            else content.get(
+                "image",
+                "main/img/occasions/special.jpg",
+            )
+        ),
+        "intro": tag.description
+        or content.get(
+            "intro",
+            "Curated ideas for this occasion.",
+        ),
     }
 
 
@@ -801,23 +834,6 @@ def _flower_type_cards():
         if category:
             cards.append(_category_card(category))
 
-    wedding_children = [
-        _category_card(categories[slug])
-        for slug in FLOWER_WEDDING_CATEGORY_SLUGS
-        if slug in categories
-    ]
-
-    if wedding_children:
-        cards.append(
-            {
-                "slug": "wedding",
-                "label": "عروسی",
-                "url": wedding_children[0]["url"],
-                "image": wedding_children[0]["image"],
-                "intro": "دسته‌گل و گل‌آرایی عروسی.",
-                "children": wedding_children,
-            }
-        )
 
     for slug in ("jarl", "plants"):
         category = categories.get(slug)
@@ -883,6 +899,7 @@ def index(request):
         meta_title="zad | Flowers, Bakery & Gifts in Mashhad",
         meta_description="zad Concept Store in Mashhad for flowers, bakery, gifts, events, and fast coordination.",
         faq_items=HOME_FAQ,
+        enable_product_modal=True,
     )
 
     home_events = list(
@@ -949,6 +966,7 @@ def _category_page(request, section):
         meta_description=config["meta_description"],
         breadcrumbs=breadcrumbs,
         faq_items=config["faq"] or None,
+        enable_product_modal=True,
     )
 
     hero_data = _hero_from_key(section)
@@ -1004,7 +1022,6 @@ FLOWER_TYPE_SLUGS = [
     "box",
     "bouquet",
     "jarl",
-    "wedding",
     "stand",
     "plants",
 ]
@@ -1033,7 +1050,7 @@ FLOWER_TYPE_FALLBACK_IMAGES = {
     "stand": "main/img/sub-stand.jpg",
     "jarl": "main/img/sub-plant.jpg",
     "plants": "main/img/sub-plant.jpg",
-    "wedding": "main/img/sub-wedding.jpg",
+    "wedding": "main/img/sub-bridal-bouquet.jpg",
 }
 
 
@@ -1042,10 +1059,10 @@ OCCASION_FALLBACK_IMAGES = {
     "birthday": "main/img/occasions/birthday.jpg",
     "romantic": "main/img/occasions/romantic.jpg",
     "congratulation": "main/img/occasions/special.jpg",
-    "apology": "main/img/occasions/apology.jpg",
+    "apology": "main/img/occasions/special.jpg",
     "condolence": "main/img/occasions/condolence.jpg",
-    "proposal": "main/img/occasions/wedding.jpg",
-    "engagement": "main/img/occasions/wedding.jpg",
+    "proposal": "main/img/occasions/special.jpg",
+    "engagement": "main/img/occasions/special.jpg",
     "no-occasion": "main/img/occasions/special.jpg",
 }
 
@@ -1116,6 +1133,7 @@ def flowers(request):
         meta_description="گل‌های زاد برای لحظه‌های ماندگار، سفارش‌های فوری، مناسبت‌ها و انتخاب‌های اختصاصی.",
         breadcrumbs=None,
         faq_items=SECTION_CONTENT["flowers"].get("faq") or None,
+        enable_product_modal=True,
     )
 
     hero_data = _hero_from_key("flowers")
@@ -1126,6 +1144,7 @@ def flowers(request):
 
     flower_products = (
     _published_products_for_section(Category.Section.FLOWERS)
+    .exclude(category__slug="wedding")
     .order_by(
         "-featured",
         "sort_order",
@@ -1133,6 +1152,17 @@ def flowers(request):
     )
     
 )
+    
+    
+    FLOWER_FILTER_ORDER = [
+        "hand-bouquet",
+        "box",
+        "bouquet",
+        "jarl",
+        "stand",
+        "plants",
+    ]
+
     flower_filter_categories = list(
     Category.objects.filter(
         section=Category.Section.FLOWERS,
@@ -1140,29 +1170,9 @@ def flowers(request):
         products__is_active=True,
         products__publish_status=Product.PublishStatus.PUBLISHED,
     )
+    .exclude(slug="wedding")
     .distinct()
-    .order_by("sort_order", "name")
 )
-    
-    FLOWER_FILTER_ORDER = [
-        "hand-bouquet",
-        "box",
-        "bouquet",
-        "jarl",
-        "wedding",
-        "stand",
-        "plants",
-    ]
-
-    flower_filter_categories = list(
-        Category.objects.filter(
-            section=Category.Section.FLOWERS,
-            is_active=True,
-            products__is_active=True,
-            products__publish_status=Product.PublishStatus.PUBLISHED,
-        )
-        .distinct()
-    )
 
     flower_filter_categories = sorted(
         flower_filter_categories,
@@ -1243,6 +1253,7 @@ def _section_all_products(request, section):
         meta_title=f"{title} | zad",
         meta_description=f"View all {config['title']} products at zad.",
         breadcrumbs=breadcrumbs,
+        enable_product_modal=True,
     )
 
     hero_data = _hero_from_key(
@@ -1356,6 +1367,7 @@ def _section_subcategory(request, section, subcategory_slug):
         meta_title=content["meta_title"],
         meta_description=content["meta_description"],
         breadcrumbs=breadcrumbs,
+        enable_product_modal=True,
     )
 
     hero_data = _hero_from_key(
@@ -1486,6 +1498,7 @@ def flower_occasion(request, slug):
         meta_title=f"{title} | zad",
         meta_description=f"View {title} at zad with fast order coordination.",
         breadcrumbs=breadcrumbs,
+        enable_product_modal=True,
     )
 
     context.update(
@@ -1493,7 +1506,7 @@ def flower_occasion(request, slug):
             "flowers",
             title=title,
             text=occasion.description or card.get("intro", "A soft zad selection for this mood."),
-            image=card.get("image", "main/img/hero-flowers.jpg"),
+            image=card.get("image", "main/img/flowers-hero.jpg"),
         )
     )
 
@@ -1595,13 +1608,14 @@ def _item_detail_context(request, product):
         meta_description=f"View {product.name} at zad. Call for availability, delivery timing, and order coordination.",
         breadcrumbs=breadcrumbs,
         item_id=product.pk,
+        enable_product_modal=True,
     )
 
     hero_data = _hero_from_key(
         "item",
         title=product.name,
         text=description,
-        image=product.cover_image.url if getattr(product, "cover_image", None) else "main/img/hero-item.jpg",
+        image=product.cover_image.url if getattr(product, "cover_image", None) else "main/img/hero-gifts.jpg",
     )
 
     db_hero = _get_site_hero("item", product.slug)
@@ -1679,7 +1693,16 @@ def flower_detail_redirect(request, pk: int):
 def occasions(request):
     occasion_tags = _active_occasion_tags(limit=12)
     occasion_cards = [_occasion_card(tag) for tag in occasion_tags]
-
+    occasion_cards.append(
+    {
+        "slug": "wedding",
+        "label": "عروسی",
+        "label_en": "Wedding",
+        "url": reverse("flower_subcategory", args=["wedding"]),
+        "image": "main/img/occasions/special.jpg",
+        "intro": "برای روزهای سپید.",
+    }
+)
     breadcrumbs = _with_home(
         [
             {
@@ -1775,6 +1798,7 @@ def occasion_detail(request, slug):
         meta_title=f"{occasion.name} | zad",
         meta_description=f"zad suggestions for {occasion.name}.",
         breadcrumbs=breadcrumbs,
+        enable_product_modal=True,
     )
 
     db_hero = _get_site_hero("occasions", occasion.slug)
@@ -1810,55 +1834,20 @@ def occasion_detail(request, slug):
 # =========================
 
 def events(request):
-    published_events_qs = Event.objects.filter(
+    published_events = Event.objects.filter(
         status=PublishStatus.PUBLISHED,
     ).order_by("start_at", "-created_at")
 
-    published_events = list(published_events_qs)
-
-    breadcrumbs = _with_home([{"name": "Events", "url": None}])
+    breadcrumbs = _with_home([{"name": "ورکشاپ‌ها", "url": None}])
 
     context = _default_context(
         request,
-        page_type="category",
+        page_type="workshops",
         active_nav="events",
-        meta_title="zad Events | Workshops & Experiences",
-        meta_description="zad events in Mashhad for workshops, launches, and in-person experiences.",
+        meta_title="ورکشاپ‌های زاد",
+        meta_description="ورکشاپ‌های گل‌آرایی زاد؛ تجربه‌ای آرام، زیبا و الهام‌بخش.",
         breadcrumbs=breadcrumbs,
     )
-
-    hero_data = _hero_from_key("events")
-    db_hero = _get_site_hero("events")
-
-    if db_hero:
-        hero_data = db_hero
-
-    context.update(hero_data)
-
-    events_are_demo = not published_events_qs.exists()
-
-    if events_are_demo:
-        now = timezone.now()
-        published_events = [
-            {
-                "title": "Floral Styling Workshop",
-                "description": "A short floral styling session with a minimal zad approach.",
-                "start_at": now + timedelta(days=7),
-                "end_at": now + timedelta(days=7, hours=2),
-                "location": "zad Store, Mashhad",
-                "is_demo": True,
-                "get_absolute_url": reverse("contact"),
-            },
-            {
-                "title": "Gift Collection Preview",
-                "description": "A preview of zad’s new curated gifts and occasion sets.",
-                "start_at": now + timedelta(days=14),
-                "end_at": now + timedelta(days=14, hours=3),
-                "location": "zad Store, Mashhad",
-                "is_demo": True,
-                "get_absolute_url": reverse("contact"),
-            },
-        ]
 
     context.update(
         {
@@ -1868,7 +1857,6 @@ def events(request):
                 include_event_fields=True,
             ),
             "lead_default_type": "event",
-            "events_are_demo": events_are_demo,
         }
     )
 
@@ -1975,6 +1963,7 @@ def mashhad_hub(request):
         meta_title="Mashhad Orders | zad",
         meta_description="zad Mashhad order hub for flowers, same-day delivery, and fast coordination.",
         breadcrumbs=breadcrumbs,
+        enable_product_modal=True,
     )
 
     hero_data = _hero_from_key("mashhad")
@@ -2059,6 +2048,7 @@ def _local_landing(request, landing_type):
         meta_description=meta_description,
         breadcrumbs=breadcrumbs,
         faq_items=local_faq,
+        enable_product_modal=True,
     )
 
     hero_data = _hero_from_key("mashhad", title=title, text=subtitle)
@@ -2296,13 +2286,14 @@ def blog_detail(request, slug):
         meta_title=f"{post.title} | zad Journal",
         meta_description=post.excerpt or "Read a note from the zad Journal.",
         breadcrumbs=breadcrumbs,
+        enable_product_modal=True,
     )
 
     hero_data = _hero_from_key(
         "blog",
         title=post.title,
         text=post.excerpt or "Read a note from the zad Journal.",
-        image=post.cover_image.url if post.cover_image else "main/img/hero-blog.jpg",
+        image=post.cover_image.url if post.cover_image else "main/img/hero-contact.jpg",
     )
 
     db_hero = _get_site_hero("blog", post.slug)

@@ -3,6 +3,11 @@
 
 {% block body_class %}page-item{% endblock %}
 
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/product_detail.css' %}?v=1">
+{% endblock %}
+
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
@@ -155,4 +160,8 @@
   {% include "partials/featured_products_slider.html" with products=similar_items %}
 </section>
 {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'main/js/featured-products-slider.js' %}?v=10000"></script>
 {% endblock %}

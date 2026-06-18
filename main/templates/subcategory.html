@@ -1,6 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-subcategory page-catalog-subcategory{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}

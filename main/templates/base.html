@@ -22,14 +22,14 @@
   <link rel="stylesheet" href="{% static 'main/css/layout.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/navbar.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/hero.css' %}?v=1">
-  <link rel="stylesheet" href="{% static 'main/css/home.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/components.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/page.css' %}?v=1">
-  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
-  <link rel="stylesheet" href="{% static 'main/css/product_detail.css' %}?v=1">
+  {% block page_css %}{% endblock %}
   <link rel="stylesheet" href="{% static 'main/css/footer.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/responsive.css' %}?v=1">
-  <link rel="stylesheet" href="{% static 'main/css/product-modal.css' %}">
+  {% if enable_product_modal %}
+    <link rel="stylesheet" href="{% static 'main/css/product-modal.css' %}">
+  {% endif %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   {% block extra_head %}{% endblock %}
@@ -103,7 +103,7 @@
   </div>
 </header>
 
-  {% if not is_home and page_type != "home" and page_type != "flowers_landing" %}
+  {% if not is_home and page_type != "home" and page_type != "flowers_landing" and page_type != "workshops" %}
   <section class="page-hero">
     <div class="page-hero__media">
       {% if page_hero_image %}
@@ -121,7 +121,7 @@
   </section>
   
 
-  {% if page_type != "item" %}
+  {% if page_type != "item" and page_type != "occasions" %}
     <section class="container section-block page-hero-mood">
       <div class="home-intro__brandline page-hero-mood__brandline">
         <span class="page-hero-mood__mark">✦</span>
@@ -203,11 +203,12 @@
 </footer>
 
   <script src="{% static 'main/js/analytics.js' %}"></script>
-<script src="{% static 'main/js/featured-products-slider.js' %}?v=10000"></script>
 <script src="{% static 'main/js/navbar.js' %}"></script>
 
 {% block extra_js %}{% endblock %}
-{% include "product_modal.html" %}
-<script src="{% static 'main/js/product-modal.js' %}"></script>
+{% if enable_product_modal %}
+  {% include "product_modal.html" %}
+  <script src="{% static 'main/js/product-modal.js' %}"></script>
+{% endif %}
 </body>
 </html>

@@ -1,6 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-local-landing{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
@@ -62,4 +67,8 @@
     {% endfor %}
   </div>
 </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'main/js/featured-products-slider.js' %}?v=10000"></script>
 {% endblock %}

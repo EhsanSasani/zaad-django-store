@@ -578,7 +578,7 @@
 
 .home-experience-section {
   margin-top: 0;
-  padding: 78px 0 86px;
+  padding: 56px 0 86px;
   background:
     radial-gradient(circle at 18% 18%, rgba(199, 155, 107, 0.09), transparent 28%),
     linear-gradient(180deg, #f6f1ea 0%, #fbf7f1 52%, #f4ede5 100%);
@@ -757,56 +757,51 @@
 
 .home-occasions-section {
   margin-top: 0;
-  padding: 34px 0 52px;
+  padding: 42px 0 48px;
   background:
-    linear-gradient(180deg, rgba(246, 241, 234, 0.84), rgba(246, 241, 234, 0.9)),
+    linear-gradient(180deg, rgba(246, 241, 234, 0.88), rgba(246, 241, 234, 0.94)),
     url("../img/home-occasions-bg.jpg") center / cover no-repeat;
-  border-top: 1px solid rgba(120, 90, 65, 0.08);
-  border-bottom: 1px solid rgba(120, 90, 65, 0.08);
+  border-top: 1px solid rgba(157, 111, 63, 0.12);
+  border-bottom: 1px solid rgba(157, 111, 63, 0.12);
   overflow: hidden;
 }
 
-.home-occasions-section::before {
-  content: "";
-  display: block;
-  width: min(1180px, 86%);
-  height: 1px;
-  margin: 0 auto 24px;
-  background: linear-gradient(90deg, transparent, rgba(199, 155, 107, 0.34), transparent);
-}
-
 .home-occasions-section .container {
-  width: min(1480px, 88%);
+  width: min(1380px, 88%);
+  margin-inline: auto;
 }
 
 .home-occasions-head {
-  margin-bottom: 30px;
+  max-width: 720px;
+  margin: 0 auto 24px;
   text-align: center;
 }
 
 .home-occasions-head span {
   display: block;
   margin-bottom: 8px;
-  color: #b98952;
+  color: #b98a57;
   font-family: var(--font-ui-en);
   font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
 .home-occasions-head h2 {
   margin: 0;
-  color: #342b26;
+  color: #302925;
   font-family: var(--font-fa);
-  font-size: clamp(1.65rem, 2.8vw, 3rem);
+  font-size: clamp(1.7rem, 2.6vw, 3rem);
   font-weight: 500;
   line-height: 1.25;
   letter-spacing: -0.045em;
 }
 
 .home-occasions-head p {
+  max-width: 560px;
   margin: 10px 0 0;
+  margin-inline: auto;
   color: rgba(52, 43, 38, 0.7);
   font-family: var(--font-fa);
   font-size: 0.86rem;
@@ -844,29 +839,35 @@
 .home-occasions-row {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  gap: 18px;
+  max-width: 1160px;
+  margin: 0 auto;
   overflow: visible;
   padding: 0;
 }
 
 .home-occasion-card {
+  position: relative;
   display: block;
+  width: 100%;
+  min-width: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 16px;
-  background: #fbf5ec;
-  box-shadow: 0 28px 70px rgba(58, 43, 30, 0.14);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+  scroll-snap-align: unset;
   text-decoration: none;
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition: 0.3s ease;
 }
 
 .home-occasion-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 38px 84px rgba(58, 43, 30, 0.18);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.08);
 }
 
 .home-occasion-card__media {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
 }
 
@@ -875,7 +876,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s ease, filter 0.4s ease;
+  transition: transform 0.45s ease, filter 0.4s ease;
 }
 
 .home-occasion-card:hover .home-occasion-card__media img {
@@ -884,12 +885,15 @@
 }
 
 .home-occasion-card__body {
-  min-height: 92px;
-  display: flex;
+  position: relative;
+  min-height: 82px;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 24px 16px;
-  background: linear-gradient(180deg, #fff8ef 0%, #f7eee3 100%);
+  padding: 16px 22px 14px;
+  border-top: 1px solid rgba(157, 111, 63, 0.08);
+  background: #f9f5ef;
 }
 
 .home-occasion-card__body strong {
@@ -897,7 +901,7 @@
   margin: 0 0 6px;
   color: #332a25;
   font-family: var(--font-fa);
-  font-size: 1.42rem;
+  font-size: 1.28rem;
   font-weight: 600;
   line-height: 1.2;
 }
@@ -906,7 +910,7 @@
   display: block;
   color: #a77945;
   font-family: var(--font-ui-en);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -915,10 +919,10 @@
 .home-occasion-card__body div::after {
   content: "";
   display: block;
-  width: 42px;
+  width: 34px;
   height: 1px;
-  margin-top: 11px;
-  background: #b98952;
+  margin-top: 9px;
+  background: rgba(185, 138, 87, 0.72);
 }
 
 .home-occasion-card__body i,
@@ -930,7 +934,7 @@
 }
 
 .home-occasions-more {
-  margin-top: 24px;
+  margin-top: 20px;
   text-align: center;
 }
 
@@ -1096,6 +1100,15 @@
 
   .home-experience__features {
     margin-top: 30px;
+  }
+
+  .home-occasions-section .container {
+    width: min(100% - 32px, 760px);
+  }
+
+  .home-occasions-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
   }
 }
 
@@ -1348,286 +1361,13 @@
     white-space: normal;
   }
 
-  .home-occasions-section {
-    padding: 48px 0 58px;
-  }
-
-  .home-occasions-section::before {
-    margin-bottom: 28px;
-  }
-
-  .home-occasions-head {
-    margin-bottom: 28px;
-  }
-
   .home-occasions-head span {
     font-size: 0.72rem;
-  }
-
-  .home-occasions-head h2 {
-    font-size: 2rem;
-    line-height: 1.5;
   }
 
   .home-occasions-head p {
     font-size: 0.88rem;
   }
-
-  .home-occasions-row {
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    padding-bottom: 8px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .home-occasions-row::-webkit-scrollbar {
-    display: none;
-  }
-
-  .home-occasion-card {
-    min-width: 84%;
-    scroll-snap-align: center;
-  }
-
-  .home-occasion-card__body {
-    min-height: 96px;
-    padding: 18px 22px;
-  }
-
-  .home-occasion-card__body strong {
-    font-size: 1.5rem;
-  }
-
-  .home-occasion-card__body span {
-    font-size: 0.78rem;
-  }
-}
-/* =========================
-   Occasions - Step 1 layout
-   ========================= */
-
-.home-occasions-section {
-  padding: 58px 0 70px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(246, 241, 234, 0.88),
-      rgba(246, 241, 234, 0.94)
-    ),
-    url("../img/home-occasions-bg.jpg") center / cover no-repeat;
-  overflow: hidden;
-}
-
-.home-occasions-section .container {
-  width: min(1380px, 88%);
-  margin-inline: auto;
-}
-
-.home-occasions-head {
-  max-width: 720px;
-  margin: 0 auto 34px;
-  text-align: center;
-}
-
-.home-occasions-row {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-  overflow: visible;
-  padding: 0;
-}
-
-.home-occasion-card {
-  min-width: 0;
-  width: 100%;
-  scroll-snap-align: unset;
-}
-
-.home-occasions-more {
-  margin-top: 30px;
-  text-align: center;
-}
-
-@media (max-width: 900px) {
-  .home-occasions-section .container {
-    width: min(100% - 32px, 760px);
-  }
-
-  .home-occasions-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
-  }
-}
-
-@media (max-width: 520px) {
-  .home-occasions-section {
-    padding: 44px 0 52px;
-  }
-
-  .home-occasions-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-}
-
-.home-occasion-card__media{
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-}
-
-.home-occasion-card__media img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:transform .45s ease;
-}
-
-.home-occasion-card:hover .home-occasion-card__media img{
-    transform:scale(1.04);
-}
-
-.home-occasion-card__body{
-    background:#f9f5ef;
-    padding:18px 18px 16px;
-    border-top:1px solid rgba(157,111,63,.08);
-}
-
-.home-occasion-card__title{
-    font-size:1.7rem;
-    font-weight:700;
-    color:#2d2a27;
-    margin-bottom:4px;
-}
-
-.home-occasion-card__subtitle{
-    font-size:.82rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:#b98a57;
-}
-
-.home-occasion-card__arrow{
-    width:34px;
-    height:34px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:#b98a57;
-    background:transparent;
-    font-size:18px;
-}
-
-.home-occasion-card{
-    border-radius:22px;
-    overflow:hidden;
-    background:#fff;
-    box-shadow:0 12px 32px rgba(0,0,0,.05);
-    transition:.3s ease;
-}
-
-.home-occasion-card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 20px 44px rgba(0,0,0,.08);
-}
-
-/* =========================
-   Occasions - Step 3 premium details
-   ========================= */
-
-.home-occasion-card {
-  position: relative;
-}
-
-.home-occasion-card__body {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  min-height: 96px;
-}
-
-.home-occasion-card__body::before {
-  content: "✦";
-  position: absolute;
-  top: -20px;
-  right: 24px;
-
-  width: 42px;
-  height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  border-radius: 999px;
-  background: #f9f5ef;
-  border: 1px solid rgba(185, 138, 87, 0.24);
-  color: #b98a57;
-
-  font-size: 16px;
-  box-shadow: 0 10px 24px rgba(70, 50, 35, 0.10);
-}
-
-.home-occasion-card__body div {
-  text-align: right;
-}
-
-.home-occasion-card__body div::after {
-  width: 34px;
-  margin-top: 9px;
-  background: rgba(185, 138, 87, 0.72);
-}
-
-.home-occasion-card__arrow {
-  border: 1px solid rgba(185, 138, 87, 0.22);
-  background: rgba(255, 252, 247, 0.7);
-  transition: transform 180ms ease, background 180ms ease;
-}
-
-.home-occasion-card:hover .home-occasion-card__arrow {
-  transform: translateX(-3px);
-  background: rgba(185, 138, 87, 0.10);
-}
-
-.home-occasions-head span {
-  color: #b98a57;
-  letter-spacing: 0.22em;
-}
-
-.home-occasions-head h2 {
-  color: #302925;
-}
-
-.home-occasions-head p {
-  max-width: 560px;
-  margin-inline: auto;
-}
-
-.home-occasion-card__body::before {
-  display: none;
-}
-.home-occasion-card__body {
-  min-height: 82px;
-  padding: 16px 22px 14px;
-}
-
-.home-occasion-card__body strong {
-  font-size: 1.28rem;
-}
-
-.home-occasion-card__body span {
-  font-size: 0.72rem;
-}
-
-.home-occasion-card__arrow {
-  border: 0;
-  background: transparent;
-  width: auto;
-  height: auto;
-  font-size: 1.2rem;
 }
 
 @media (max-width: 520px) {
@@ -1637,6 +1377,11 @@
 
   .home-occasions-head {
     margin-bottom: 24px;
+  }
+
+  .home-occasions-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
   }
 
   .home-occasion-card__body {
@@ -1656,35 +1401,3 @@
     margin-top: 20px;
   }
 }
-
-.home-occasions-section {
-  padding: 42px 0 48px;
-  border-top: 1px solid rgba(157, 111, 63, 0.12);
-  border-bottom: 1px solid rgba(157, 111, 63, 0.12);
-}
-
-.home-occasions-section::before {
-  display: none;
-}
-
-.home-occasions-head {
-  margin-bottom: 24px;
-}
-
-.home-occasions-head h2 {
-  font-size: clamp(1.7rem, 2.6vw, 3rem);
-}
-
-.home-occasions-row {
-  max-width: 1160px;
-  margin: 0 auto;
-}
-
-.home-occasions-more {
-  margin-top: 20px;
-}
-
-.home-experience-section {
-  padding-top: 56px;
-}
-

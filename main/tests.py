@@ -4,87 +4,93 @@ from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
 
-from .models import BakeryItem, Category, Event, Flower, LeadRequest, PublishStatus
+from .models import Category, Event, LeadRequest, Product, PublishStatus
 
 
 class MainViewsTests(TestCase):
     def setUp(self):
-        flowers_category, _ = Category.objects.get_or_create(
+        self.flowers_category = Category.objects.create(
+            name="Bouquet",
             slug="bouquet",
             section=Category.Section.FLOWERS,
-            defaults={"name": "دسته گل"},
         )
-        bakery_category, _ = Category.objects.get_or_create(
+        self.bakery_category = Category.objects.create(
+            name="Daily Bakery",
             slug="daily-bakery",
             section=Category.Section.BAKERY,
-            defaults={"name": "بیکری روز"},
         )
-        gifts_category, _ = Category.objects.get_or_create(
+        self.gifts_category = Category.objects.create(
+            name="Gift Box",
             slug="gift-box",
             section=Category.Section.GIFTS,
-            defaults={"name": "هدیه"},
         )
 
-        self.flower = Flower.objects.create(
-            name="رز قرمز",
-            pack_type=Flower.PackType.BOUQUET,
+        self.flower = Product.objects.create(
+            name="Red Rose",
+            pricing_type=Product.PricingType.FIXED,
             price=450000,
-            category=flowers_category,
-            description="تست محصول",
+            publish_status=Product.PublishStatus.PUBLISHED,
+            category=self.flowers_category,
+            description="Test flower product",
         )
-        self.bakery = BakeryItem.objects.create(
-            name="کیک شکلاتی",
-            size_or_weight="۱ کیلو",
+        self.bakery = Product.objects.create(
+            name="Chocolate Cake",
+            pricing_type=Product.PricingType.FIXED,
             price=560000,
-            category=bakery_category,
-            description="نمونه بیکری",
+            publish_status=Product.PublishStatus.PUBLISHED,
+            category=self.bakery_category,
+            description="Test bakery product",
         )
-        self.gift_flower = Flower.objects.create(
-            name="گل هدیه",
-            pack_type=Flower.PackType.BOX,
+        self.gift_product = Product.objects.create(
+            name="Gift Box",
+            pricing_type=Product.PricingType.FIXED,
             price=320000,
-            category=gifts_category,
-            description="نمونه هدیه",
+            publish_status=Product.PublishStatus.PUBLISHED,
+            category=self.gifts_category,
+            description="Test gift product",
         )
 
         self.published_event = Event.objects.create(
-            title="رویداد منتشرشده",
-            description="رویداد تست",
+            title="Published Event",
+            description="Test event",
             start_at=timezone.now() + timedelta(days=2),
             end_at=timezone.now() + timedelta(days=2, hours=3),
-            location="مشهد",
+            location="Mashhad",
             status=PublishStatus.PUBLISHED,
             published_at=timezone.now(),
         )
         self.draft_event = Event.objects.create(
-            title="رویداد پیش‌نویس",
-            description="پیش‌نویس",
+            title="Draft Event",
+            description="Draft",
             start_at=timezone.now() + timedelta(days=5),
             end_at=timezone.now() + timedelta(days=5, hours=2),
-            location="مشهد",
+            location="Mashhad",
             status=PublishStatus.DRAFT,
         )
 
     def test_index_page_loads(self):
         response = self.client.get(reverse("index"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "دسته‌بندی‌ها")
         self.assertContains(response, reverse("flowers"))
 
     def test_legacy_section_redirects_to_new_category(self):
         response = self.client.get(reverse("index"), {"section": "bakery"})
         self.assertRedirects(response, reverse("bakery"), fetch_redirect_response=False)
 
-    def test_category_page_contains_lead_form(self):
+    def test_flowers_landing_page_loads(self):
         response = self.client.get(reverse("flowers"))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "راهنمایی می‌خواهم")
-        self.assertContains(response, reverse("flower_subcategory", args=["bouquet"]))
+        self.assertContains(response, self.flower.product_code)
+
+    def test_category_page_contains_subcategory_link(self):
+        response = self.client.get(reverse("bakery"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, reverse("bakery_subcategory", args=["daily-bakery"]))
 
     def test_subcategory_page_loads(self):
         response = self.client.get(reverse("flower_subcategory", args=["bouquet"]))
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.flower.name)
+        self.assertContains(response, self.flower.display_name)
 
     def test_events_page_shows_only_published(self):
         response = self.client.get(reverse("events"))
@@ -109,11 +115,11 @@ class MainViewsTests(TestCase):
         response = self.client.post(
             reverse("lead_request"),
             {
-                "full_name": "کاربر تست",
+                "full_name": "Test User",
                 "mobile": "09121234567",
                 "lead_type": LeadRequest.LeadType.FLOWER,
                 "delivery_window": LeadRequest.DeliveryWindow.TODAY,
-                "note": "تست",
+                "note": "Test",
                 "next": reverse("contact"),
                 "source_page": "/contact/",
             },

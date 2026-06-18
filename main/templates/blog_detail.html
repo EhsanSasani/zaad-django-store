@@ -1,6 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-blog-detail{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
@@ -40,4 +45,8 @@
   {% include "partials/featured_products_slider.html" with products=related_products %}
 </section>
 {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'main/js/featured-products-slider.js' %}?v=10000"></script>
 {% endblock %}

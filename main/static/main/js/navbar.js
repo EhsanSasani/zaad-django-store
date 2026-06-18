@@ -4,19 +4,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (!dropdown || !trigger) return;
 
+  trigger.setAttribute("aria-expanded", "false");
+
+  function setDropdownOpen(isOpen) {
+    dropdown.classList.toggle("is-open", isOpen);
+    trigger.setAttribute("aria-expanded", isOpen ? "true" : "false");
+  }
+
   trigger.addEventListener("click", function (event) {
+    event.preventDefault();
     event.stopPropagation();
-    dropdown.classList.toggle("is-open");
+    setDropdownOpen(!dropdown.classList.contains("is-open"));
   });
 
   document.addEventListener("click", function (event) {
     if (!dropdown.contains(event.target)) {
-      dropdown.classList.remove("is-open");
+      setDropdownOpen(false);
     }
   });
 
   window.addEventListener("resize", function () {
-    dropdown.classList.remove("is-open");
+    setDropdownOpen(false);
   });
 });
 

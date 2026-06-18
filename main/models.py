@@ -423,8 +423,9 @@ class Product(TimeStampedModel):
 
         if update_fields:
             super().save(update_fields=update_fields)
-        def get_absolute_url(self):
-            return reverse("product_detail", args=[self.pk, self.slug])
+
+    def get_absolute_url(self):
+        return reverse("product_detail", args=[self.pk, self.slug])
 
 
 class FlowerManager(models.Manager):

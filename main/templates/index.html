@@ -3,6 +3,10 @@
 
 {% block body_class %}page-home{% endblock %}
 
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/home.css' %}?v=1">
+{% endblock %}
+
 {% block content %}
 
 <section class="global-hero home-hero">
@@ -33,7 +37,7 @@
     {% empty %}
       <div class="hero-slide is-active">
         <picture>
-          <source media="(max-width:760px)" srcset="{% static 'main/img/hero-mobile-1.webp' %}">
+          <source media="(max-width:760px)" srcset="{% static 'main/img/hero-mobile-1.jpg' %}">
           <img src="{% static 'main/img/hero-1.jpg' %}" alt="ZAD Concept Store">
         </picture>
 
