@@ -14,4 +14,6 @@ media_backup*/
 
 staticfiles/
 
+ui-audit-shots-current-fixes/
+
 .env
