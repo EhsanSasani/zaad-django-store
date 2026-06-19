@@ -186,14 +186,13 @@ JAZZMIN_SETTINGS = {
     "default_icon_children": "fas fa-circle",
     "related_modal_active": True,
     "changeform_format": "horizontal_tabs",
-    "custom_css": "main/admin/css/admin-local.css",
-    "custom_js": "main/admin/js/admin-local.js",
+    "custom_css": "main/css/admin_custom.css",
     "use_google_fonts_cdn": False,
 }
 
 JAZZMIN_UI_TWEAKS = {
     "theme": "default",
-    "dark_mode_theme": None,
+    "default_theme_mode": "dark",
     "navbar": "navbar-dark",
     "no_navbar_border": True,
     "sidebar": "sidebar-dark-primary",

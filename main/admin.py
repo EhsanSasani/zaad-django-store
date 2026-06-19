@@ -65,11 +65,12 @@ class AdminImagePreviewMixin:
             )
 
         return format_html(
-                '''
-                <img src="{}" class="zad-admin-image-preview" />
-                ''',
-                image.url,
-            )
+            '''
+            <img src="{}" class="zad-admin-preview" />
+            ''',
+            image.url,
+        )
+
     @admin.display(description="نمای بزرگ عکس")
     def large_image_preview(self, obj):
         image = None
@@ -85,7 +86,7 @@ class AdminImagePreviewMixin:
         return format_html(
             '''
             <a href="{}" target="_blank" class="zad-admin-large-image-link">
-                <img src="{}" class="zad-admin-large-image-preview" />
+                <img src="{}" class="zad-admin-preview" />
             </a>
             ''',
             image.url,

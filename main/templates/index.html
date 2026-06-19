@@ -99,14 +99,32 @@
   <div class="container container--wide-home">
     <div class="home-categories home-categories--fixed">
 
-      <a href="{% url 'flowers' %}" class="home-category-card home-category-card--primary">
-        <img src="{% static 'main/img/cat-flowers.jpg' %}" alt="Flowers">
+      <a href="{% url 'flowers' %}" class="home-category-card home-category-card--primary home-category-card--flowers" aria-label="مشاهده مجموعه گل‌های زاد">
+        <img src="{% static 'main/img/cat-flowers.jpg' %}" alt="گل‌های زاد">
         <div class="home-category-card__overlay"></div>
+
+        <div class="home-category-card__content">
+          <i class="bi bi-flower1 home-category-card__icon" aria-hidden="true"></i>
+          <h2>گل‌های زاد</h2>
+          <span>Premium Bouquets</span>
+          <div class="home-category-card__line"></div>
+          <p>برای لحظه‌هایی که ماندگار می‌شوند</p>
+          <em>مشاهده مجموعه گل‌ها <i class="bi bi-chevron-left" aria-hidden="true"></i></em>
+        </div>
       </a>
 
-      <a href="{% url 'events' %}" class="home-category-card home-category-card--primary">
-        <img src="{% static 'main/img/cat-events.jpg' %}" alt="Events">
+      <a href="{% url 'events' %}" class="home-category-card home-category-card--primary home-category-card--workshops" aria-label="مشاهده ورکشاپ‌های زاد">
+        <img src="{% static 'main/img/cat-events.jpg' %}" alt="ورکشاپ‌های زاد">
         <div class="home-category-card__overlay"></div>
+
+        <div class="home-category-card__content">
+          <i class="bi bi-stars home-category-card__icon" aria-hidden="true"></i>
+          <h2>ورکشاپ‌های زاد</h2>
+          <span>Creative Workshops</span>
+          <div class="home-category-card__line"></div>
+          <p>تجربه‌ای برای خلق با گل‌ها</p>
+          <em>مشاهده ورکشاپ‌ها <i class="bi bi-chevron-left" aria-hidden="true"></i></em>
+        </div>
       </a>
 
     </div>
