@@ -137,8 +137,8 @@
 
 .page-home .home-category-card--workshops .home-category-card__overlay {
   background:
-    radial-gradient(circle at 40% 48%, rgba(255, 244, 229, 0.50), transparent 36%),
-    linear-gradient(90deg, rgba(248, 235, 216, 0.58), rgba(248, 235, 216, 0.36) 48%, rgba(43, 28, 18, 0.12));
+    radial-gradient(circle at 72% 48%, rgba(255, 244, 229, 0.50), transparent 34%),
+    linear-gradient(90deg, rgba(43, 28, 18, 0.10), rgba(248, 235, 216, 0.34) 46%, rgba(248, 235, 216, 0.62));
 }
 
 .page-home .home-category-card__content {
@@ -162,8 +162,8 @@
 }
 
 .page-home .home-category-card--workshops .home-category-card__content {
-  left: 5%;
-  right: auto;
+  right: 5%;
+  left: auto;
 }
 
 .page-home .home-category-card__icon {
@@ -680,8 +680,15 @@
 }
 
 .home-abroad__icon {
+  display: block;
   color: #c8955e;
   font-size: 1.75rem;
+  line-height: 1;
+}
+.home-abroad__icon i {
+  display: block;
+  width: 1em;
+  height: 1em;
   line-height: 1;
 }
 
@@ -1571,3 +1578,5 @@
     margin-top: 20px;
   }
 }
+
+
