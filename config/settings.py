@@ -13,7 +13,17 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 # --- حالت اجرا و تنظیمات امنیتی پایه ---
 ENV = os.getenv("ENV", "dev").lower()
-DEBUG = os.getenv("DEBUG", "1" if ENV == "dev" else "0") == "1"
+DEBUG_RAW = os.getenv("DEBUG")
+if DEBUG_RAW is None:
+    DEBUG = ENV == "dev"
+else:
+    debug_value = DEBUG_RAW.strip().lower()
+    if debug_value in {"1", "true", "yes", "on"}:
+        DEBUG = True
+    elif debug_value in {"0", "false", "no", "off"}:
+        DEBUG = False
+    else:
+        DEBUG = ENV == "dev"
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-insecure-key-change-me")
 ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "*").split(",") if h.strip()]
 
@@ -124,18 +134,19 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --- اطلاعات پایه کسب‌وکار برای SEO/CTA ---
 zad_SITE_URL = os.getenv("zad_SITE_URL", "https://zad.ir")
-zad_PHONE_DISPLAY = os.getenv("zad_PHONE_DISPLAY", "۰۹۱۲ ۱۲۳ ۴۵۶۷")
-zad_PHONE_E164 = os.getenv("zad_PHONE_E164", "+989121234567")
-zad_TELEGRAM_URL = os.getenv("zad_TELEGRAM_URL", "https://t.me/zad_store")
-zad_EMAIL = os.getenv("zad_EMAIL", "info@zadconcept.com")
-zad_INSTAGRAM_URL = os.getenv("zad_INSTAGRAM_URL", "https://instagram.com/zad.store")
+zad_PHONE_DISPLAY = os.getenv("zad_PHONE_DISPLAY", "09154203569")
+zad_PHONE_E164 = os.getenv("zad_PHONE_E164", "+989154203569")
+zad_TELEGRAM_URL = os.getenv("zad_TELEGRAM_URL", "https://t.me/Flowerhouse_pv")
+zad_TELEGRAM_DISPLAY = os.getenv("zad_TELEGRAM_DISPLAY", "@Flowerhouse_pv")
+zad_EMAIL = os.getenv("zad_EMAIL", "")
+zad_INSTAGRAM_URL = os.getenv("zad_INSTAGRAM_URL", "https://www.instagram.com/zad_concept/")
 zad_OPENING_HOURS_TEXT = os.getenv("zad_OPENING_HOURS_TEXT", "هر روز ۱۰:۰۰ تا ۲۲:۰۰")
 zad_RESPONSE_TIME_TEXT = os.getenv("zad_RESPONSE_TIME_TEXT", "زمان متوسط پاسخ‌گویی: حدود ۱۵ دقیقه")
-zad_ADDRESS_STREET = os.getenv("zad_ADDRESS_STREET", "بلوار سجاد، پلاک ۲۲")
-zad_ADDRESS_LOCALITY = os.getenv("zad_ADDRESS_LOCALITY", "Mashhad")
-zad_ADDRESS_REGION = os.getenv("zad_ADDRESS_REGION", "Razavi Khorasan")
+zad_ADDRESS_STREET = os.getenv("zad_ADDRESS_STREET", "بلوار وکیل اباد - نبش فارغ التحصیلان 6 - کانسپت زاد")
+zad_ADDRESS_LOCALITY = os.getenv("zad_ADDRESS_LOCALITY", "مشهد")
+zad_ADDRESS_REGION = os.getenv("zad_ADDRESS_REGION", "خراسان رضوی")
 zad_ADDRESS_COUNTRY = os.getenv("zad_ADDRESS_COUNTRY", "IR")
-zad_ADDRESS_POSTAL_CODE = os.getenv("zad_ADDRESS_POSTAL_CODE", "9183811111")
+zad_ADDRESS_POSTAL_CODE = os.getenv("zad_ADDRESS_POSTAL_CODE", "")
 
 
 JAZZMIN_SETTINGS = {

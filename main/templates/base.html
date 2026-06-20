@@ -160,26 +160,26 @@
     <div class="zad-footer__info">
       <a href="/contact/" class="zad-footer__item">
         <i class="bi bi-geo-alt"></i>
-        <strong>مشهد، ایران</strong>
-        <span>Mashhad, Iran</span>
+        <strong>آدرس زاد</strong>
+        <span>{{ site_address_text }}</span>
       </a>
 
-      <a href="https://t.me/zad_flower" class="zad-footer__item" target="_blank" rel="noopener">
+      <a href="{{ site_telegram_url }}" class="zad-footer__item" target="_blank" rel="noopener">
         <i class="bi bi-telegram"></i>
         <strong>تلگرام</strong>
-        <span>@zad_flower</span>
+        <span>{{ site_telegram_display }}</span>
       </a>
 
-      <a href="tel:05112345678" class="zad-footer__item">
+      <a href="{{ site_call_href }}" class="zad-footer__item">
         <i class="bi bi-telephone"></i>
         <strong>تماس با ما</strong>
-        <span>051 1234 5678</span>
+        <span>{{ site_phone_display }}</span>
       </a>
 
-      <a href="/contact/" class="zad-footer__item">
-        <i class="bi bi-globe2"></i>
-        <strong>ارسال بین‌المللی</strong>
-        <span>Worldwide Delivery</span>
+      <a href="{{ site_instagram_url }}" class="zad-footer__item" target="_blank" rel="noopener">
+        <i class="bi bi-instagram"></i>
+        <strong>اینستاگرام</strong>
+        <span>zad_concept</span>
       </a>
 
       <a href="/faq/" class="zad-footer__item">
@@ -193,9 +193,9 @@
       <p>© 2026 ZAD Flower &amp; Concept Store</p>
 
       <div class="zad-footer__socials">
-        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-        <a href="https://t.me/zad_flower" target="_blank" rel="noopener" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
-        <a href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+        <a href="{{ site_instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
+        <a href="{{ site_call_href }}" aria-label="Phone"><i class="bi bi-telephone"></i></a>
       </div>
     </div>
   </div>

@@ -386,7 +386,7 @@ def _with_home(items):
 
 
 def _telegram_href():
-    return getattr(settings, "zad_TELEGRAM_URL", "https://t.me/zad_store")
+    return getattr(settings, "zad_TELEGRAM_URL", "https://t.me/Flowerhouse_pv")
 
 
 def _item_telegram_href(request, product):
@@ -475,7 +475,7 @@ def _get_active_home_hero_slides():
             "image_url": settings.STATIC_URL + "main/img/hero-1.jpg",
             "primary_button_text": "Call Now",
             "primary_button_url": "",
-            "secondary_button_text": "Telegram",
+            "secondary_button_text": "تلگرام",
             "secondary_button_url": "",
         },
         {
@@ -925,7 +925,7 @@ def index(request):
             "occasion_tags": occasion_tags,
             "sections": SECTION_CONTENT,
             "hero_call_text": "Call Now",
-            "hero_telegram_text": "Telegram",
+            "hero_telegram_text": "تلگرام",
             "home_subtitle": "Premium flowers, bakery, and gifts with fast coordination in Mashhad",
             "is_homepage": True,
             "home_hero_slides": _get_active_home_hero_slides(),
@@ -1010,7 +1010,7 @@ def _category_page(request, section):
             "lead_form": LeadRequestForm(initial_lead_type=config["lead_type"]),
             "lead_default_type": config["lead_type"],
             "category_call_text": "Call for Guidance",
-            "category_telegram_text": "Telegram",
+            "category_telegram_text": "تلگرام",
         }
     )
 
@@ -1634,8 +1634,8 @@ def _item_detail_context(request, product):
             "subcategory_label": subcategory_label,
             "similar_items": similar_items,
             "item_telegram_href": _item_telegram_href(request, product),
-            "item_call_text": "Call",
-            "item_telegram_text": "Telegram",
+            "item_call_text": "تماس",
+            "item_telegram_text": "تلگرام",
             "mashhad_order_url": reverse("mashhad_flower_order"),
         }
     )
