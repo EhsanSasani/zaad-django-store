@@ -1,41 +1,335 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-faq{% endblock %}
+
+{% block extra_head %}
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="سوالات متداول زاد, سفارش گل در مشهد, ارسال گل در مشهد, سفارش هدیه در مشهد, ZAD FAQ">
+  <meta property="og:site_name" content="ZAD Flower & Concept Store">
+  <meta property="og:image" content="{{ site_url }}{% static 'main/img/hero-faq.jpg' %}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" hreflang="fa-IR" href="{{ request.build_absolute_uri }}">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "fa-IR",
+    "name": "سوالات متداول زاد",
+    "url": "{{ request.build_absolute_uri|escapejs }}",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "از زاد چه محصولاتی می‌توان سفارش داد؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "در زاد می‌توانید گل، آیتم‌های بیکری، هدیه‌های انتخاب‌شده و سفارش‌های مناسبتی یا رویدادی را هماهنگ کنید."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "سریع‌ترین راه ثبت سفارش در زاد چیست؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "برای سفارش‌های فوری، تماس تلفنی سریع‌ترین راه است. برای ارسال تصویر، توضیحات یا هماهنگی مرحله‌به‌مرحله می‌توانید از تلگرام استفاده کنید."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "آیا زاد ارسال همان‌روز در مشهد دارد؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "بله، بسیاری از سفارش‌ها در مشهد بسته به موجودی روز، ظرفیت آماده‌سازی و بازه ارسال، امکان هماهنگی برای همان روز را دارند."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "برای سفارش فوری چه اطلاعاتی لازم است؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "نام، شماره تماس، نوع سفارش، محدوده بودجه، زمان ارسال، آدرس و یک توضیح کوتاه درباره مناسبت برای شروع هماهنگی کافی است."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "آیا امکان دیدن تصویر سفارش قبل از ارسال وجود دارد؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "در صورت درخواست، تیم زاد می‌تواند پیش از ارسال تصویر نهایی سفارش را برای هماهنگی بیشتر ارسال کند."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "ساعت کاری زاد چگونه است؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "زاد معمولاً هر روز از ساعت ۱۰ تا ۲۲ پاسخ‌گو است، مگر اینکه تغییر ساعت کاری از قبل اعلام شده باشد."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "آیا قبل از مراجعه حضوری باید هماهنگ کنم؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "برای سفارش‌های خاص، فوری یا مناسبتی بهتر است قبل از مراجعه تماس بگیرید تا موجودی و زمان آماده‌سازی دقیق‌تر بررسی شود."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "در بازدید حضوری از زاد چه کاری می‌توان انجام داد؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "می‌توانید نمونه‌ها را ببینید، درباره رنگ و سبک چیدمان مشورت بگیرید و سفارش خود را برای تحویل حضوری یا ارسال هماهنگ کنید."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "آیا می‌توان گل، هدیه و بیکری را هم‌زمان سفارش داد؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "بله، تیم زاد می‌تواند ترکیب گل، هدیه و آیتم‌های بیکری را براساس مناسبت، بودجه و زمان ارسال با هم هماهنگ کند."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "برای سفارش مراسم یا رویداد از کجا شروع کنم؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "تاریخ، محل، نوع مراسم، تعداد تقریبی مهمان‌ها و سبک موردنظر را ارسال کنید تا تیم زاد امکان اجرا و جزئیات را بررسی کند."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "آیا زاد خارج از مشهد هم ارسال دارد؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "تمرکز اصلی ارسال زاد داخل مشهد است، اما درخواست‌های خاص خارج از مشهد موردی بررسی می‌شوند."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "اگر آیتم انتخابی موجود نبود چه می‌شود؟",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "در صورت نبود یک گل، رنگ یا آیتم خاص، گزینه‌های مشابه با همان سطح کیفیت پیش از نهایی شدن سفارش پیشنهاد می‌شود."
+        }
+      }
+    ]
+  }
+  </script>
+{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block faq-page-intro">
-  <p class="intro-text intro-text--en">
-    Short answers about ordering, delivery timing, request coordination, and choosing the right zad piece.
-  </p>
+<section class="container section-block faq-page-intro faq-landing" aria-labelledby="faq-title">
+  <div class="faq-landing__content">
+    <p class="section-kicker">سوالات متداول زاد</p>
+    <h1 id="faq-title">پاسخ‌های کوتاه برای سفارش گل، هدیه و هماهنگی ارسال</h1>
+    <p>
+      اگر قبل از ثبت سفارش گل در مشهد، انتخاب هدیه، ارسال همان‌روز یا هماهنگی مراسم سوالی دارید،
+      این راهنما کمک می‌کند سریع‌تر مسیر درست را پیدا کنید. برای سفارش‌های فوری، تماس مستقیم با زاد بهترین راه است.
+    </p>
+
+    <div class="faq-landing__actions" aria-label="راه‌های سریع ارتباط با زاد">
+      <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="faq-hero">
+        <i class="bi bi-telephone"></i>
+        تماس با زاد
+      </a>
+      <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="faq-hero">
+        <i class="bi bi-telegram"></i>
+        پیام در تلگرام
+      </a>
+    </div>
+  </div>
+
+  <aside class="faq-contact-panel" aria-label="اطلاعات سریع زاد">
+    <div>
+      <span>شماره تماس</span>
+      <strong>{{ site_phone_display }}</strong>
+    </div>
+    <div>
+      <span>ساعت پاسخ‌گویی</span>
+      <strong>{{ site_opening_hours_text }}</strong>
+    </div>
+    <div>
+      <span>زمان معمول پاسخ</span>
+      <strong>{{ site_response_time_text }}</strong>
+    </div>
+  </aside>
 </section>
 
-<section class="container section-block faq-page-section">
-  <div class="faq-grid faq-grid--compact">
-    {% for item in faq_page_items %}
-      <article class="faq-card">
-        <h2>{{ item.question }}</h2>
-        <p>{{ item.answer }}</p>
-      </article>
-    {% empty %}
-      <div class="empty-box">No questions have been added yet.</div>
-    {% endfor %}
+<section class="container section-block faq-highlights" aria-label="خلاصه خدمات زاد">
+  <article>
+    <i class="bi bi-flower1"></i>
+    <h2>گل، هدیه و بیکری</h2>
+    <p>انتخاب‌های هماهنگ برای تولد، تبریک، عاشقانه، تشریفات و هدیه‌های روزمره.</p>
+  </article>
+  <article>
+    <i class="bi bi-truck"></i>
+    <h2>ارسال در مشهد</h2>
+    <p>هماهنگی ارسال براساس موجودی روز، ظرفیت آماده‌سازی و بازه زمانی موردنظر شما.</p>
+  </article>
+  <article>
+    <i class="bi bi-chat-dots"></i>
+    <h2>راهنمایی قبل از خرید</h2>
+    <p>پیشنهاد انتخاب مناسب براساس مناسبت، بودجه، رنگ‌بندی و زمان موردنیاز برای ارسال.</p>
+  </article>
+</section>
+
+<nav class="container section-block faq-topic-nav" aria-label="دسته‌بندی سوالات متداول">
+  <a href="#faq-order">ثبت سفارش</a>
+  <a href="#faq-delivery">ارسال و زمان‌بندی</a>
+  <a href="#faq-visit">بازدید و انتخاب</a>
+  <a href="#faq-events">مراسم و درخواست خاص</a>
+</nav>
+
+<section class="container section-block faq-page-section" aria-labelledby="faq-list-title">
+  <div class="section-head faq-section-head">
+    <div>
+      <p class="section-kicker">FAQ</p>
+      <h2 id="faq-list-title">سوالات پرتکرار مشتریان زاد</h2>
+    </div>
+    <p>پاسخ‌ها کوتاه‌اند؛ برای جزئیات سفارش، تیم زاد مستقیم راهنمایی‌تان می‌کند.</p>
+  </div>
+
+  <div class="faq-category" id="faq-order">
+    <div class="faq-category__head">
+      <span>01</span>
+      <h2>ثبت سفارش</h2>
+    </div>
+
+    <div class="faq-accordion">
+      <details class="faq-card" open>
+        <summary>از زاد چه محصولاتی می‌توان سفارش داد؟</summary>
+        <div class="faq-card__answer">
+          <p>در زاد می‌توانید گل، آیتم‌های بیکری، هدیه‌های انتخاب‌شده و سفارش‌های مناسبتی یا رویدادی را هماهنگ کنید.</p>
+        </div>
+      </details>
+
+      <details class="faq-card">
+        <summary>سریع‌ترین راه ثبت سفارش چیست؟</summary>
+        <div class="faq-card__answer">
+          <p>برای سفارش‌های فوری، تماس تلفنی سریع‌ترین راه است. برای ارسال تصویر، توضیحات یا هماهنگی مرحله‌به‌مرحله می‌توانید از تلگرام استفاده کنید.</p>
+        </div>
+      </details>
+
+      <details class="faq-card">
+        <summary>برای سفارش فوری چه اطلاعاتی لازم است؟</summary>
+        <div class="faq-card__answer">
+          <p>نام، شماره تماس، نوع سفارش، محدوده بودجه، زمان ارسال، آدرس و یک توضیح کوتاه درباره مناسبت برای شروع هماهنگی کافی است.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="faq-category" id="faq-delivery">
+    <div class="faq-category__head">
+      <span>02</span>
+      <h2>ارسال و زمان‌بندی</h2>
+    </div>
+
+    <div class="faq-accordion">
+      <details class="faq-card">
+        <summary>آیا زاد ارسال همان‌روز در مشهد دارد؟</summary>
+        <div class="faq-card__answer">
+          <p>بله، بسیاری از سفارش‌ها در مشهد بسته به موجودی روز، ظرفیت آماده‌سازی و بازه ارسال، امکان هماهنگی برای همان روز را دارند.</p>
+        </div>
+      </details>
+
+      <details class="faq-card">
+        <summary>آیا امکان دیدن تصویر سفارش قبل از ارسال وجود دارد؟</summary>
+        <div class="faq-card__answer">
+          <p>در صورت درخواست، تیم زاد می‌تواند پیش از ارسال تصویر نهایی سفارش را برای هماهنگی بیشتر ارسال کند.</p>
+        </div>
+      </details>
+
+      <details class="faq-card">
+        <summary>آیا زاد خارج از مشهد هم ارسال دارد؟</summary>
+        <div class="faq-card__answer">
+          <p>تمرکز اصلی ارسال زاد داخل مشهد است، اما درخواست‌های خاص خارج از مشهد موردی بررسی می‌شوند.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="faq-category" id="faq-visit">
+    <div class="faq-category__head">
+      <span>03</span>
+      <h2>بازدید و انتخاب</h2>
+    </div>
+
+    <div class="faq-accordion">
+      <details class="faq-card">
+        <summary>ساعت کاری زاد چگونه است؟</summary>
+        <div class="faq-card__answer">
+          <p>زاد معمولاً هر روز از ساعت ۱۰ تا ۲۲ پاسخ‌گو است، مگر اینکه تغییر ساعت کاری از قبل اعلام شده باشد.</p>
+        </div>
+      </details>
+
+      <details class="faq-card">
+        <summary>آیا قبل از مراجعه حضوری باید هماهنگ کنم؟</summary>
+        <div class="faq-card__answer">
+          <p>برای سفارش‌های خاص، فوری یا مناسبتی بهتر است قبل از مراجعه تماس بگیرید تا موجودی و زمان آماده‌سازی دقیق‌تر بررسی شود.</p>
+        </div>
+      </details>
+
+      <details class="faq-card">
+        <summary>در بازدید حضوری از زاد چه کاری می‌توان انجام داد؟</summary>
+        <div class="faq-card__answer">
+          <p>می‌توانید نمونه‌ها را ببینید، درباره رنگ و سبک چیدمان مشورت بگیرید و سفارش خود را برای تحویل حضوری یا ارسال هماهنگ کنید.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="faq-category" id="faq-events">
+    <div class="faq-category__head">
+      <span>04</span>
+      <h2>مراسم و درخواست خاص</h2>
+    </div>
+
+    <div class="faq-accordion">
+      <details class="faq-card">
+        <summary>آیا می‌توان گل، هدیه و بیکری را هم‌زمان سفارش داد؟</summary>
+        <div class="faq-card__answer">
+          <p>بله، تیم زاد می‌تواند ترکیب گل، هدیه و آیتم‌های بیکری را براساس مناسبت، بودجه و زمان ارسال با هم هماهنگ کند.</p>
+        </div>
+      </details>
+
+      <details class="faq-card">
+        <summary>برای سفارش مراسم یا رویداد از کجا شروع کنم؟</summary>
+        <div class="faq-card__answer">
+          <p>تاریخ، محل، نوع مراسم، تعداد تقریبی مهمان‌ها و سبک موردنظر را ارسال کنید تا تیم زاد امکان اجرا و جزئیات را بررسی کند.</p>
+        </div>
+      </details>
+
+      <details class="faq-card">
+        <summary>اگر آیتم انتخابی موجود نبود چه می‌شود؟</summary>
+        <div class="faq-card__answer">
+          <p>در صورت نبود یک گل، رنگ یا آیتم خاص، گزینه‌های مشابه با همان سطح کیفیت پیش از نهایی شدن سفارش پیشنهاد می‌شود.</p>
+        </div>
+      </details>
+    </div>
   </div>
 </section>
 
-<section class="container section-block faq-page-cta">
-  <div class="section-head">
-    <h2>Still Have a Question?</h2>
-  </div>
-
-  <p class="intro-text intro-text--en">
-    Call zad or send a Telegram message for quick guidance.
+<section class="container section-block faq-page-cta faq-final-cta" aria-labelledby="faq-contact-title">
+  <p class="section-kicker">هنوز سوال دارید؟</p>
+  <h2 id="faq-contact-title">برای انتخاب سریع‌تر، مستقیم با زاد هماهنگ کنید.</h2>
+  <p>
+    اگر سفارش شما فوری است یا برای مناسبت خاصی نیاز به پیشنهاد دقیق دارید، تماس یا پیام تلگرام کمک می‌کند سریع‌تر به گزینه مناسب برسید.
   </p>
 
   <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">Call Now</a>
-    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="inline">Telegram</a>
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="faq-bottom">
+      <i class="bi bi-telephone"></i>
+      تماس برای سفارش
+    </a>
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="faq-bottom">
+      <i class="bi bi-telegram"></i>
+      ارسال پیام
+    </a>
   </div>
 </section>
 {% endblock %}
