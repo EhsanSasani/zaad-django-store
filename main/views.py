@@ -439,6 +439,100 @@ def _event_to_iso(dt):
     return dt.isoformat()
 
 
+COLLECTION_LANDING_CONTENT = {
+    Category.Section.FLOWERS: {
+        "hero_eyebrow": "FLOWER COLLECTION",
+        "hero_title": "گل‌های زاد",
+        "hero_text": "گل‌هایی برای تمام لحظه‌های خاص زندگی شما",
+        "hero_image": "main/img/flowers-hero.jpg",
+        "fallback_image": "main/img/cat-flowers.jpg",
+        "empty_text": "هنوز محصولی برای نمایش ثبت نشده است.",
+        "why_items": [
+            {
+                "icon": "bi bi-flower1",
+                "title": "گل‌های تازه",
+                "text": "انتخاب روزانه و چیدمان با دقت",
+            },
+            {
+                "icon": "bi bi-gift",
+                "title": "بسته‌بندی شیک",
+                "text": "هماهنگ با حس و مناسبت سفارش",
+            },
+            {
+                "icon": "bi bi-truck",
+                "title": "ارسال در مشهد",
+                "text": "هماهنگی سریع برای تحویل مطمئن",
+            },
+        ],
+        "cta_kicker": "CUSTOM ORDER",
+        "cta_title": "دسته‌گل اختصاصی، دقیقاً مطابق سلیقه شما",
+        "cta_text": "برای انتخاب رنگ، سبک چیدمان، بودجه و زمان ارسال، با ما تماس بگیرید یا در تلگرام پیام بدهید.",
+        "cta_image": "main/img/footer-floral.jpg",
+        "cta_alt": "سفارش اختصاصی گل",
+    },
+    Category.Section.BAKERY: {
+        "hero_eyebrow": "ZAD SWEET BAR",
+        "hero_title": "سوییت بار زاد",
+        "hero_text": "طعم‌های شیرین برای لحظه‌های گرم و به‌یادماندنی",
+        "hero_image": "main/img/hero-bakery.jpg",
+        "fallback_image": "main/img/cat-bakery.jpg",
+        "empty_text": "هنوز محصولی در سوییت بار ثبت نشده است.",
+        "why_items": [
+            {
+                "icon": "bi bi-stars",
+                "title": "تازه و خوش‌طعم",
+                "text": "آماده‌سازی با مواد اولیه باکیفیت",
+            },
+            {
+                "icon": "bi bi-gift",
+                "title": "بسته‌بندی شیک",
+                "text": "مناسب هدیه و پذیرایی‌های خاص",
+            },
+            {
+                "icon": "bi bi-truck",
+                "title": "ارسال در مشهد",
+                "text": "هماهنگی سریع برای تحویل مطمئن",
+            },
+        ],
+        "cta_kicker": "CUSTOM ORDER",
+        "cta_title": "سفارش شیرینی اختصاصی، دقیقاً برای مناسبت شما",
+        "cta_text": "برای انتخاب طعم، تعداد، نوع بسته‌بندی و زمان ارسال، با ما تماس بگیرید یا در تلگرام پیام بدهید.",
+        "cta_image": "main/img/hero-bakery.jpg",
+        "cta_alt": "سفارش اختصاصی سوییت بار",
+    },
+    Category.Section.GIFTS: {
+        "hero_eyebrow": "ZAD CONCEPT STORE",
+        "hero_title": "کانسپت استور زاد",
+        "hero_text": "هدیه‌هایی خاص برای آدم‌ها و لحظه‌های خاص زندگی شما",
+        "hero_image": "main/img/hero-gifts-v2.webp",
+        "fallback_image": "main/img/cat-gifts.jpg",
+        "empty_text": "هنوز محصولی در کانسپت استور ثبت نشده است.",
+        "why_items": [
+            {
+                "icon": "bi bi-stars",
+                "title": "انتخاب‌های خاص",
+                "text": "محصولاتی مینیمال و انتخاب‌شده با دقت",
+            },
+            {
+                "icon": "bi bi-gift",
+                "title": "بسته‌بندی هدیه",
+                "text": "هماهنگ با حس و مناسبت سفارش",
+            },
+            {
+                "icon": "bi bi-truck",
+                "title": "ارسال در مشهد",
+                "text": "هماهنگی سریع برای تحویل مطمئن",
+            },
+        ],
+        "cta_kicker": "CUSTOM GIFT",
+        "cta_title": "هدیه‌ای خاص، دقیقاً مطابق سلیقه شما",
+        "cta_text": "برای انتخاب هدیه، بسته‌بندی، بودجه و زمان ارسال، با ما تماس بگیرید یا در تلگرام پیام بدهید.",
+        "cta_image": "main/img/gifts-custom-v1.webp",
+        "cta_alt": "سفارش هدیه اختصاصی",
+    },
+}
+
+
 def _hero_defaults(meta_title, meta_description):
     return {
         "page_hero_kicker": "zad",
@@ -1124,92 +1218,111 @@ def _same_day_flower_products(limit=12):
     )
 
 
-def flowers(request):
-    context = _default_context(
-        request,
-        page_type="flowers_landing",
-        active_nav="flowers",
-        meta_title="Flowers by ZAD | گل‌های زاد",
-        meta_description="گل‌های زاد برای لحظه‌های ماندگار، سفارش‌های فوری، مناسبت‌ها و انتخاب‌های اختصاصی.",
-        breadcrumbs=None,
-        faq_items=SECTION_CONTENT["flowers"].get("faq") or None,
-        enable_product_modal=True,
-    )
+FLOWER_FILTER_ORDER = [
+    "hand-bouquet",
+    "box",
+    "bouquet",
+    "jarl",
+    "stand",
+    "plants",
+]
 
-    hero_data = _hero_from_key("flowers")
-    db_hero = _get_site_hero("flowers")
 
-    if db_hero:
-        hero_data = db_hero
+def _collection_landing_page(request, section, *, excluded_category_slugs=()):
+    config = SECTION_CONTENT[section]
+    landing = COLLECTION_LANDING_CONTENT[section]
 
-    flower_products = (
-    _published_products_for_section(Category.Section.FLOWERS)
-    .exclude(category__slug="wedding")
-    .order_by(
-        "-featured",
-        "sort_order",
-        "-created_at",
-    )
-    
-)
-    
-    
-    FLOWER_FILTER_ORDER = [
-        "hand-bouquet",
-        "box",
-        "bouquet",
-        "jarl",
-        "stand",
-        "plants",
-    ]
-
-    flower_filter_categories = list(
-    Category.objects.filter(
-        section=Category.Section.FLOWERS,
+    products_qs = _published_products_for_section(section)
+    categories_qs = Category.objects.filter(
+        section=section,
         is_active=True,
         products__is_active=True,
         products__publish_status=Product.PublishStatus.PUBLISHED,
     )
-    .exclude(slug="wedding")
-    .distinct()
-)
 
-    flower_filter_categories = sorted(
-        flower_filter_categories,
-        key=lambda category: FLOWER_FILTER_ORDER.index(category.slug)
-        if category.slug in FLOWER_FILTER_ORDER
-        else 999,
+    if excluded_category_slugs:
+        products_qs = products_qs.exclude(category__slug__in=excluded_category_slugs)
+        categories_qs = categories_qs.exclude(slug__in=excluded_category_slugs)
+
+    products = list(
+        products_qs.order_by(
+            "-featured",
+            "sort_order",
+            "-created_at",
+        )
+    )
+    categories = list(
+        categories_qs.distinct().order_by("sort_order", "name")
     )
 
-    flower_products = sorted(
-        flower_products,
-        key=lambda product: FLOWER_FILTER_ORDER.index(product.category.slug)
-        if product.category.slug in FLOWER_FILTER_ORDER
-        else 999,
+    if section == Category.Section.FLOWERS:
+        order = {slug: index for index, slug in enumerate(FLOWER_FILTER_ORDER)}
+        products.sort(
+            key=lambda product: order.get(product.category.slug, len(order))
+        )
+        categories.sort(
+            key=lambda category: order.get(category.slug, len(order))
+        )
+
+    filter_categories = [
+        {
+            "name": category.name,
+            "slug": category.slug,
+            "url": _section_category_url(category),
+        }
+        for category in categories
+    ]
+
+    context = _default_context(
+        request,
+        page_type="flowers_landing",
+        active_nav=config["nav"],
+        meta_title=config["meta_title"],
+        meta_description=config["meta_description"],
+        breadcrumbs=None,
+        faq_items=config.get("faq") or None,
+        enable_product_modal=True,
     )
-
-    context.update(hero_data)
-
+    context.update(_hero_from_key(section))
     context.update(
         {
-            "flower_type_cards": _flower_type_cards(),
-            "same_day_products": _same_day_flower_products(limit=12),
-            "occasion_cards": _flower_occasion_cards(),
-            "lead_form": LeadRequestForm(initial_lead_type="flower"),
-            "lead_default_type": "flower",
-            "flower_products": flower_products,
-            "flower_filter_categories": flower_filter_categories,
+            "section": section,
+            "catalog_products": products,
+            "catalog_filter_categories": filter_categories,
+            "landing_hero_eyebrow": landing["hero_eyebrow"],
+            "landing_hero_title": landing["hero_title"],
+            "landing_hero_text": landing["hero_text"],
+            "landing_hero_image": landing["hero_image"],
+            "landing_fallback_image": landing["fallback_image"],
+            "landing_empty_text": landing["empty_text"],
+            "landing_why_items": landing["why_items"],
+            "landing_cta_kicker": landing["cta_kicker"],
+            "landing_cta_title": landing["cta_title"],
+            "landing_cta_text": landing["cta_text"],
+            "landing_cta_image": landing["cta_image"],
+            "landing_cta_alt": landing["cta_alt"],
+            "lead_form": LeadRequestForm(initial_lead_type=config["lead_type"]),
+            "lead_default_type": config["lead_type"],
         }
     )
 
     return render(request, "flowers_landing.html", context)
 
+
+def flowers(request):
+    return _collection_landing_page(
+        request,
+        Category.Section.FLOWERS,
+        excluded_category_slugs=("wedding",),
+    )
+
+
 def bakery(request):
-    return _category_page(request, Category.Section.BAKERY)
+    return _collection_landing_page(request, Category.Section.BAKERY)
 
 
 def gifts(request):
-    return _category_page(request, Category.Section.GIFTS)
+    return _collection_landing_page(request, Category.Section.GIFTS)
 
 
 def _section_all_products(request, section):

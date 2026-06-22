@@ -200,7 +200,21 @@
   .page-home .hero-slide img {
     height: 78vh;
     min-height: 560px;
-    object-position: 28% center;
+    object-position: center center;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 761px) {
+  .page-home .hero-slide--1 img {
+    object-position: 35% center;
+  }
+
+  .page-home .hero-slide--2 img {
+    object-position: 78% center;
+  }
+
+  .page-home .hero-slide--3 img {
+    object-position: 16% center;
   }
 }
 
@@ -219,7 +233,7 @@
     height: 70vh !important;
     min-height: 520px !important;
     object-fit: cover !important;
-    object-position: 70% 72% !important;
+    object-position: left center !important;
   }
 
   .page-home .hero-slider__dots {

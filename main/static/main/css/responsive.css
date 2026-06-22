@@ -567,7 +567,7 @@
   }
 
   .page-home .hero-slide img {
-    object-position: center center !important;
+    object-position: left center !important;
   }
 
   .home-trust-strip {
@@ -720,7 +720,7 @@
 
 @media (max-width: 760px) {
   .page-home .hero-slide img {
-    object-position: 42% center !important;
+    object-position: left center !important;
   }
 
   .home-trust-strip__inner {

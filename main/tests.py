@@ -87,6 +87,19 @@ class MainViewsTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, reverse("bakery_subcategory", args=["daily-bakery"]))
 
+    def test_bakery_and_gifts_use_the_shared_collection_landing(self):
+        for route_name, product, category in (
+            ("bakery", self.bakery, self.bakery_category),
+            ("gifts", self.gift_product, self.gifts_category),
+        ):
+            with self.subTest(route_name=route_name):
+                response = self.client.get(reverse(route_name))
+                self.assertTemplateUsed(response, "flowers_landing.html")
+                self.assertContains(response, 'class="flowers-hero"')
+                self.assertContains(response, f'data-filter="{category.slug}"')
+                self.assertContains(response, f'data-category="{category.slug}"')
+                self.assertContains(response, product.product_code)
+
     def test_subcategory_page_loads(self):
         response = self.client.get(reverse("flower_subcategory", args=["bouquet"]))
         self.assertEqual(response.status_code, 200)

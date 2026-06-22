@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block body_class %}page-flowers-landing{% endblock %}
+{% block body_class %}page-flowers-landing page-{{ section }}-landing{% endblock %}
 
 {% block extra_head %}
   <link rel="stylesheet" href="{% static 'main/css/flowers-landing.css' %}?v=3">
@@ -10,17 +10,21 @@
 {% block content %}
 <main class="flowers-shell">
 
-  <section class="flowers-hero" id="flowers-top">
+  <section class="flowers-hero" id="{{ section }}-top">
   <div class="flowers-hero__media" aria-hidden="true">
-    <img src="{% static 'main/img/flowers-hero.jpg' %}" alt="">
+    {% if landing_hero_image|slice:":7" == "/media/" %}
+      <img src="{{ landing_hero_image }}" alt="">
+    {% else %}
+      <img src="{% static landing_hero_image %}" alt="">
+    {% endif %}
   </div>
 
   <div class="flowers-hero__overlay"></div>
 
   <div class="flowers-hero__content">
-    <span class="flowers-hero__eyebrow">FLOWER COLLECTION</span>
-    <h1>گل‌های زاد</h1>
-    <p>گل‌هایی برای تمام لحظه‌های خاص زندگی شما</p>
+    <span class="flowers-hero__eyebrow">{{ landing_hero_eyebrow }}</span>
+    <h1>{{ landing_hero_title }}</h1>
+    <p>{{ landing_hero_text }}</p>
   </div>
 </section>
 
@@ -29,10 +33,9 @@
     <div class="flowers-container">
 
 
-      {% with products=flower_products|default:same_day_products %}
-        {% if products %}
+      {% if catalog_products %}
           <div class="flowers-filter-wrap">
-              <div class="flowers-filter" data-flower-filter>
+              <div class="flowers-filter" data-catalog-filter>
             <button type="button" class="flowers-filter__chip is-active" data-filter="all">
               <span>همه</span>
               <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -43,11 +46,12 @@
               </svg>
             </button>
 
-            {% for category in flower_filter_categories %}
+            {% for category in catalog_filter_categories %}
               <button
                 type="button"
                 class="flowers-filter__chip"
                 data-filter="{{ category.slug }}"
+                data-category-url="{{ category.url }}"
               >
                 <span>{{ category.name }}</span>
 
@@ -93,6 +97,22 @@
                     <path d="M9 20h6"></path>
                   </svg>
 
+                {% elif section == "bakery" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 10h12l-1 10H7z"></path>
+                    <path d="M8 10a4 4 0 0 1 8 0"></path>
+                    <path d="M9 5c0-1 1-2 2-2s2 1 2 2"></path>
+                  </svg>
+
+                {% elif section == "gifts" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 9h16v11H4z"></path>
+                    <path d="M3 6h18v4H3z"></path>
+                    <path d="M12 6v14"></path>
+                    <path d="M12 6c-3 0-5-1-5-3 3 0 5 1 5 3z"></path>
+                    <path d="M12 6c3 0 5-1 5-3-3 0-5 1-5 3z"></path>
+                  </svg>
+
                 {% else %}
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 21s-6-4.5-6-10a6 6 0 0 1 12 0c0 5.5-6 10-6 10z"></path>
@@ -107,17 +127,15 @@
                 <span></span>
               </div>
             </div>
-        {% endif %}
-      {% endwith %}
+      {% endif %}
 
-      {% with products=flower_products|default:same_day_products %}
-        {% if products %}
-          <div class="flowers-grid" data-flowers-grid>
-            {% for product in products %}
+      {% if catalog_products %}
+          <div class="flowers-grid" data-catalog-grid>
+            {% for product in catalog_products %}
               <a
                 href="{{ product.get_absolute_url }}"
                 class="flowers-product-card"
-                data-flower-card
+                data-catalog-card
                 data-zad-modal-card
                 data-category="{{ product.category.slug|default:'uncategorized' }}"
                 data-product-type="{{ product.category.slug|default:'collection' }}"
@@ -135,7 +153,7 @@
                     >
                   {% else %}
                     <img
-                      src="{% static 'main/img/cat-flowers.jpg' %}"
+                      src="{% static landing_fallback_image %}"
                       alt="{{ product.display_name }}"
                       loading="lazy"
                       data-product-image
@@ -165,7 +183,7 @@
                       {% elif product.category.slug == "stand" %}
                         STAND
                       {% else %}
-                        COLLECTION
+                        {{ product.category.slug|cut:"-"|upper }}
                       {% endif %}
                     </span>
 
@@ -193,34 +211,24 @@
           </div>
         {% else %}
           <div class="flowers-empty">
-            هنوز محصولی برای نمایش ثبت نشده است.
+            {{ landing_empty_text }}
           </div>
         {% endif %}
-      {% endwith %}
 
     </div>
+  </div>
   </section>
 
   <section class="flowers-why">
     <div class="flowers-container">
       <div class="flowers-why__grid">
+        {% for item in landing_why_items %}
         <div class="flowers-why__item">
-          <i class="bi bi-flower1"></i>
-          <strong>گل‌های تازه</strong>
-          <span>انتخاب روزانه و چیدمان با دقت</span>
+          <i class="{{ item.icon }}"></i>
+          <strong>{{ item.title }}</strong>
+          <span>{{ item.text }}</span>
         </div>
-
-        <div class="flowers-why__item">
-          <i class="bi bi-gift"></i>
-          <strong>بسته‌بندی شیک</strong>
-          <span>هماهنگ با حس و مناسبت سفارش</span>
-        </div>
-
-        <div class="flowers-why__item">
-          <i class="bi bi-truck"></i>
-          <strong>ارسال در مشهد</strong>
-          <span>هماهنگی سریع برای تحویل مطمئن</span>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </section>
@@ -229,11 +237,9 @@
     <div class="flowers-container">
       <div class="flowers-cta__inner">
         <div class="flowers-cta__content">
-          <span>CUSTOM ORDER</span>
-          <h2>دسته‌گل اختصاصی، دقیقاً مطابق سلیقه شما</h2>
-          <p>
-            برای انتخاب رنگ، سبک چیدمان، بودجه و زمان ارسال، با ما تماس بگیرید یا در تلگرام پیام بدهید.
-          </p>
+          <span>{{ landing_cta_kicker }}</span>
+          <h2>{{ landing_cta_title }}</h2>
+          <p>{{ landing_cta_text }}</p>
 
           <div class="flowers-cta__actions">
             <a href="{% url 'contact' %}" class="flowers-btn">تماس با ما</a>
@@ -244,7 +250,11 @@
         </div>
 
         <div class="flowers-cta__media">
-          <img src="{% static 'main/img/footer-floral.jpg' %}" alt="سفارش اختصاصی گل" loading="lazy">
+          {% if landing_cta_image|slice:":7" == "/media/" %}
+            <img src="{{ landing_cta_image }}" alt="{{ landing_cta_alt }}" loading="lazy">
+          {% else %}
+            <img src="{% static landing_cta_image %}" alt="{{ landing_cta_alt }}" loading="lazy">
+          {% endif %}
         </div>
       </div>
     </div>
@@ -256,27 +266,20 @@
 {% block extra_js %}
 <script>
   (function () {
-    const filterRoot = document.querySelector("[data-flower-filter]");
-    const grid = document.querySelector("[data-flowers-grid]");
-    const cards = Array.from(document.querySelectorAll("[data-flower-card]"));
+    const filterRoot = document.querySelector("[data-catalog-filter]");
+    const grid = document.querySelector("[data-catalog-grid]");
+    const cards = Array.from(document.querySelectorAll("[data-catalog-card]"));
 
     if (!filterRoot || !grid || !cards.length) return;
 
     const buttons = Array.from(filterRoot.querySelectorAll("[data-filter]"));
 
-    function applyFilter(filter) {
+    function filterProducts(filter) {
       cards.forEach((card) => {
         const isMatch = filter === "all" || card.dataset.category === filter;
 
         card.classList.toggle("is-hidden", !isMatch);
-
-        if (isMatch) {
-          card.hidden = false;
-        } else {
-          window.setTimeout(() => {
-            card.hidden = true;
-          }, 180);
-        }
+        card.hidden = !isMatch;
       });
     }
 
@@ -291,26 +294,26 @@
     }
     const scrollbarThumb = document.querySelector(".flowers-filter-scrollbar span");
 
-function updateFilterScrollbar() {
-  if (!scrollbarThumb) return;
+    function updateFilterScrollbar() {
+      if (!scrollbarThumb) return;
 
-  const maxScroll = filterRoot.scrollWidth - filterRoot.clientWidth;
+      const maxScroll = filterRoot.scrollWidth - filterRoot.clientWidth;
 
-  if (maxScroll <= 0) {
-    scrollbarThumb.parentElement.style.display = "none";
-    return;
-  }
+      if (maxScroll <= 0) {
+        scrollbarThumb.parentElement.style.display = "none";
+        return;
+      }
 
-  scrollbarThumb.parentElement.style.display = "block";
+      scrollbarThumb.parentElement.style.display = "block";
 
-  const trackWidth = scrollbarThumb.parentElement.clientWidth;
-  const thumbWidth = 16;
-  const maxThumbMove = trackWidth - thumbWidth;
-  const progress = filterRoot.scrollLeft / maxScroll;
-  const x = progress * maxThumbMove;
+      const trackWidth = scrollbarThumb.parentElement.clientWidth;
+      const thumbWidth = 16;
+      const maxThumbMove = trackWidth - thumbWidth;
+      const progress = filterRoot.scrollLeft / maxScroll;
+      const x = progress * maxThumbMove;
 
-  scrollbarThumb.style.transform = `translateX(${x}px)`;
-}
+      scrollbarThumb.style.transform = `translateX(${x}px)`;
+    }
 
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
@@ -319,17 +322,18 @@ function updateFilterScrollbar() {
         buttons.forEach((item) => item.classList.remove("is-active"));
         button.classList.add("is-active");
 
-        applyFilter(filter);
+        filterProducts(filter);
         window.setTimeout(scrollToGridStart, 40);
       });
     });
+
     filterRoot.addEventListener("scroll", updateFilterScrollbar, {
-  passive: true
-});
+      passive: true,
+    });
 
-window.addEventListener("resize", updateFilterScrollbar);
+    window.addEventListener("resize", updateFilterScrollbar);
 
-updateFilterScrollbar();
+    updateFilterScrollbar();
   })();
 </script>
 {% endblock %}
