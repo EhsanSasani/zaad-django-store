@@ -1,219 +1,228 @@
-﻿/* === متغیرهای تم (روشن) === */
+/* =========================
+   Base / fonts / variables / reset
+   ========================= */
+
+@font-face {
+  font-family: "EstedadLocal";
+  src: url("../fonts/Estedad-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EstedadLocal";
+  src: url("../fonts/Estedad-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EstedadLocal";
+  src: url("../fonts/Estedad-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "EstedadLocal";
+  src: url("../fonts/Estedad-Bold.woff2") format("woff2");
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "VazirmatnLocal";
+  src: url("../admin/fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "VazirmatnLocal";
+  src: url("../admin/fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CormorantGaramond";
+  src: url("../fonts/CormorantGaramond-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CormorantGaramond";
+  src: url("../fonts/CormorantGaramond-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CormorantGaramond";
+  src: url("../fonts/CormorantGaramond-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("../fonts/PlusJakartaSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("../fonts/PlusJakartaSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("../fonts/PlusJakartaSans-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("../fonts/PlusJakartaSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --font-fa: "Vazirmatn", sans-serif;
-  --bg: #f8f5ef;
-  --bg-2: #ece6da;
-  --surface: #ffffff;
-  --surface-soft: #f4efe5;
-  --text: #1a2433;
-  --muted: #5a6678;
-  --line: #d9cfbf;
-  --brand: #12263a;
-  --brand-2: #274560;
-  --accent: #c97f2f;
-  --radius: 18px;
-  --shadow: 0 14px 40px rgba(18, 38, 58, 0.12);
+  --bg: #f7f2eb;
+  --bg-soft: #efe7dc;
+  --bg-card: #ffffff;
+  --bg-strong: #f2e8dc;
+
+  --text: #2d2a27;
+  --muted: #7b736a;
+  --line: #e6ddd1;
+
+  --brand: #f8f4ee;
+  --brand-text: #2d2a27;
+  --brand-dark: #1f2f47;
+
+  --accent: #c79b6b;
+  --accent-hover: #b98a57;
+  --success: #bfa487;
+  --success-hover: #ad8d68;
+
+  --white: #ffffff;
+  --shadow-sm: 0 8px 18px rgba(38, 26, 16, 0.04);
+  --shadow: 0 14px 34px rgba(38, 26, 16, 0.07);
+  --shadow-lg: 0 20px 44px rgba(38, 26, 16, 0.1);
+
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-lg: 0px;
+  --radius-pill: 999px;
+
+  --container: 1380px;
+  --header-height: 72px;
+
+  --hero-overlay: linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.34));
+
+  --font-brand-en: "CormorantGaramond", serif;
+  --font-ui-en: "PlusJakartaSans", sans-serif;
+  --font-fa: "EstedadLocal", "VazirmatnLocal", Tahoma, sans-serif;
 }
 
-/* === متغیرهای تم (تیره) === */
-html[data-theme="dark"] {
-  --bg: #0f1c2d;
-  --bg-2: #182b43;
-  --surface: #132338;
-  --surface-soft: #1a2f4b;
-  --text: #edf1f6;
-  --muted: #b2bfce;
-  --line: #2c4361;
-  --brand: #0b1726;
-  --brand-2: #173353;
-  --accent: #f2ad56;
-  --shadow: 0 16px 42px rgba(0, 0, 0, 0.35);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* === ریست سبک پایه و بدنه === */
-* { box-sizing: border-box; }
+html,
+body,
+input,
+textarea,
+select,
+button {
+  font-family: var(--font-fa);
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
-  font-family: var(--font-fa);
-  background:
-    radial-gradient(900px 400px at 10% 0, color-mix(in oklab, var(--bg-2) 55%, transparent), transparent 60%),
-    radial-gradient(900px 450px at 90% 10%, color-mix(in oklab, var(--bg-2) 45%, transparent), transparent 60%),
-    var(--bg);
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fbf8f4 0%, var(--bg) 100%);
   color: var(--text);
 }
 
-/* === هدر و نوار ناوبری === */
-.zaad-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  backdrop-filter: blur(10px);
-  background: color-mix(in oklab, var(--brand) 94%, transparent);
-  border-bottom: 1px solid color-mix(in oklab, var(--line) 40%, transparent);
+img {
+  display: block;
+  max-width: 100%;
 }
 
-.zaad-nav {
-  min-height: 74px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  direction: ltr;
-}
-
-/* === برند === */
-.zaad-brand {
-  display: inline-flex;
-  flex-direction: column;
+a {
+  color: inherit;
   text-decoration: none;
-  color: #fff;
-  line-height: 1.1;
 }
 
-.zaad-brand-main {
-  font-size: 1.3rem;
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+  line-height: 1.95;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
   font-weight: 900;
-  letter-spacing: 0.08em;
 }
 
-.zaad-brand-sub {
-  font-size: 0.72rem;
-  opacity: 0.8;
+h2 {
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  font-weight: 900;
 }
 
-/* === لینک‌های منو و حالت active === */
-.zaad-links .nav-link {
-  color: rgba(255, 255, 255, 0.88);
-  font-weight: 700;
-  padding: 10px 13px;
-  border-radius: 12px;
-}
-
-.zaad-links .nav-link:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.zaad-links .nav-link.is-active {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
-}
-
-/* === ساختار collapse در navbar === */
-.zaad-collapse {
-  flex-grow: 1;
-  direction: ltr;
-}
-
-/* === اکشن‌های هدر (آیکون/تم) === */
-.zaad-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.zaad-icon-btn,
-.zaad-theme-btn {
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-  border-radius: 12px;
-  height: 36px;
-  min-width: 36px;
-  padding: 0 10px;
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-
-.zaad-icon-btn {
-  display: inline-grid;
-  place-items: center;
-  line-height: 1;
-}
-
-.zaad-theme-btn {
-  display: inline-grid;
-  place-items: center;
-  width: 36px;
-  padding: 0;
-  font-size: 1rem;
-}
-
-.theme-mark {
-  line-height: 1;
-}
-
-.zaad-icon-btn:hover,
-.zaad-theme-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
-}
-
-/* === واکنش‌گرایی هدر === */
-@media (max-width: 991px) {
-  .zaad-nav {
-    justify-content: flex-start;
-  }
-
-  .zaad-actions {
-    margin-top: 10px;
-  }
-
-  .zaad-links {
-    margin-top: 8px;
-  }
-
-  .zaad-links .nav-link {
-    padding-right: 0;
-    padding-left: 0;
-  }
-}
-
-/* === فوتر === */
-.zaad-footer {
-  margin-top: 70px;
-  padding-top: 34px;
-  background: linear-gradient(180deg, var(--brand-2), var(--brand));
-  color: rgba(255, 255, 255, 0.92);
-}
-
-.zaad-footer-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.zaad-footer-grid section {
-  padding: 16px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.zaad-footer h2 {
-  margin: 0 0 8px;
-  font-size: 0.92rem;
+h3 {
+  font-size: 1.08rem;
   font-weight: 800;
 }
 
-.zaad-footer p {
-  margin: 0 0 6px;
-  font-size: 0.82rem;
-  line-height: 1.9;
-  opacity: 0.88;
+ul,
+ol {
+  margin: 0;
+  padding: 0;
 }
 
-.zaad-copy {
-  margin-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-  text-align: center;
-  font-size: 0.78rem;
-  padding: 12px;
-  opacity: 0.85;
-}
-
-/* === واکنش‌گرایی فوتر === */
-@media (max-width: 992px) {
-  .zaad-footer-grid { grid-template-columns: 1fr; }
+button {
+  font: inherit;
+  border: 0;
+  background: none;
 }

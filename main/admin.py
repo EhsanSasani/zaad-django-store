@@ -1,7 +1,9 @@
-﻿from types import MethodType
-
+from django import forms
 from django.contrib import admin
+from django.db.models import Count
 from django.utils import timezone
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from .models import (
     BakeryItem,
@@ -9,215 +11,90 @@ from .models import (
     Event,
     Flower,
     GiftItem,
+    HomeHeroSlide,
     LeadRequest,
     NewsPost,
     Product,
     ProductImage,
     PublishStatus,
+    SiteHero,
     Tag,
 )
 
+
 admin.site.site_header = "پنل مدیریت زاد"
 admin.site.site_title = "مدیریت زاد"
-admin.site.index_title = "مدیریت محتوا و محصولات"
-
-_ADMIN_METADATA_LOCALIZED = False
+admin.site.index_title = "مدیریت محتوا، محصولات و درخواست‌ها"
 
 
-def _localize_admin_metadata():
-    model_labels = {
-        Category: ("دسته‌بندی", "دسته‌بندی‌ها"),
-        Tag: ("برچسب", "برچسب‌ها"),
-        Product: ("محصول", "محصولات"),
-        Flower: ("گل", "گل‌ها"),
-        BakeryItem: ("محصول بیکری", "محصولات بیکری"),
-        GiftItem: ("هدیه", "هدایا"),
-        ProductImage: ("تصویر محصول", "تصاویر محصول"),
-        NewsPost: ("خبر", "اخبار"),
-        Event: ("رویداد", "رویدادها"),
-        LeadRequest: ("درخواست مشاوره", "درخواست‌های مشاوره"),
-    }
-    for model, (singular, plural) in model_labels.items():
-        model._meta.verbose_name = singular
-        model._meta.verbose_name_plural = plural
-
-    field_metadata = {
-        Category: {
-            "name": ("نام دسته", ""),
-            "slug": ("اسلاگ", "برای URL استفاده می‌شود؛ با حروف لاتین و خط تیره وارد کنید."),
-            "section": ("بخش", "نوع بخش فروشگاه را انتخاب کنید."),
-            "created_at": ("زمان ایجاد", ""),
-            "updated_at": ("آخرین به‌روزرسانی", ""),
-        },
-        Tag: {
-            "name": ("نام برچسب", ""),
-            "slug": ("اسلاگ", "برای URL استفاده می‌شود؛ یکتا و کوتاه باشد."),
-            "created_at": ("زمان ایجاد", ""),
-            "updated_at": ("آخرین به‌روزرسانی", ""),
-        },
-        Product: {
-            "name": ("نام محصول", ""),
-            "slug": ("اسلاگ", "در صورت خالی بودن، به‌صورت خودکار از نام ساخته می‌شود."),
-            "description": ("توضیحات", ""),
-            "price": ("قیمت", "قیمت را به‌صورت عددی وارد کنید."),
-            "cover_image": ("تصویر اصلی", "تصویر شاخص محصول برای نمایش در لیست‌ها."),
-            "category": ("دسته‌بندی", "دسته محصول را برای مسیر نمایش درست انتخاب کنید."),
-            "tags": ("برچسب‌ها", ""),
-            "is_active": ("فعال", "در صورت غیرفعال بودن، محصول در سایت نمایش داده نمی‌شود."),
-            "stock_status": ("وضعیت موجودی", "وضعیت فعلی دسترسی محصول را مشخص کنید."),
-            "featured": ("ویژه", "برای نمایش برجسته در بخش‌های منتخب فعال کنید."),
-            "sort_order": ("ترتیب نمایش", "عدد کمتر یعنی نمایش بالاتر."),
-            "created_at": ("زمان ایجاد", ""),
-            "updated_at": ("آخرین به‌روزرسانی", ""),
-        },
-        Flower: {
-            "pack_type": ("نوع بسته‌بندی", "نوع ارائه گل را انتخاب کنید."),
-        },
-        BakeryItem: {
-            "size_or_weight": ("اندازه یا وزن", "مثال: ۱ کیلوگرم یا قطر ۲۰ سانتی‌متر."),
-            "is_vegan": ("وگان", "اگر محصول وگان است این گزینه را فعال کنید."),
-        },
-        GiftItem: {
-            "material": ("جنس", "جنس اصلی محصول را کوتاه وارد کنید."),
-            "handmade": ("دست‌ساز", "اگر محصول دست‌ساز است این گزینه را فعال کنید."),
-        },
-        ProductImage: {
-            "product": ("محصول", ""),
-            "image": ("تصویر", "تصویر را با کیفیت مناسب بارگذاری کنید."),
-            "alt_text": ("متن جایگزین", "یک توضیح کوتاه برای دسترس‌پذیری تصویر."),
-            "ordering": ("ترتیب", "عدد کمتر یعنی نمایش زودتر در گالری."),
-            "is_cover": ("تصویر کاور", "این گزینه را فقط برای یک تصویر اصلی فعال کنید."),
-            "created_at": ("زمان ایجاد", ""),
-            "updated_at": ("آخرین به‌روزرسانی", ""),
-        },
-        NewsPost: {
-            "title": ("عنوان", ""),
-            "slug": ("اسلاگ", "برای URL خبر استفاده می‌شود؛ خالی بماند خودکار ساخته می‌شود."),
-            "excerpt": ("خلاصه کوتاه", "خلاصه یک‌خطی برای لیست خبرها."),
-            "body": ("متن خبر", ""),
-            "cover_image": ("تصویر کاور", "تصویر اصلی خبر در صفحه لیست و جزئیات."),
-            "status": ("وضعیت انتشار", "پیش‌نویس یا منتشرشده بودن خبر را تعیین کنید."),
-            "published_at": ("تاریخ انتشار", "برای زمان‌بندی انتشار، تاریخ را مشخص کنید."),
-            "created_at": ("زمان ایجاد", ""),
-            "updated_at": ("آخرین به‌روزرسانی", ""),
-        },
-        Event: {
-            "title": ("عنوان", ""),
-            "slug": ("اسلاگ", "برای URL رویداد استفاده می‌شود؛ خالی بماند خودکار ساخته می‌شود."),
-            "description": ("توضیحات", ""),
-            "start_at": ("شروع رویداد", ""),
-            "end_at": ("پایان رویداد", ""),
-            "location": ("مکان", "آدرس یا نام محل برگزاری رویداد."),
-            "cover_image": ("تصویر کاور", "تصویر اصلی رویداد برای نمایش در لیست."),
-            "status": ("وضعیت انتشار", "پیش‌نویس یا منتشرشده بودن رویداد را تعیین کنید."),
-            "published_at": ("تاریخ انتشار", "برای زمان‌بندی انتشار، تاریخ را مشخص کنید."),
-            "created_at": ("زمان ایجاد", ""),
-            "updated_at": ("آخرین به‌روزرسانی", ""),
-        },
-        LeadRequest: {
-            "full_name": ("نام", ""),
-            "mobile": ("شماره موبایل", ""),
-            "lead_type": ("نوع درخواست", ""),
-            "delivery_window": ("بازه زمانی تحویل", ""),
-            "preferred_date": ("تاریخ انتخابی", ""),
-            "event_location": ("مکان رویداد", ""),
-            "note": ("توضیح کوتاه", ""),
-            "source_page": ("صفحه مبدا", ""),
-            "created_at": ("زمان ایجاد", ""),
-            "updated_at": ("آخرین به‌روزرسانی", ""),
-        },
-    }
-    for model, metadata in field_metadata.items():
-        for field_name, (label, help_text) in metadata.items():
-            field = model._meta.get_field(field_name)
-            field.verbose_name = label
-            if help_text:
-                field.help_text = help_text
-
-    Category._meta.get_field("section").choices = [
-        (Category.Section.FLOWERS, "گل‌ها"),
-        (Category.Section.BAKERY, "بیکری"),
-        (Category.Section.GIFTS, "هدایا"),
-    ]
-    Product._meta.get_field("stock_status").choices = [
-        (Product.StockStatus.IN_STOCK, "موجود"),
-        (Product.StockStatus.OUT_OF_STOCK, "ناموجود"),
-        (Product.StockStatus.PREORDER, "پیش‌سفارش"),
-    ]
-    Flower._meta.get_field("pack_type").choices = [
-        (Flower.PackType.BOX, "باکس"),
-        (Flower.PackType.BOUQUET, "دسته‌گل"),
-        (Flower.PackType.BASKET, "سبد"),
-        (Flower.PackType.STEM, "شاخه‌ای"),
-        (Flower.PackType.STAND, "استند"),
-    ]
-    publish_choices = [
-        (PublishStatus.DRAFT, "پیش‌نویس"),
-        (PublishStatus.PUBLISHED, "منتشرشده"),
-    ]
-    NewsPost._meta.get_field("status").choices = publish_choices
-    Event._meta.get_field("status").choices = publish_choices
-    LeadRequest._meta.get_field("lead_type").choices = [
-        (LeadRequest.LeadType.FLOWER, "گل"),
-        (LeadRequest.LeadType.BAKERY, "بیکری"),
-        (LeadRequest.LeadType.GIFT, "هدیه"),
-        (LeadRequest.LeadType.EVENT, "رویداد"),
-    ]
-    LeadRequest._meta.get_field("delivery_window").choices = [
-        (LeadRequest.DeliveryWindow.TODAY, "امروز"),
-        (LeadRequest.DeliveryWindow.TOMORROW, "فردا"),
-        (LeadRequest.DeliveryWindow.PICK_DATE, "تاریخ انتخابی"),
-    ]
+def to_persian_digits(value):
+    value = str(value)
+    english_digits = "0123456789"
+    persian_digits = "۰۱۲۳۴۵۶۷۸۹"
+    translation_table = str.maketrans(english_digits, persian_digits)
+    return value.translate(translation_table)
 
 
-def _ensure_admin_metadata():
-    global _ADMIN_METADATA_LOCALIZED
-    if not _ADMIN_METADATA_LOCALIZED:
-        _localize_admin_metadata()
-        _ADMIN_METADATA_LOCALIZED = True
+def format_toman(value):
+    if value in (None, ""):
+        return "استعلام قیمت"
+
+    try:
+        number = int(value)
+    except (TypeError, ValueError):
+        return "استعلام قیمت"
+
+    formatted = f"{number:,}".replace(",", "٬")
+    return f"{to_persian_digits(formatted)} تومان"
 
 
-_original_get_app_list = admin.site.get_app_list
+class AdminImagePreviewMixin:
+    @admin.display(description="تصویر")
+    def image_preview(self, obj):
+        image = None
 
+        if obj and hasattr(obj, "cover_image") and obj.cover_image:
+            image = obj.cover_image
+        elif obj and hasattr(obj, "image") and obj.image:
+            image = obj.image
 
-def _localized_get_app_list(self, request, app_label=None):
-    _ensure_admin_metadata()
-    return _original_get_app_list(request, app_label)
+        if not image:
+            return format_html(
+                '<span style="display:inline-flex;width:44px;height:44px;align-items:center;justify-content:center;border-radius:10px;border:1px dashed #aaa;font-size:10px;color:#999;">{}</span>',
+                "بدون عکس",
+            )
 
+        return format_html(
+            '''
+            <img src="{}" class="zad-admin-preview" />
+            ''',
+            image.url,
+        )
 
-admin.site.get_app_list = MethodType(_localized_get_app_list, admin.site)
+    @admin.display(description="نمای بزرگ عکس")
+    def large_image_preview(self, obj):
+        image = None
 
+        if obj and hasattr(obj, "cover_image") and obj.cover_image:
+            image = obj.cover_image
+        elif obj and hasattr(obj, "image") and obj.image:
+            image = obj.image
 
-class LocalizedAdminMixin:
-    def get_queryset(self, request):
-        _ensure_admin_metadata()
-        return super().get_queryset(request)
+        if not image:
+            return "بدون عکس"
 
-    def get_form(self, request, obj=None, change=False, **kwargs):
-        _ensure_admin_metadata()
-        return super().get_form(request, obj, change, **kwargs)
+        return format_html(
+            '''
+            <a href="{}" target="_blank" class="zad-admin-large-image-link">
+                <img src="{}" class="zad-admin-preview" />
+            </a>
+            ''',
+            image.url,
+            image.url,
+        )
 
-    def get_fieldsets(self, request, obj=None):
-        _ensure_admin_metadata()
-        return super().get_fieldsets(request, obj)
-
-    def history_view(self, request, object_id, extra_context=None):
-        _ensure_admin_metadata()
-        return super().history_view(request, object_id, extra_context)
-
-    def delete_view(self, request, object_id, extra_context=None):
-        _ensure_admin_metadata()
-        return super().delete_view(request, object_id, extra_context)
-
-
-class LocalizedInlineMixin:
-    def get_formset(self, request, obj=None, **kwargs):
-        _ensure_admin_metadata()
-        return super().get_formset(request, obj, **kwargs)
-
-
-class ProductActionsMixin:
-    actions = ("activate_selected", "deactivate_selected", "mark_featured", "remove_featured")
+class ActiveActionsMixin:
+    actions = ("activate_selected", "deactivate_selected")
 
     @admin.action(description="فعال‌کردن موارد انتخاب‌شده")
     def activate_selected(self, request, queryset):
@@ -229,6 +106,18 @@ class ProductActionsMixin:
         updated = queryset.update(is_active=False)
         self.message_user(request, f"{updated} مورد غیرفعال شد.")
 
+
+class ProductActionsMixin(ActiveActionsMixin):
+    actions = ActiveActionsMixin.actions + (
+        "mark_featured",
+        "remove_featured",
+        "publish_selected_products",
+        "draft_selected_products",
+        "mark_in_stock",
+        "mark_out_of_stock",
+        "make_inquiry_pricing",
+    )
+
     @admin.action(description="ویژه‌کردن موارد انتخاب‌شده")
     def mark_featured(self, request, queryset):
         updated = queryset.update(featured=True)
@@ -239,268 +128,1482 @@ class ProductActionsMixin:
         updated = queryset.update(featured=False)
         self.message_user(request, f"{updated} مورد از ویژه‌ها حذف شد.")
 
+    @admin.action(description="انتشار موارد انتخاب‌شده")
+    def publish_selected_products(self, request, queryset):
+        updated = queryset.update(publish_status=Product.PublishStatus.PUBLISHED)
+        self.message_user(request, f"{updated} مورد منتشر شد.")
+
+    @admin.action(description="بازگردانی به پیش‌نویس")
+    def draft_selected_products(self, request, queryset):
+        updated = queryset.update(publish_status=Product.PublishStatus.DRAFT)
+        self.message_user(request, f"{updated} مورد به پیش‌نویس برگشت.")
+
+    @admin.action(description="علامت‌گذاری به عنوان موجود")
+    def mark_in_stock(self, request, queryset):
+        updated = queryset.update(stock_status=Product.StockStatus.IN_STOCK)
+        self.message_user(request, f"{updated} مورد موجود شد.")
+
+    @admin.action(description="علامت‌گذاری به عنوان ناموجود")
+    def mark_out_of_stock(self, request, queryset):
+        updated = queryset.update(stock_status=Product.StockStatus.OUT_OF_STOCK)
+        self.message_user(request, f"{updated} مورد ناموجود شد.")
+
+    @admin.action(description="قیمت‌گذاری به حالت استعلامی")
+    def make_inquiry_pricing(self, request, queryset):
+        updated = queryset.update(pricing_type=Product.PricingType.INQUIRY, price=None, price_usd=None)
+        self.message_user(request, f"{updated} مورد استعلامی شد.")
+
 
 class PublishActionsMixin:
     actions = ("publish_selected", "unpublish_selected")
 
     @admin.action(description="انتشار موارد انتخاب‌شده")
     def publish_selected(self, request, queryset):
-        updated = queryset.update(status=PublishStatus.PUBLISHED, published_at=timezone.now())
+        updated = queryset.update(
+            status=PublishStatus.PUBLISHED,
+            published_at=timezone.now(),
+        )
         self.message_user(request, f"{updated} مورد منتشر شد.")
 
     @admin.action(description="بازگردانی به پیش‌نویس")
     def unpublish_selected(self, request, queryset):
-        updated = queryset.update(status=PublishStatus.DRAFT, published_at=None)
+        updated = queryset.update(
+            status=PublishStatus.DRAFT,
+            published_at=None,
+        )
         self.message_user(request, f"{updated} مورد به پیش‌نویس برگشت.")
 
 
-# --- اینلاین تصاویر محصول در فرم ادمین ---
-class ProductImageInline(LocalizedInlineMixin, admin.TabularInline):
+class CategoryAdminForm(forms.ModelForm):
+    class Meta:
+        fields = "__all__"
+        widgets = {
+            "description": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "placeholder": "یک توضیح کوتاه برای این زیر‌دسته بنویس.",
+                }
+            ),
+        }
+
+
+class TagAdminForm(forms.ModelForm):
+    class Meta:
+        fields = "__all__"
+        widgets = {
+            "description": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "placeholder": "توضیح کوتاه برای کارت مناسبتی یا کاربرد این برچسب.",
+                }
+            ),
+        }
+
+class PersianImageInput(forms.ClearableFileInput):
+    initial_text = "عکس فعلی"
+    input_text = "تغییر عکس"
+    clear_checkbox_label = "حذف عکس فعلی"
+
+class ProductAdminForm(forms.ModelForm):
+    class Meta:
+        fields = "__all__"
+        widgets = {
+                "cover_image": PersianImageInput,
+                "tags": forms.CheckboxSelectMultiple,
+                "description": forms.Textarea(
+                    attrs={
+                        "rows": 4,
+                        "placeholder": "توضیح کوتاه و احساسی بنویس؛ اگر خالی بماند مشکلی نیست.",
+                    }
+                ),
+            }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if "category" in self.fields:
+            section_filter = getattr(self, "section_filter", None)
+
+            category_queryset = Category.objects.filter(is_active=True)
+
+            if section_filter:
+                category_queryset = category_queryset.filter(section=section_filter)
+
+            self.fields["category"].queryset = category_queryset.order_by(
+                "section",
+                "sort_order",
+                "name",
+            )
+            self.fields["category"].help_text = "نوع فیزیکی محصول را انتخاب کن؛ مثل باکس، دسته گل، کیک تولد، شمع."
+
+        if "tags" in self.fields:
+            self.fields["tags"].queryset = Tag.objects.filter(
+                is_active=True
+            ).order_by("sort_order", "name")
+            self.fields["tags"].help_text = "مناسبت یا کاربرد محصول؛ مثل تولد، ترحیم، ارسال روز، عاشقانه، یونیک و ..."
+
+        if "price" in self.fields:
+            self.fields["price"].help_text = "فقط عدد وارد کن؛ مثلاً 2500000."
+
+        if "price_usd" in self.fields:
+            self.fields["price_usd"].help_text = "اختیاری است؛ اگر قیمت دلاری نداری خالی بگذار."
+
+        if "sort_order" in self.fields:
+            self.fields["sort_order"].help_text = "عدد کمتر یعنی محصول بالاتر نمایش داده می‌شود."
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        pricing_type = cleaned_data.get("pricing_type")
+        price = cleaned_data.get("price")
+        price_usd = cleaned_data.get("price_usd")
+
+        if pricing_type == Product.PricingType.INQUIRY:
+            cleaned_data["price"] = None
+            cleaned_data["price_usd"] = None
+
+        if pricing_type == Product.PricingType.FIXED and price is None:
+            self.add_error(
+                "price",
+                "برای قیمت ثابت، وارد کردن قیمت الزامی است. اگر قیمت قطعی نیست، نوع قیمت‌گذاری را استعلامی بگذار.",
+            )
+
+        if price is not None and price < 0:
+            self.add_error("price", "قیمت نمی‌تواند منفی باشد.")
+
+        if price_usd is not None and price_usd < 0:
+            self.add_error("price_usd", "قیمت دلاری نمی‌تواند منفی باشد.")
+
+        return cleaned_data
+
+
+class NewsPostAdminForm(forms.ModelForm):
+    class Meta:
+        fields = "__all__"
+        widgets = {
+            "excerpt": forms.Textarea(attrs={"rows": 3}),
+            "body": forms.Textarea(attrs={"rows": 8}),
+        }
+
+
+class EventAdminForm(forms.ModelForm):
+    class Meta:
+        fields = "__all__"
+        widgets = {
+            "description": forms.Textarea(attrs={"rows": 6}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        start_at = cleaned_data.get("start_at")
+        end_at = cleaned_data.get("end_at")
+
+        if start_at and end_at and end_at <= start_at:
+            self.add_error("end_at", "زمان پایان باید بعد از زمان شروع باشد.")
+
+        return cleaned_data
+
+
+class ProductImageInline(AdminImagePreviewMixin, admin.StackedInline):
     model = ProductImage
-    extra = 0
-    fields = ("image", "alt_text", "ordering", "is_cover", "created_at", "updated_at")
-    readonly_fields = ("created_at", "updated_at")
-    ordering = ("ordering", "id")
-    verbose_name = "تصویر گالری"
-    verbose_name_plural = "تصاویر گالری"
-
-
-# --- ادمین داده‌های مرجع: دسته‌بندی ---
-@admin.register(Category)
-class CategoryAdmin(LocalizedAdminMixin, admin.ModelAdmin):
-    list_display = ("name", "section", "slug", "updated_at")
-    list_filter = ("section", "created_at")
-    search_fields = ("name", "slug")
-    prepopulated_fields = {"slug": ("name",)}
-    ordering = ("section", "name")
-    readonly_fields = ("created_at", "updated_at")
-    fieldsets = (
-        ("اطلاعات اصلی", {"fields": ("name", "section", "slug")}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
-    )
-
-
-# --- ادمین داده‌های مرجع: برچسب ---
-@admin.register(Tag)
-class TagAdmin(LocalizedAdminMixin, admin.ModelAdmin):
-    list_display = ("name", "slug", "updated_at")
-    search_fields = ("name", "slug")
-    prepopulated_fields = {"slug": ("name",)}
-    ordering = ("name",)
-    readonly_fields = ("created_at", "updated_at")
-    fieldsets = (
-        ("اطلاعات اصلی", {"fields": ("name", "slug")}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
-    )
-
-
-class BaseProductAdmin(ProductActionsMixin, LocalizedAdminMixin, admin.ModelAdmin):
-    list_display = (
-        "name",
-        "category",
-        "price",
-        "stock_status",
-        "is_active",
-        "featured",
-        "sort_order",
+    extra = 1
+    fields = (
+        "image",
+        "image_preview",
+        "alt_text",
+        "ordering",
+        "created_at",
         "updated_at",
     )
-    list_filter = ("is_active", "featured", "stock_status", "category__section", "category")
-    search_fields = ("name", "slug", "description", "category__name", "tags__name")
-    readonly_fields = ("created_at", "updated_at")
-    prepopulated_fields = {"slug": ("name",)}
-    ordering = ("sort_order", "-updated_at")
-    list_editable = ("is_active", "featured", "sort_order")
-    inlines = [ProductImageInline]
-    date_hierarchy = "created_at"
-    list_select_related = ("category",)
-    autocomplete_fields = ("category", "tags")
+    readonly_fields = (
+        "image_preview",
+        "created_at",
+        "updated_at",
+    )
+    ordering = (
+        "ordering",
+        "id",
+    )
+    verbose_name = "عکس گالری"
+    verbose_name_plural = "گالری محصول"
+
+
+@admin.register(Category)
+class CategoryAdmin(ActiveActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
+    form = CategoryAdminForm
+
+    list_display = (
+        "image_preview",
+        "name",
+        "section",
+        "is_active",
+        "sort_order",
+        "product_count",
+        "updated_at",
+    )
+    list_filter = (
+        "section",
+        "is_active",
+    )
+    search_fields = (
+        "name",
+        "slug",
+        "description",
+    )
+    ordering = (
+        "section",
+        "sort_order",
+        "name",
+    )
+    list_editable = (
+        "is_active",
+        "sort_order",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "image_preview",
+        "product_count",
+    )
+    save_on_top = True
+    list_per_page = 30
+
     fieldsets = (
-        ("اطلاعات اصلی", {"fields": ("name", "slug", "description")}),
-        ("دسته‌بندی و برچسب", {"fields": ("category", "tags")}),
-        ("قیمت و موجودی", {"fields": ("price", "stock_status", "is_active")}),
-        ("نمایش", {"fields": ("cover_image", "featured", "sort_order")}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
+        (
+            "۱. زیر‌دسته",
+            {
+                "description": "زیر‌دسته یعنی نوع فیزیکی محصول؛ مثل دسته گل، باکس، استند، کیک تولد، شمع.",
+                "fields": (
+                    "cover_image",
+                    "image_preview",
+                    "name",
+                    "section",
+                ),
+            },
+        ),
+        (
+            "۲. توضیح کوتاه",
+            {
+                "fields": (
+                    "description",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            "۳. نمایش",
+            {
+                "description": "برای مخفی کردن یک زیر‌دسته، فعال را خاموش کن. عدد کمتر یعنی نمایش بالاتر.",
+                "fields": (
+                    "is_active",
+                    "sort_order",
+                ),
+            },
+        ),
+        (
+            "تنظیمات پیشرفته",
+            {
+                "fields": (
+                    "slug",
+                    "product_count",
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
     )
 
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.annotate(products_total=Count("products"))
 
-# --- ادمین محصول پایه ---
+    @admin.display(description="تعداد محصول")
+    def product_count(self, obj):
+        if not obj.pk:
+            return 0
+
+        if hasattr(obj, "products_total"):
+            return obj.products_total
+
+        return obj.products.count()
+
+
+@admin.register(Tag)
+class TagAdmin(ActiveActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
+    form = TagAdminForm
+
+    list_display = (
+        "image_preview",
+        "name",
+        "is_occasion",
+        "is_active",
+        "sort_order",
+        "product_count",
+    )
+    list_filter = (
+        "is_occasion",
+        "is_active",
+    )
+    search_fields = (
+        "name",
+        "slug",
+        "description",
+    )
+    ordering = (
+        "sort_order",
+        "name",
+    )
+    list_editable = (
+        "is_occasion",
+        "is_active",
+        "sort_order",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "image_preview",
+        "product_count",
+    )
+    list_per_page = 40
+    save_on_top = True
+
+    fieldsets = (
+        (
+            "۱. برچسب",
+            {
+                "description": "برچسب یعنی مناسبت یا کاربرد محصول؛ مثل تولد، عاشقانه، تبریک، ترحیم یا ارسال روز.",
+                "fields": (
+                    "cover_image",
+                    "image_preview",
+                    "name",
+                    "slug",
+                ),
+            },
+        ),
+        (
+            "۲. کارت مناسبتی",
+            {
+                "description": "اگر روشن باشد، این برچسب می‌تواند در کارت‌های مناسبتی سایت نمایش داده شود.",
+                "fields": (
+                    "is_occasion",
+                    "description",
+                ),
+            },
+        ),
+        (
+            "۳. نمایش",
+            {
+                "fields": (
+                    "is_active",
+                    "sort_order",
+                ),
+            },
+        ),
+        (
+            "زمان‌ها",
+            {
+                "fields": (
+                    "product_count",
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+    )
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.annotate(products_total=Count("products"))
+
+    @admin.display(description="تعداد محصول")
+    def product_count(self, obj):
+        if not obj.pk:
+            return 0
+
+        if hasattr(obj, "products_total"):
+            return obj.products_total
+
+        return obj.products.count()
+    @admin.display(description="کد", ordering="product_code")
+    def product_code_display(self, obj):
+        if not obj.product_code:
+            return "-"
+
+        return format_html(
+            '<strong style="font-size:13px;letter-spacing:.04em;">{}</strong>',
+            to_persian_digits(obj.product_code),
+        )
+
+
+@admin.display(description="نام محصول", ordering="name")
+def name_display(self, obj):
+    if not obj.name:
+        return "-"
+
+    return obj.name
+
+
+@admin.display(description="نوع", ordering="category__name")
+def category_display(self, obj):
+    if not obj.category_id:
+        return "-"
+
+    return obj.category.name
+
+
+@admin.display(description="موجودی", ordering="stock_status")
+def stock_badge(self, obj):
+    label_map = {
+        Product.StockStatus.IN_STOCK: "موجود",
+        Product.StockStatus.OUT_OF_STOCK: "ناموجود",
+        Product.StockStatus.PREORDER: "پیش‌سفارش",
+    }
+
+    return label_map.get(obj.stock_status, "-")
+
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        return queryset.annotate(products_total=Count("products"))
+
+    @admin.display(description="تعداد محصول")
+    def product_count(self, obj):
+        if not obj.pk:
+            return 0
+
+        if hasattr(obj, "products_total"):
+            return obj.products_total
+
+        return obj.products.count()
+class SectionCategoryFilter(admin.SimpleListFilter):
+    title = "زیردسته"
+    parameter_name = "category"
+
+    def lookups(self, request, model_admin):
+        queryset = Category.objects.filter(is_active=True)
+
+        if getattr(model_admin, "section_filter", None):
+            queryset = queryset.filter(section=model_admin.section_filter)
+
+        return [
+            (category.pk, category.name)
+            for category in queryset.order_by("sort_order", "name")
+        ]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(category_id=self.value())
+
+        return queryset
+
+
+class BaseProductAdmin(ProductActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
+    form = ProductAdminForm
+    section_filter = None
+
+    list_display = (
+        "image_preview",
+        "product_code_display",
+        "name_display",
+        "price_toman",
+        "category_display",
+        "stock_badge",
+        "featured",
+    )
+
+    list_filter = (
+        SectionCategoryFilter,
+        "stock_status",
+        "featured",
+        "is_active",
+    )
+
+    search_fields = (
+        "product_code",
+        "name",
+        "category__name",
+        "tags__name",
+    )
+
+    readonly_fields = (
+        "product_code",
+        "created_at",
+        "updated_at",
+        "image_preview",
+        "large_image_preview",
+    )
+
+    ordering = (
+        "sort_order",
+        "-updated_at",
+    )
+
+    list_editable = ()
+    inlines = [ProductImageInline]
+    list_select_related = ("category",)
+    list_per_page = 25
+    save_on_top = True
+    actions_on_top = True
+    actions_on_bottom = False
+
+    fieldsets = (
+        (
+            "۱. عکس و نام محصول",
+            {
+                "description": "اول عکس اصلی و اسم محصول را وارد کن.",
+                "fields": (
+                    "cover_image",
+                    "image_preview",
+                    "large_image_preview",
+                    "name",
+                ),
+            },
+        ),
+        (
+            "۲. قیمت و موجودی",
+            {
+                "description": "اگر قیمت قطعی نیست، نوع قیمت‌گذاری را استعلامی بگذار.",
+                "fields": (
+                    "pricing_type",
+                    "price",
+                    "price_usd",
+                    "stock_status",
+                ),
+            },
+        ),
+        (
+            "۳. نمایش در سایت",
+            {
+                "description": "برای دیده شدن در سایت، محصول باید فعال و منتشرشده باشد.",
+                "fields": (
+                    "publish_status",
+                    "is_active",
+                    "featured",
+                    "sort_order",
+                ),
+            },
+        ),
+        (
+            "۴. نوع محصول و مناسبت",
+            {
+                "fields": (
+                    "category",
+                    "tags",
+                ),
+            },
+        ),
+        (
+            "۵. توضیح",
+            {
+                "fields": (
+                    "description",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            "تنظیمات پیشرفته",
+            {
+                "fields": (
+                    "product_code",
+                    "slug",
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+    )
+
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        form_class = super().get_form(request, obj, change, **kwargs)
+        form_class.section_filter = self.section_filter
+        return form_class
+
+    def get_queryset(self, request):
+        queryset = (
+            super()
+            .get_queryset(request)
+            .select_related("category")
+            .prefetch_related("tags")
+        )
+
+        if self.section_filter:
+            queryset = queryset.filter(category__section=self.section_filter)
+
+        return queryset
+
+    @admin.display(description="کد", ordering="product_code")
+    def product_code_display(self, obj):
+        if not obj.product_code:
+            return "-"
+
+        return format_html(
+            '<strong style="font-size:13px;letter-spacing:.04em;">{}</strong>',
+            to_persian_digits(obj.product_code),
+        )
+
+    @admin.display(description="نام محصول", ordering="name")
+    def name_display(self, obj):
+        if not obj.name:
+            return "-"
+
+        return obj.name
+
+    @admin.display(description="قیمت", ordering="price")
+    def price_toman(self, obj):
+        if obj.pricing_type == Product.PricingType.INQUIRY or not obj.price:
+            return format_html(
+                '<span class="zad-price zad-price--inquiry">{}</span>',
+                "استعلام قیمت",
+            )
+
+        price_parts = [format_toman(obj.price)]
+
+        if obj.price_usd:
+            price_parts.append(f"{int(obj.price_usd):,} USD")
+
+        return format_html(
+            '<span class="zad-price">{}</span>',
+            " · ".join(price_parts),
+        )
+
+    @admin.display(description="نوع", ordering="category__name")
+    def category_display(self, obj):
+        if not obj.category_id:
+            return "-"
+
+        return obj.category.name
+
+    @admin.display(description="موجودی", ordering="stock_status")
+    def stock_badge(self, obj):
+        label_map = {
+            Product.StockStatus.IN_STOCK: "موجود",
+            Product.StockStatus.OUT_OF_STOCK: "ناموجود",
+            Product.StockStatus.PREORDER: "پیش‌سفارش",
+        }
+
+        return label_map.get(obj.stock_status, "-")
+
+    def get_changeform_initial_data(self, request):
+        initial = {
+            "pricing_type": Product.PricingType.INQUIRY,
+            "stock_status": Product.StockStatus.IN_STOCK,
+            "publish_status": Product.PublishStatus.PUBLISHED,
+            "is_active": True,
+            "featured": False,
+            "sort_order": 0,
+        }
+
+        if self.section_filter:
+            first_category = (
+                Category.objects.filter(
+                    section=self.section_filter,
+                    is_active=True,
+                )
+                .order_by("sort_order", "name")
+                .first()
+            )
+
+            if first_category:
+                initial["category"] = first_category.pk
+
+        return initial
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "category":
+            queryset = Category.objects.filter(is_active=True)
+
+            if self.section_filter:
+                queryset = queryset.filter(section=self.section_filter)
+
+            kwargs["queryset"] = queryset.order_by("section", "sort_order", "name")
+
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "tags":
+            kwargs["queryset"] = Tag.objects.filter(is_active=True).order_by(
+                "sort_order",
+                "name",
+            )
+
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
+    def save_model(self, request, obj, form, change):
+        if obj.pricing_type == Product.PricingType.INQUIRY:
+            obj.price = None
+            obj.price_usd = None
+
+        super().save_model(request, obj, form, change)
+
+
 @admin.register(Product)
 class ProductAdmin(BaseProductAdmin):
-    list_display = (
-        "name",
-        "product_type",
-        "category",
-        "price",
-        "stock_status",
-        "is_active",
-        "featured",
-        "sort_order",
-        "updated_at",
-    )
+    """
+    این مدل برای مدیریت کلی محصول است، اما از صفحه اصلی ادمین مخفی می‌شود
+    تا Behzad یک محصول را دو جا نبیند و گیج نشود.
+    """
 
-    @admin.display(description="نوع محصول")
-    def product_type(self, obj):
-        if hasattr(obj, "flower"):
-            return "گل"
-        if hasattr(obj, "bakeryitem"):
-            return "بیکری"
-        if hasattr(obj, "giftitem"):
-            return "هدیه"
-        return "پایه"
+    list_filter = BaseProductAdmin.list_filter + ("category__section",)
+
+    def has_module_permission(self, request):
+        return False
 
 
-# --- ادمین انواع محصول: گل ---
 @admin.register(Flower)
 class FlowerAdmin(BaseProductAdmin):
-    list_display = (
-        "name",
-        "pack_type",
-        "category",
-        "price",
-        "stock_status",
-        "is_active",
-        "featured",
-        "sort_order",
-        "updated_at",
-    )
-    list_filter = ("pack_type",) + BaseProductAdmin.list_filter
+    section_filter = Category.Section.FLOWERS
+
     fieldsets = (
-        ("اطلاعات اصلی", {"fields": ("name", "slug", "description")}),
-        ("ویژگی گل", {"fields": ("pack_type",)}),
-        ("دسته‌بندی و برچسب", {"fields": ("category", "tags")}),
-        ("قیمت و موجودی", {"fields": ("price", "stock_status", "is_active")}),
-        ("نمایش", {"fields": ("cover_image", "featured", "sort_order")}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
+        (
+            "۱. عکس و نام گل",
+            {
+                "fields": (
+                    "cover_image",
+                    "large_image_preview",
+                    "name", 
+                ),
+            },
+        ),
+        (
+            "۲. قیمت و موجودی",
+            {
+                "fields": (
+                    "pricing_type",
+                    "price",
+                    "price_usd",
+                    "stock_status",
+                ),
+            },
+        ),
+        (
+            "۳. انتشار در سایت",
+            {
+                "fields": (
+                    "publish_status",
+                    "is_active",
+                    "featured",
+                    "sort_order",
+                ),
+            },
+        ),
+        (
+            "۴. نوع گل و مناسبت",
+            {
+                "description": "زیر‌دسته مثل دسته گل، باکس گل، بوکت، استند، جار گل یا گیاه است. برچسب مثل تولد، عاشقانه، یونیک، ترحیم یا ارسال روز است.",
+                "fields": (
+                    "category",
+                    "tags",
+                ),
+            },
+        ),
+        (
+            "توضیح",
+            {
+                "fields": (
+                    "description",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            "تنظیمات پیشرفته",
+            {
+                "fields": (
+                    "slug",
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
     )
 
 
-# --- ادمین انواع محصول: بیکری ---
 @admin.register(BakeryItem)
 class BakeryItemAdmin(BaseProductAdmin):
-    list_display = (
-        "name",
-        "size_or_weight",
-        "is_vegan",
-        "category",
-        "price",
-        "stock_status",
-        "is_active",
-        "featured",
-        "sort_order",
-        "updated_at",
-    )
-    list_filter = ("is_vegan",) + BaseProductAdmin.list_filter
+    section_filter = Category.Section.BAKERY
+
     fieldsets = (
-        ("اطلاعات اصلی", {"fields": ("name", "slug", "description")}),
-        ("ویژگی بیکری", {"fields": ("size_or_weight", "is_vegan")}),
-        ("دسته‌بندی و برچسب", {"fields": ("category", "tags")}),
-        ("قیمت و موجودی", {"fields": ("price", "stock_status", "is_active")}),
-        ("نمایش", {"fields": ("cover_image", "featured", "sort_order")}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
+        (
+            "۱. عکس و نام محصول بیکری",
+            {
+                "fields": (
+                    "cover_image",
+                    "large_image_preview",
+                    "name",
+                ),
+            },
+        ),
+        (
+            "۲. قیمت و موجودی",
+            {
+                "fields": (
+                    "pricing_type",
+                    "price",
+                    "price_usd",
+                    "stock_status",
+                ),
+            },
+        ),
+        (
+            "۳. انتشار در سایت",
+            {
+                "fields": (
+                    "publish_status",
+                    "is_active",
+                    "featured",
+                    "sort_order",
+                ),
+            },
+        ),
+        (
+            "۴. نوع بیکری و مناسبت",
+            {
+                "description": "زیر‌دسته مثل کیک تولد یا کوکی است. برچسب مثل تولد، تبریک، یونیک یا بدون مناسبت است.",
+                "fields": (
+                    "category",
+                    "tags",
+                ),
+            },
+        ),
+        (
+            "توضیح",
+            {
+                "fields": (
+                    "description",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            "تنظیمات پیشرفته",
+            {
+                "fields": (
+                    "slug",
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
     )
 
 
-# --- ادمین انواع محصول: کانسپت‌استور ---
 @admin.register(GiftItem)
 class GiftItemAdmin(BaseProductAdmin):
+    section_filter = Category.Section.GIFTS
+
+    fieldsets = (
+        (
+            "۱. عکس و نام هدیه",
+            {
+                "fields": (
+                    "cover_image",
+                    "large_image_preview",
+                    "name",
+                ),
+            },
+        ),
+        (
+            "۲. قیمت و موجودی",
+            {
+                "fields": (
+                    "pricing_type",
+                    "price",
+                    "price_usd",
+                    "stock_status",
+                ),
+            },
+        ),
+        (
+            "۳. انتشار در سایت",
+            {
+                "fields": (
+                    "publish_status",
+                    "is_active",
+                    "featured",
+                    "sort_order",
+                ),
+            },
+        ),
+        (
+            "۴. نوع هدیه و مناسبت",
+            {
+                "description": "زیر‌دسته مثل شمع، سفال یا سایر است. برچسب مثل تولد، تبریک، یونیک یا بدون مناسبت است.",
+                "fields": (
+                    "category",
+                    "tags",
+                ),
+            },
+        ),
+        (
+            "توضیح",
+            {
+                "fields": (
+                    "description",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            "تنظیمات پیشرفته",
+            {
+                "fields": (
+                    "slug",
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+    )
+
+
+@admin.register(ProductImage)
+class ProductImageAdmin(AdminImagePreviewMixin, admin.ModelAdmin):
     list_display = (
-        "name",
-        "material",
-        "handmade",
-        "category",
-        "price",
-        "stock_status",
-        "is_active",
-        "featured",
-        "sort_order",
+        "image_preview",
+        "product",
+        "ordering",
+        "created_at",
         "updated_at",
     )
-    list_filter = ("handmade",) + BaseProductAdmin.list_filter
+    list_filter = (
+        "created_at",
+    )
+    search_fields = (
+        "product__name",
+        "product__slug",
+        "alt_text",
+    )
+    ordering = (
+        "product",
+        "ordering",
+    )
+    list_editable = (
+        "ordering",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "image_preview",
+    )
+    list_select_related = (
+        "product",
+    )
+    save_on_top = True
+
     fieldsets = (
-        ("اطلاعات اصلی", {"fields": ("name", "slug", "description")}),
-        ("ویژگی هدیه", {"fields": ("material", "handmade")}),
-        ("دسته‌بندی و برچسب", {"fields": ("category", "tags")}),
-        ("قیمت و موجودی", {"fields": ("price", "stock_status", "is_active")}),
-        ("نمایش", {"fields": ("cover_image", "featured", "sort_order")}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
+        (
+            "تصویر",
+            {
+                "fields": (
+                    "product",
+                    "image",
+                    "image_preview",
+                    "alt_text",
+                ),
+            },
+        ),
+        (
+            "نمایش",
+            {
+                "fields": (
+                    "ordering",
+                ),
+            },
+        ),
+        (
+            "زمان‌ها",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
     )
 
-
-# --- ادمین گالری تصاویر ---
-@admin.register(ProductImage)
-class ProductImageAdmin(LocalizedAdminMixin, admin.ModelAdmin):
-    list_display = ("product", "ordering", "is_cover", "created_at", "updated_at")
-    list_filter = ("is_cover", "created_at")
-    search_fields = ("product__name", "product__slug", "alt_text")
-    ordering = ("product", "ordering")
-    list_editable = ("ordering", "is_cover")
-    autocomplete_fields = ("product",)
-    readonly_fields = ("created_at", "updated_at")
-    list_select_related = ("product",)
-    fieldsets = (
-        ("اطلاعات تصویر", {"fields": ("product", "image", "alt_text")}),
-        ("نمایش", {"fields": ("ordering", "is_cover")}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
-    )
+    def has_module_permission(self, request):
+        return False
 
 
-# --- ادمین محتوایی: خبر ---
 @admin.register(NewsPost)
-class NewsPostAdmin(PublishActionsMixin, LocalizedAdminMixin, admin.ModelAdmin):
-    list_display = ("title", "status", "published_at", "created_at", "updated_at")
-    list_filter = ("status", "published_at", "created_at")
-    search_fields = ("title", "slug", "excerpt", "body")
-    readonly_fields = ("created_at", "updated_at")
-    prepopulated_fields = {"slug": ("title",)}
-    ordering = ("-published_at", "-created_at")
+class NewsPostAdmin(PublishActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
+    form = NewsPostAdminForm
+
+    list_display = (
+        "image_preview",
+        "title",
+        "status",
+        "published_at",
+        "created_at",
+        "updated_at",
+    )
+    list_filter = (
+        "status",
+        "published_at",
+        "created_at",
+    )
+    search_fields = (
+        "title",
+        "slug",
+        "excerpt",
+        "body",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "image_preview",
+    )
+    ordering = (
+        "-published_at",
+        "-created_at",
+    )
     date_hierarchy = "published_at"
-    list_editable = ("status",)
+    list_editable = (
+        "status",
+    )
     save_on_top = True
+
     fieldsets = (
-        ("اطلاعات اصلی", {"fields": ("title", "slug", "excerpt", "body")}),
-        ("رسانه و انتشار", {"fields": ("cover_image", "status", "published_at")}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
+        (
+            "محتوا",
+            {
+                "fields": (
+                    "title",
+                    "excerpt",
+                    "body",
+                ),
+            },
+        ),
+        (
+            "رسانه و انتشار",
+            {
+                "fields": (
+                    "cover_image",
+                    "image_preview",
+                    "status",
+                    "published_at",
+                ),
+            },
+        ),
+        (
+            "تنظیمات پیشرفته",
+            {
+                "fields": (
+                    "slug",
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
     )
 
 
-# --- ادمین محتوایی: رویداد ---
 @admin.register(Event)
-class EventAdmin(PublishActionsMixin, LocalizedAdminMixin, admin.ModelAdmin):
-    list_display = ("title", "status", "start_at", "end_at", "location", "published_at")
-    list_filter = ("status", "start_at", "end_at", "published_at")
-    search_fields = ("title", "slug", "description", "location")
-    readonly_fields = ("created_at", "updated_at")
-    prepopulated_fields = {"slug": ("title",)}
-    ordering = ("start_at", "-created_at")
+class EventAdmin(PublishActionsMixin, AdminImagePreviewMixin, admin.ModelAdmin):
+    form = EventAdminForm
+
+    list_display = (
+        "image_preview",
+        "title",
+        "status",
+        "start_at",
+        "end_at",
+        "location",
+        "published_at",
+    )
+    list_filter = (
+        "status",
+        "start_at",
+        "end_at",
+        "published_at",
+    )
+    search_fields = (
+        "title",
+        "slug",
+        "description",
+        "location",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "image_preview",
+    )
+    ordering = (
+        "start_at",
+        "-created_at",
+    )
     date_hierarchy = "start_at"
-    list_editable = ("status",)
+    list_editable = (
+        "status",
+    )
     save_on_top = True
+
     fieldsets = (
-        ("اطلاعات اصلی", {"fields": ("title", "slug", "description")}),
-        ("زمان و مکان", {"fields": ("start_at", "end_at", "location")}),
-        ("رسانه و انتشار", {"fields": ("cover_image", "status", "published_at")}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
+        (
+            "محتوا",
+            {
+                "fields": (
+                    "title",
+                    "description",
+                ),
+            },
+        ),
+        (
+            "زمان و مکان",
+            {
+                "fields": (
+                    "start_at",
+                    "end_at",
+                    "location",
+                ),
+            },
+        ),
+        (
+            "رسانه و انتشار",
+            {
+                "fields": (
+                    "cover_image",
+                    "image_preview",
+                    "status",
+                    "published_at",
+                ),
+            },
+        ),
+        (
+            "تنظیمات پیشرفته",
+            {
+                "fields": (
+                    "slug",
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
     )
 
 
 @admin.register(LeadRequest)
-class LeadRequestAdmin(LocalizedAdminMixin, admin.ModelAdmin):
+class LeadRequestAdmin(admin.ModelAdmin):
     list_display = (
         "full_name",
         "mobile",
         "lead_type",
+        "product",
         "delivery_window",
         "preferred_date",
         "created_at",
     )
-    list_filter = ("lead_type", "delivery_window", "created_at")
-    search_fields = ("full_name", "mobile", "note", "event_location", "source_page")
-    readonly_fields = ("created_at", "updated_at")
-    ordering = ("-created_at",)
+    list_filter = (
+        "lead_type",
+        "delivery_window",
+        "created_at",
+    )
+    search_fields = (
+        "full_name",
+        "mobile",
+        "product__name",
+        "note",
+        "event_location",
+        "source_page",
+    )
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+    ordering = (
+        "-created_at",
+    )
+    list_select_related = (
+        "product",
+    )
+    list_per_page = 30
+
     fieldsets = (
-        ("اطلاعات متقاضی", {"fields": ("full_name", "mobile", "lead_type")}),
-        ("جزئیات سفارش", {"fields": ("delivery_window", "preferred_date", "event_location", "note")}),
-        ("فنی", {"fields": ("source_page",)}),
-        ("زمان‌ها", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
+        (
+            "اطلاعات متقاضی",
+            {
+                "fields": (
+                    "full_name",
+                    "mobile",
+                    "lead_type",
+                    "product",
+                ),
+            },
+        ),
+        (
+            "جزئیات سفارش",
+            {
+                "fields": (
+                    "delivery_window",
+                    "preferred_date",
+                    "event_location",
+                    "note",
+                ),
+            },
+        ),
+        (
+            "فنی",
+            {
+                "fields": (
+                    "source_page",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            "زمان‌ها",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+    )
+
+
+class HeroAdminBase(admin.ModelAdmin):
+    list_per_page = 20
+    save_on_top = True
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+        "image_preview",
+        "mobile_image_preview",
+    )
+
+    search_fields = (
+        "title",
+        "kicker",
+        "description",
+    )
+
+    ordering = (
+        "sort_order",
+        "id",
+    )
+
+    @admin.display(description="پیش‌نمایش تصویر")
+    def image_preview(self, obj):
+        if obj and obj.image:
+            return format_html(
+                '''
+                <img src="{}" style="
+                    width:72px !important;
+                    height:42px !important;
+                    object-fit:cover !important;
+                    border-radius:8px !important;
+                    display:block !important;
+                " />
+                ''',
+                obj.image.url,
+            )
+
+        return format_html(
+            '<span style="display:inline-flex;width:72px;height:42px;align-items:center;justify-content:center;border:1px dashed #999;border-radius:8px;font-size:10px;color:#999;">{}</span>',
+            "بدون عکس",
+        )
+
+    @admin.display(description="پیش‌نمایش موبایل")
+    def mobile_image_preview(self, obj):
+        if obj and obj.mobile_image:
+            return format_html(
+                '''
+                <img src="{}" style="
+                    width:32px !important;
+                    height:54px !important;
+                    object-fit:cover !important;
+                    border-radius:8px !important;
+                    display:block !important;
+                " />
+                ''',
+                obj.mobile_image.url,
+            )
+
+        return format_html(
+            '<span style="display:inline-flex;width:32px;height:54px;align-items:center;justify-content:center;border:1px dashed #999;border-radius:8px;font-size:9px;color:#999;">{}</span>',
+            "ندارد",
+        )
+
+
+@admin.register(HomeHeroSlide)
+class HomeHeroSlideAdmin(HeroAdminBase):
+    list_display = (
+        "image_preview",
+        "title",
+        "is_active",
+        "sort_order",
+        "updated_at",
+    )
+
+    list_filter = (
+        "is_active",
+        "created_at",
+        "updated_at",
+    )
+
+    list_editable = (
+        "is_active",
+        "sort_order",
+    )
+
+    fieldsets = (
+        (
+            "۱. متن اسلاید صفحه خانه",
+            {
+                "fields": (
+                    "title",
+                    "kicker",
+                    "description",
+                ),
+            },
+        ),
+        (
+            "۲. عکس اسلاید",
+            {
+                "fields": (
+                    "image",
+                    "image_preview",
+                    "mobile_image",
+                    "mobile_image_preview",
+                ),
+            },
+        ),
+        (
+            "۳. دکمه‌ها",
+            {
+                "fields": (
+                    "primary_button_text",
+                    "primary_button_url",
+                    "secondary_button_text",
+                    "secondary_button_url",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+        (
+            "۴. نمایش در سایت",
+            {
+                "fields": (
+                    "is_active",
+                    "sort_order",
+                ),
+            },
+        ),
+        (
+            "زمان‌ها",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
+    )
+
+
+@admin.register(SiteHero)
+class SiteHeroAdmin(HeroAdminBase):
+    list_display = (
+        "image_preview",
+        "title",
+        "target_page_display",
+        "target_slug_display",
+        "is_active",
+        "sort_order",
+        "updated_at",
+    )
+
+    list_filter = (
+        "target_page",
+        "is_active",
+        "created_at",
+        "updated_at",
+    )
+
+    list_editable = (
+        "is_active",
+        "sort_order",
+    )
+
+    search_fields = (
+        "title",
+        "kicker",
+        "description",
+        "target_slug",
+    )
+
+    @admin.display(description="صفحه")
+    def target_page_display(self, obj):
+        return obj.get_target_page_display()
+
+    @admin.display(description="برای کدام دسته؟")
+    def target_slug_display(self, obj):
+        if obj.target_slug:
+            return obj.target_slug
+
+        return "کل صفحه"
+
+    fieldsets = (
+        (
+            "۱. این بنر برای کجاست؟",
+            {
+                "fields": (
+                    "target_page",
+                    "target_slug",
+                ),
+            },
+        ),
+        (
+            "۲. متن بنر",
+            {
+                "fields": (
+                    "title",
+                    "kicker",
+                    "description",
+                ),
+            },
+        ),
+        (
+            "۳. عکس بنر",
+            {
+                "fields": (
+                    "image",
+                    "image_preview",
+                    "mobile_image",
+                    "mobile_image_preview",
+                ),
+            },
+        ),
+        (
+            "۴. نمایش در سایت",
+            {
+                "fields": (
+                    "is_active",
+                    "sort_order",
+                ),
+            },
+        ),
+        (
+            "زمان‌ها",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                ),
+                "classes": ("collapse",),
+            },
+        ),
     )

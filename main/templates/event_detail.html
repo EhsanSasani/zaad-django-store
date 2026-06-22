@@ -5,23 +5,47 @@
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>{{ event.title }}</h1>
-  <p class="intro-text">{{ event.description }}</p>
+<section class="container section-block event-detail event-detail--premium">
+  <div class="event-detail__grid">
+    <article class="event-detail__main">
+      <p class="section-kicker">zad Event</p>
+      <h1 class="section-title-en">{{ event.title }}</h1>
 
-  <div class="meta-row">
-    <span>شروع: {{ event.start_at|date:"Y/m/d H:i" }}</span>
-    <span>پایان: {{ event.end_at|date:"Y/m/d H:i" }}</span>
-    <span>مکان: {{ event.location }}</span>
-  </div>
+      {% if event.description %}
+        <div class="event-detail__body">
+          <p>{{ event.description }}</p>
+        </div>
+      {% endif %}
+    </article>
 
-  <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">هماهنگی سفارش</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">مشاوره در واتساپ</a>
+    <aside class="event-detail__side">
+      <div class="event-detail__info-card">
+        <p class="event-detail__label">Date & Time</p>
+
+        <div class="event-detail__row">
+          <span>Starts</span>
+          <strong>{{ event.start_at|date:"Y/m/d H:i" }}</strong>
+        </div>
+
+        <div class="event-detail__row">
+          <span>Ends</span>
+          <strong>{{ event.end_at|date:"Y/m/d H:i" }}</strong>
+        </div>
+
+        {% if event.location %}
+          <div class="event-detail__row">
+            <span>Location</span>
+            <strong>{{ event.location }}</strong>
+          </div>
+        {% endif %}
+
+        <a href="#event-reserve" class="btn btn-call event-detail__reserve">Reserve</a>
+      </div>
+    </aside>
   </div>
 </section>
 
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="درخواست هماهنگی رویداد" cta_position="inline" %}
+<section id="event-reserve" class="container section-block contact-help">
+  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="Reserve this event" lead_subtitle="برای رزرو، هماهنگی یا دریافت جزئیات بیشتر، درخواست خود را برای زاد ارسال کنید." cta_position="inline" %}
 </section>
 {% endblock %}

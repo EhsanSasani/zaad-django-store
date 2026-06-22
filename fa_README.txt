@@ -1,9 +1,9 @@
-ZAAD – وب‌سایت کاتالوگی مبتنی بر Django
+zad – وب‌سایت کاتالوگی مبتنی بر Django
 =========================================
 
 معرفی
 ------
-ZAAD یک وب‌سایت کاتالوگی است که با فریم‌ورک Django توسعه داده شده است.
+zad یک وب‌سایت کاتالوگی است که با فریم‌ورک Django توسعه داده شده است.
 این نسخه صرفاً بر نمایش محصولات و مدیریت روزانه از طریق پنل ادمین تمرکز دارد.
 در حال حاضر هیچ سیستم سبد خرید، احراز هویت کاربر یا پرداخت آنلاین در سایت فعال نیست.
 پنل مدیریت Django تنها ابزار مدیریت محتوا محسوب می‌شود.
@@ -106,15 +106,29 @@ media/
 اختیاری (برندینگ / آنالیتیکس):
 - GOOGLE_ANALYTICS_ID
 - SITE_NAME
-- CONTACT_EMAIL
+- zad_PHONE_DISPLAY
+- zad_PHONE_E164
+- zad_TELEGRAM_URL
+- zad_TELEGRAM_DISPLAY
+- zad_INSTAGRAM_URL
+- zad_ADDRESS_STREET
+- zad_ADDRESS_LOCALITY
+- zad_ADDRESS_REGION
 
 نمونه فایل .env:
 
 SECRET_KEY=your-secret-key
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
-SITE_NAME=ZAAD
-CONTACT_EMAIL=info@example.com
+SITE_NAME=zad
+zad_PHONE_DISPLAY=09154203569
+zad_PHONE_E164=+989154203569
+zad_TELEGRAM_URL=https://t.me/Flowerhouse_pv
+zad_TELEGRAM_DISPLAY=@Flowerhouse_pv
+zad_INSTAGRAM_URL=https://www.instagram.com/zad_concept/
+zad_ADDRESS_STREET=بلوار وکیل اباد - نبش فارغ التحصیلان 6 - کانسپت زاد
+zad_ADDRESS_LOCALITY=مشهد
+zad_ADDRESS_REGION=خراسان رضوی
 
 
 فایل‌های Static و Media

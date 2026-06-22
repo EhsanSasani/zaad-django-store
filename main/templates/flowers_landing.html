@@ -1,0 +1,346 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}page-flowers-landing page-{{ section }}-landing{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'main/css/flowers-landing.css' %}?v=4">
+{% endblock %}
+
+{% block content %}
+<main class="flowers-shell">
+
+  <section class="flowers-hero" id="{{ section }}-top">
+  <div class="flowers-hero__media{% if landing_hero_mobile_image %} has-mobile-image{% endif %}" aria-hidden="true">
+    {% if landing_hero_mobile_image %}
+      {% if landing_hero_mobile_image|slice:":7" == "/media/" %}
+        <img class="flowers-hero__image flowers-hero__image--mobile" src="{{ landing_hero_mobile_image }}" alt="">
+      {% else %}
+        <img class="flowers-hero__image flowers-hero__image--mobile" src="{% static landing_hero_mobile_image %}" alt="">
+      {% endif %}
+    {% endif %}
+    {% if landing_hero_image|slice:":7" == "/media/" %}
+      <img class="flowers-hero__image flowers-hero__image--desktop" src="{{ landing_hero_image }}" alt="">
+    {% else %}
+      <img class="flowers-hero__image flowers-hero__image--desktop" src="{% static landing_hero_image %}" alt="">
+    {% endif %}
+  </div>
+
+  <div class="flowers-hero__overlay"></div>
+
+  <div class="flowers-hero__content">
+    <span class="flowers-hero__eyebrow">{{ landing_hero_eyebrow }}</span>
+    <h1>{{ landing_hero_title }}</h1>
+    <p>{{ landing_hero_text }}</p>
+  </div>
+</section>
+
+<section class="flowers-collection" id="flowers-collection">
+  <div class="flowers-container">
+    <div class="flowers-container">
+
+
+      {% if catalog_products %}
+          <div class="flowers-filter-wrap">
+              <div class="flowers-filter" data-catalog-filter>
+            <button type="button" class="flowers-filter__chip is-active" data-filter="all">
+              <span>همه</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 4h6v6H4z"></path>
+                <path d="M14 4h6v6h-6z"></path>
+                <path d="M4 14h6v6H4z"></path>
+                <path d="M14 14h6v6h-6z"></path>
+              </svg>
+            </button>
+
+            {% for category in catalog_filter_categories %}
+              <button
+                type="button"
+                class="flowers-filter__chip"
+                data-filter="{{ category.slug }}"
+                data-category-url="{{ category.url }}"
+              >
+                <span>{{ category.name }}</span>
+
+                {% if category.slug == "bouquet" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 21s-5-5.2-5-10a5 5 0 0 1 10 0c0 4.8-5 10-5 10z"></path>
+                    <path d="M9.5 9.5c1.2-2 3.8-2 5 0"></path>
+                    <path d="M12 14v7"></path>
+                  </svg>
+
+                {% elif category.slug == "box" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 9h14v11H5z"></path>
+                    <path d="M4 9l2-4h12l2 4"></path>
+                    <path d="M12 5v15"></path>
+                    <path d="M8 13h8"></path>
+                  </svg>
+
+                {% elif category.slug == "basket" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5 10h14l-1.5 10h-11z"></path>
+                    <path d="M8 10a4 4 0 0 1 8 0"></path>
+                    <path d="M9 14h6"></path>
+                  </svg>
+
+                {% elif category.slug == "stand" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 4c3 0 5.5 2.2 5.5 5s-2.5 5-5.5 5-5.5-2.2-5.5-5S9 4 12 4z"></path>
+                    <path d="M12 14v7"></path>
+                    <path d="M8 21h8"></path>
+                  </svg>
+
+                {% elif category.slug == "jarl" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 3h6"></path>
+                    <path d="M10 3v5l-2 3v8a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-8l-2-3V3"></path>
+                    <path d="M9 14h6"></path>
+                  </svg>
+
+                {% elif category.slug == "wedding" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 5.5l2.2 3.2 3.8.9-2.4 3.1.2 3.9-3.8-1.3-3.8 1.3.2-3.9L6 9.6l3.8-.9z"></path>
+                    <path d="M9 20h6"></path>
+                  </svg>
+
+                {% elif section == "bakery" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 10h12l-1 10H7z"></path>
+                    <path d="M8 10a4 4 0 0 1 8 0"></path>
+                    <path d="M9 5c0-1 1-2 2-2s2 1 2 2"></path>
+                  </svg>
+
+                {% elif section == "gifts" %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 9h16v11H4z"></path>
+                    <path d="M3 6h18v4H3z"></path>
+                    <path d="M12 6v14"></path>
+                    <path d="M12 6c-3 0-5-1-5-3 3 0 5 1 5 3z"></path>
+                    <path d="M12 6c3 0 5-1 5-3-3 0-5 1-5 3z"></path>
+                  </svg>
+
+                {% else %}
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 21s-6-4.5-6-10a6 6 0 0 1 12 0c0 5.5-6 10-6 10z"></path>
+                    <path d="M9 10c1.5-1.8 4.5-1.8 6 0"></path>
+                    <path d="M12 14v6"></path>
+                  </svg>
+                {% endif %}
+              </button>
+            {% endfor %}
+            </div>
+              <div class="flowers-filter-scrollbar" aria-hidden="true">
+                <span></span>
+              </div>
+            </div>
+      {% endif %}
+
+      {% if catalog_products %}
+          <div class="flowers-grid" data-catalog-grid>
+            {% for product in catalog_products %}
+              <a
+                href="{{ product.get_absolute_url }}"
+                class="flowers-product-card"
+                data-catalog-card
+                data-zad-modal-card
+                data-category="{{ product.category.slug|default:'uncategorized' }}"
+                data-product-type="{{ product.category.slug|default:'collection' }}"
+                data-product-code="{{ product.product_code }}"
+                data-product-name="{{ product.name|default:'' }}"
+                data-product-price="{% if product.price %}{{ product.display_price }}{% else %}استعلام قیمت{% endif %}"
+              >
+                <div class="flowers-product-card__media">
+                  {% if product.cover_image %}
+                    <img
+                      src="{{ product.cover_image.url }}"
+                      alt="{{ product.display_name }}"
+                      loading="lazy"
+                      data-product-image
+                    >
+                  {% else %}
+                    <img
+                      src="{% static landing_fallback_image %}"
+                      alt="{{ product.display_name }}"
+                      loading="lazy"
+                      data-product-image
+                    >
+                  {% endif %}
+
+                  {% if product.stock_status == "preorder" %}
+                    <span class="flowers-product-card__badge">پیش‌سفارش</span>
+                  {% elif product.stock_status == "out_of_stock" %}
+                    <span class="flowers-product-card__badge flowers-product-card__badge--muted">ناموجود</span>
+                  {% endif %}
+                </div>
+
+                <div class="flowers-product-card__body">
+                  <div>
+                    <span class="flowers-product-card__type">
+                      {% if product.category.slug == "hand-bouquet" %}
+                        HAND BOUQUET
+                      {% elif product.category.slug == "box" %}
+                        BOX
+                      {% elif product.category.slug == "bouquet" %}
+                        BOUQUET
+                      {% elif product.category.slug == "jarl" %}
+                        JARL
+                      {% elif product.category.slug == "wedding" %}
+                        WEDDING
+                      {% elif product.category.slug == "stand" %}
+                        STAND
+                      {% else %}
+                        {{ product.category.slug|cut:"-"|upper }}
+                      {% endif %}
+                    </span>
+
+                    {% if product.name %}
+                      <h3>{{ product.name }}</h3>
+                    {% else %}
+                      <h3 class="flowers-product-card__code">
+                        {{ product.product_code }}
+                      </h3>
+                    {% endif %}
+
+                    {% if product.price %}
+                      <p>{{ product.display_price }}</p>
+                    {% else %}
+                      <p class="flowers-product-card__price-muted">استعلام قیمت</p>
+                    {% endif %}
+                  </div>
+
+                  <span class="flowers-product-card__arrow">
+                    <span>→</span>
+                  </span>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="flowers-empty">
+            {{ landing_empty_text }}
+          </div>
+        {% endif %}
+
+    </div>
+  </div>
+  </section>
+
+  <section class="flowers-why">
+    <div class="flowers-container">
+      <div class="flowers-why__grid">
+        {% for item in landing_why_items %}
+        <div class="flowers-why__item">
+          <i class="{{ item.icon }}"></i>
+          <strong>{{ item.title }}</strong>
+          <span>{{ item.text }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="flowers-cta">
+    <div class="flowers-container">
+      <div class="flowers-cta__inner">
+        <div class="flowers-cta__content">
+          <span>{{ landing_cta_kicker }}</span>
+          <h2>{{ landing_cta_title }}</h2>
+          <p>{{ landing_cta_text }}</p>
+
+          <div class="flowers-cta__actions">
+            <a href="{% url 'contact' %}" class="flowers-btn">تماس با ما</a>
+            <a href="{{ site_telegram_url|default:'#' }}" target="_blank" rel="noopener" class="flowers-btn flowers-btn--ghost">
+              هماهنگی در تلگرام
+            </a>
+          </div>
+        </div>
+
+        <div class="flowers-cta__media">
+          {% if landing_cta_image|slice:":7" == "/media/" %}
+            <img src="{{ landing_cta_image }}" alt="{{ landing_cta_alt }}" loading="lazy">
+          {% else %}
+            <img src="{% static landing_cta_image %}" alt="{{ landing_cta_alt }}" loading="lazy">
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function () {
+    const filterRoot = document.querySelector("[data-catalog-filter]");
+    const grid = document.querySelector("[data-catalog-grid]");
+    const cards = Array.from(document.querySelectorAll("[data-catalog-card]"));
+
+    if (!filterRoot || !grid || !cards.length) return;
+
+    const buttons = Array.from(filterRoot.querySelectorAll("[data-filter]"));
+
+    function filterProducts(filter) {
+      cards.forEach((card) => {
+        const isMatch = filter === "all" || card.dataset.category === filter;
+
+        card.classList.toggle("is-hidden", !isMatch);
+        card.hidden = !isMatch;
+      });
+    }
+
+    function scrollToGridStart() {
+      const offset = 110;
+      const gridTop = grid.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: gridTop,
+        behavior: "smooth",
+      });
+    }
+    const scrollbarThumb = document.querySelector(".flowers-filter-scrollbar span");
+
+    function updateFilterScrollbar() {
+      if (!scrollbarThumb) return;
+
+      const maxScroll = filterRoot.scrollWidth - filterRoot.clientWidth;
+
+      if (maxScroll <= 0) {
+        scrollbarThumb.parentElement.style.display = "none";
+        return;
+      }
+
+      scrollbarThumb.parentElement.style.display = "block";
+
+      const trackWidth = scrollbarThumb.parentElement.clientWidth;
+      const thumbWidth = 16;
+      const maxThumbMove = trackWidth - thumbWidth;
+      const progress = filterRoot.scrollLeft / maxScroll;
+      const x = progress * maxThumbMove;
+
+      scrollbarThumb.style.transform = `translateX(${x}px)`;
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const filter = button.dataset.filter;
+
+        buttons.forEach((item) => item.classList.remove("is-active"));
+        button.classList.add("is-active");
+
+        filterProducts(filter);
+        window.setTimeout(scrollToGridStart, 40);
+      });
+    });
+
+    filterRoot.addEventListener("scroll", updateFilterScrollbar, {
+      passive: true,
+    });
+
+    window.addEventListener("resize", updateFilterScrollbar);
+
+    updateFilterScrollbar();
+  })();
+</script>
+{% endblock %}

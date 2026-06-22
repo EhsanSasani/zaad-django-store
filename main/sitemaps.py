@@ -16,7 +16,6 @@ class StaticViewSitemap(Sitemap):
             "gifts",
             "events",
             "blog",
-            "visit",
             "contact",
             "faq",
             "mashhad_hub",

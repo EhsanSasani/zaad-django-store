@@ -1,0 +1,1433 @@
+[
+{
+  "model": "main.category",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.034Z",
+    "updated_at": "2026-04-27T15:22:18.034Z",
+    "name": "دسته گل",
+    "slug": "bouquet",
+    "section": "flowers",
+    "description": "",
+    "cover_image": "",
+    "is_active": true,
+    "sort_order": 10
+  }
+},
+{
+  "model": "main.category",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.042Z",
+    "updated_at": "2026-04-27T15:22:18.042Z",
+    "name": "سبد",
+    "slug": "basket",
+    "section": "flowers",
+    "description": "",
+    "cover_image": "",
+    "is_active": true,
+    "sort_order": 20
+  }
+},
+{
+  "model": "main.category",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.051Z",
+    "updated_at": "2026-04-27T15:22:18.051Z",
+    "name": "استند",
+    "slug": "stand",
+    "section": "flowers",
+    "description": "",
+    "cover_image": "",
+    "is_active": true,
+    "sort_order": 30
+  }
+},
+{
+  "model": "main.category",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.061Z",
+    "updated_at": "2026-04-27T15:22:18.061Z",
+    "name": "باکس",
+    "slug": "box",
+    "section": "flowers",
+    "description": "",
+    "cover_image": "",
+    "is_active": true,
+    "sort_order": 40
+  }
+},
+{
+  "model": "main.category",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.070Z",
+    "updated_at": "2026-04-27T15:22:18.070Z",
+    "name": "کیک تولد",
+    "slug": "birthday-cakes",
+    "section": "bakery",
+    "description": "",
+    "cover_image": "",
+    "is_active": true,
+    "sort_order": 10
+  }
+},
+{
+  "model": "main.category",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.079Z",
+    "updated_at": "2026-04-27T15:22:18.079Z",
+    "name": "کوکی",
+    "slug": "cookies",
+    "section": "bakery",
+    "description": "",
+    "cover_image": "",
+    "is_active": true,
+    "sort_order": 20
+  }
+},
+{
+  "model": "main.category",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.088Z",
+    "updated_at": "2026-04-27T15:22:18.088Z",
+    "name": "شمع",
+    "slug": "candles",
+    "section": "gifts",
+    "description": "",
+    "cover_image": "",
+    "is_active": true,
+    "sort_order": 10
+  }
+},
+{
+  "model": "main.category",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.096Z",
+    "updated_at": "2026-04-27T15:22:18.096Z",
+    "name": "سفال",
+    "slug": "ceramic",
+    "section": "gifts",
+    "description": "",
+    "cover_image": "",
+    "is_active": true,
+    "sort_order": 20
+  }
+},
+{
+  "model": "main.category",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.105Z",
+    "updated_at": "2026-04-27T15:22:18.105Z",
+    "name": "سایر",
+    "slug": "others",
+    "section": "gifts",
+    "description": "",
+    "cover_image": "",
+    "is_active": true,
+    "sort_order": 30
+  }
+},
+{
+  "model": "main.tag",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.114Z",
+    "updated_at": "2026-04-27T15:22:18.114Z",
+    "name": "تولد",
+    "slug": "birthday",
+    "description": "",
+    "cover_image": "",
+    "is_occasion": true,
+    "is_active": true,
+    "sort_order": 10
+  }
+},
+{
+  "model": "main.tag",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.124Z",
+    "updated_at": "2026-04-27T15:22:18.124Z",
+    "name": "تسلیت",
+    "slug": "condolence",
+    "description": "",
+    "cover_image": "",
+    "is_occasion": true,
+    "is_active": true,
+    "sort_order": 20
+  }
+},
+{
+  "model": "main.tag",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.133Z",
+    "updated_at": "2026-04-27T15:22:18.133Z",
+    "name": "عذرخواهی",
+    "slug": "apology",
+    "description": "",
+    "cover_image": "",
+    "is_occasion": true,
+    "is_active": true,
+    "sort_order": 30
+  }
+},
+{
+  "model": "main.tag",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.142Z",
+    "updated_at": "2026-04-27T15:22:18.142Z",
+    "name": "خاص",
+    "slug": "special",
+    "description": "",
+    "cover_image": "",
+    "is_occasion": true,
+    "is_active": true,
+    "sort_order": 40
+  }
+},
+{
+  "model": "main.tag",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-04-27T15:22:18.151Z",
+    "updated_at": "2026-04-27T15:22:18.151Z",
+    "name": "عاشقانه",
+    "slug": "romantic",
+    "description": "",
+    "cover_image": "",
+    "is_occasion": true,
+    "is_active": true,
+    "sort_order": 50
+  }
+},
+{
+  "model": "main.product",
+  "pk": 1,
+  "fields": {
+    "created_at": "2026-04-27T15:46:57.720Z",
+    "updated_at": "2026-04-27T15:49:43.147Z",
+    "name": "Red One",
+    "slug": "red-one",
+    "description": "خیلی قشنگههههه",
+    "pricing_type": "fixed",
+    "price": "2500000",
+    "cover_image": "products/covers/ChatGPT_Image_Apr_22_2026_11_22_22_PM_sU44Ytj.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 2,
+  "fields": {
+    "created_at": "2026-04-27T15:52:17.230Z",
+    "updated_at": "2026-04-27T15:52:17.230Z",
+    "name": "Velvet Morning Bouquet",
+    "slug": "velvet-morning-bouquet",
+    "description": "دسته‌گلی لطیف با ترکیب رنگ‌های روشن و گرم؛ مناسب برای شروع یک روز خاص، هدیه‌های عاشقانه یا تبریک‌های صمیمی",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_22_2026_11_22_13_PM_BOrDvsh.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 3,
+  "fields": {
+    "created_at": "2026-04-27T15:53:22.896Z",
+    "updated_at": "2026-04-27T15:53:22.896Z",
+    "name": "Blush Garden Bouquet",
+    "slug": "blush-garden-bouquet",
+    "description": "ترکیبی نرم و زنانه از گل‌های صورتی و کرم که حس لطافت، آرامش و توجه را منتقل می‌کند.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_22_2026_11_22_27_PM.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      3
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 4,
+  "fields": {
+    "created_at": "2026-04-27T15:54:01.148Z",
+    "updated_at": "2026-04-27T15:54:01.148Z",
+    "name": "Moonlight Roses Bouquet",
+    "slug": "moonlight-roses-bouquet",
+    "description": "دسته‌گلی شیک و آرام با حال‌وهوای رمانتیک؛ انتخابی مناسب برای لحظه‌هایی که می‌خواهی حرفت را بی‌کلام بگویی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_22_2026_11_22_32_PM.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      3
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 5,
+  "fields": {
+    "created_at": "2026-04-27T15:54:44.516Z",
+    "updated_at": "2026-04-27T15:54:44.516Z",
+    "name": "Golden Whisper Bouquet",
+    "slug": "golden-whisper-bouquet",
+    "description": "ترکیبی گرم و درخشان از گل‌های روشن و طلایی؛ مناسب برای تولد، تبریک موفقیت یا هدیه‌ای پرانرژی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_05_53_50_PM.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 6,
+  "fields": {
+    "created_at": "2026-04-27T15:55:49.493Z",
+    "updated_at": "2026-04-27T16:00:16.245Z",
+    "name": "Pure Grace Bouquet",
+    "slug": "pure-grace-bouquet",
+    "description": "دسته‌گلی مینیمال و ظریف با حس پاکی و وقار؛ مناسب برای هدیه‌های رسمی، عذرخواهی یا مناسبت‌های خاص.",
+    "pricing_type": "fixed",
+    "price": "1250000",
+    "cover_image": "products/covers/ChatGPT_Image_Apr_25_2026_11_56_34_PM_dwowsBu.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 7,
+  "fields": {
+    "created_at": "2026-04-27T15:56:25.703Z",
+    "updated_at": "2026-04-27T15:56:25.703Z",
+    "name": "Rosé Dream Bouquet",
+    "slug": "rosé-dream-bouquet",
+    "description": "دسته‌گلی لطیف با طیف صورتی و رزگلد؛ مناسب برای عشق، قدردانی و هدیه‌های احساسی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_15_21_PM.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 8,
+  "fields": {
+    "created_at": "2026-04-27T15:56:58.586Z",
+    "updated_at": "2026-04-27T15:56:58.586Z",
+    "name": "Secret Bloom Bouquet",
+    "slug": "secret-bloom-bouquet",
+    "description": "ترکیبی خاص و متفاوت برای کسانی که هدیه‌های معمولی را دوست ندارند؛ پر از حس ظرافت، رمز و زیبایی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_15_29_PM.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      3
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 9,
+  "fields": {
+    "created_at": "2026-04-27T15:57:24.391Z",
+    "updated_at": "2026-04-27T15:57:24.391Z",
+    "name": "Ivory Love Bouquet",
+    "slug": "ivory-love-bouquet",
+    "description": "دسته‌گلی روشن، شیک و آرام با حس صمیمیت و عشق؛ مناسب برای سالگرد، خواستگاری یا هدیه‌ای ماندگار.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_15_25_PM.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 10,
+  "fields": {
+    "created_at": "2026-04-27T15:58:03.775Z",
+    "updated_at": "2026-04-27T15:58:03.775Z",
+    "name": "Sunset Charm Bouquet",
+    "slug": "sunset-charm-bouquet",
+    "description": "ترکیبی گرم با حس غروب، صمیمیت و شادی؛ مناسب برای تولد، تبریک یا سورپرایزهای دوستانه.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_25_2026_11_56_29_PM.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      3
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 11,
+  "fields": {
+    "created_at": "2026-04-27T15:58:54.574Z",
+    "updated_at": "2026-04-27T15:58:54.574Z",
+    "name": "Royal Petal Bouquet",
+    "slug": "royal-petal-bouquet",
+    "description": "دسته‌گلی لوکس و چشمگیر با حس مجلل و خاص؛ مناسب برای هدیه‌های رسمی، تولدهای ویژه و مناسبت‌های مهم.",
+    "pricing_type": "fixed",
+    "price": "850000",
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_05_53_36_PM.png",
+    "category": 1,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 13,
+  "fields": {
+    "created_at": "2026-04-27T16:01:34.024Z",
+    "updated_at": "2026-04-27T16:01:34.024Z",
+    "name": "Birthday Glow Box",
+    "slug": "birthday-glow-box",
+    "description": "باکس گلی شاد و درخشان با حال‌وهوای جشن؛ مناسب برای تبریک تولدهای صمیمی و سورپرایزهای پرانرژی.",
+    "pricing_type": "fixed",
+    "price": "450000",
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_45_28_PM.png",
+    "category": 4,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 14,
+  "fields": {
+    "created_at": "2026-04-27T16:02:10.818Z",
+    "updated_at": "2026-04-27T16:02:10.818Z",
+    "name": "Golden Birthday Box",
+    "slug": "golden-birthday-box",
+    "description": "ترکیبی گرم و لوکس از گل‌های روشن و طلایی؛ انتخابی مناسب برای تولدهای خاص و هدیه‌ای که حس ارزشمند بودن منتقل کند",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_45_32_PM.png",
+    "category": 4,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 15,
+  "fields": {
+    "created_at": "2026-04-27T16:02:37.686Z",
+    "updated_at": "2026-04-27T16:02:37.686Z",
+    "name": "Sweet Celebration Box",
+    "slug": "sweet-celebration-box",
+    "description": "باکس گلی لطیف و دوست‌داشتنی با حس شادی و محبت؛ مناسب برای تولد دوستان، خواهر، مادر یا کسی که می‌خواهی خوشحالش کنی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_45_37_PM.png",
+    "category": 4,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 16,
+  "fields": {
+    "created_at": "2026-04-27T16:03:03.902Z",
+    "updated_at": "2026-04-27T16:03:03.902Z",
+    "name": "Blooming Surprise Box",
+    "slug": "blooming-surprise-box",
+    "description": "باکسی پر از حس غافلگیری و زیبایی؛ مناسب وقتی می‌خواهی هدیه‌ات هم شیک باشد هم حس جشن را کامل منتقل کند.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_45_41_PM.png",
+    "category": 4,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 17,
+  "fields": {
+    "created_at": "2026-04-27T16:03:28.464Z",
+    "updated_at": "2026-04-27T16:03:28.464Z",
+    "name": "Pink Wish Box",
+    "slug": "pink-wish-box",
+    "description": "ترکیبی ظریف از رنگ‌های صورتی و روشن؛ مناسب برای تولدهای عاشقانه، دخترانه و هدیه‌های احساسی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_45_46_PM.png",
+    "category": 4,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 18,
+  "fields": {
+    "created_at": "2026-04-27T16:03:54.389Z",
+    "updated_at": "2026-04-27T16:03:54.389Z",
+    "name": "Royal Birthday Box",
+    "slug": "royal-birthday-box",
+    "description": "باکس گلی مجلل و چشمگیر برای تولدهای مهم؛ مناسب برای هدیه‌های رسمی، خاص و افرادی که سلیقه‌ی لوکس دارند.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_45_50_PM.png",
+    "category": 4,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 19,
+  "fields": {
+    "created_at": "2026-04-27T16:04:18.374Z",
+    "updated_at": "2026-04-27T16:04:18.374Z",
+    "name": "Happy Petals Box",
+    "slug": "happy-petals-box",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_45_54_PM.png",
+    "category": 4,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 20,
+  "fields": {
+    "created_at": "2026-04-27T16:04:39.157Z",
+    "updated_at": "2026-04-27T16:04:39.157Z",
+    "name": "Velvet Birthday Box",
+    "slug": "velvet-birthday-box",
+    "description": "باکس گلی لطیف و شیک با ترکیب رنگ‌های عمیق و گرم؛ مناسب برای تولدهای خاص، عاشقانه یا هدیه‌ای متفاوت.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_45_58_PM.png",
+    "category": 4,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 21,
+  "fields": {
+    "created_at": "2026-04-27T16:05:04.708Z",
+    "updated_at": "2026-04-27T16:05:04.708Z",
+    "name": "Elegant Wish Box",
+    "slug": "elegant-wish-box",
+    "description": "باکس گلی مینیمال و شیک برای تبریک تولد باوقار؛ مناسب برای هدیه‌های رسمی‌تر یا کسانی که سادگی لوکس را دوست دارند.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_46_03_PM.png",
+    "category": 4,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 22,
+  "fields": {
+    "created_at": "2026-04-27T16:17:07.106Z",
+    "updated_at": "2026-04-27T16:17:07.106Z",
+    "name": "Velvet Chocolate Box",
+    "slug": "velvet-chocolate-box",
+    "description": "باکس شکلاتی شیک و لطیف با حس لوکس و شیرین؛ مناسب برای تولد، عاشقانه یا یک هدیه‌ی کوچک اما خاص.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_33_PM.png",
+    "category": 9,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 23,
+  "fields": {
+    "created_at": "2026-04-27T16:17:44.935Z",
+    "updated_at": "2026-04-27T16:17:44.935Z",
+    "name": "Golden Cocoa Gift",
+    "slug": "golden-cocoa-gift",
+    "description": "هدیه‌ای گرم و خوش‌طعم با ترکیب شکلات‌های خاص؛ مناسب برای قدردانی، تبریک یا سورپرایزهای صمیمی.",
+    "pricing_type": "fixed",
+    "price": "4000000",
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_37_PM.png",
+    "category": 9,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1,
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 24,
+  "fields": {
+    "created_at": "2026-04-27T16:18:24.055Z",
+    "updated_at": "2026-04-27T16:18:24.056Z",
+    "name": "Sweet Secret Box",
+    "slug": "sweet-secret-box",
+    "description": "باکس شکلاتی دوست‌داشتنی با حس غافلگیری؛ مناسب وقتی می‌خواهی هدیه‌ای ساده، خوشحال‌کننده و دلنشین بدهی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_41_PM.png",
+    "category": 9,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      3,
+      4
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 25,
+  "fields": {
+    "created_at": "2026-04-27T16:18:46.535Z",
+    "updated_at": "2026-04-27T16:18:46.535Z",
+    "name": "Midnight Truffle Set",
+    "slug": "midnight-truffle-set",
+    "description": "ستی شیک و خاص از شکلات‌های ترافل با حال‌وهوای لوکس؛ مناسب برای هدیه‌های رسمی، عاشقانه یا افراد خوش‌سلیقه.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_48_PM.png",
+    "category": 7,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 26,
+  "fields": {
+    "created_at": "2026-04-27T16:19:05.630Z",
+    "updated_at": "2026-04-27T16:19:05.630Z",
+    "name": "Little Cocoa Joy",
+    "slug": "little-cocoa-joy",
+    "description": "باکس کوچک و خوش‌حال‌کننده‌ی شکلاتی؛ مناسب برای هدیه‌های روزمره، تشکر، عذرخواهی یا کنار گل و کیک.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_45_PM.png",
+    "category": 9,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      3
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 27,
+  "fields": {
+    "created_at": "2026-04-27T16:20:47.059Z",
+    "updated_at": "2026-04-27T16:20:47.059Z",
+    "name": "Golden Calm Box",
+    "slug": "golden-calm-box",
+    "description": "",
+    "pricing_type": "fixed",
+    "price": "452000",
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_12_35_PM.png",
+    "category": 8,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1,
+      4
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 28,
+  "fields": {
+    "created_at": "2026-04-27T16:21:10.120Z",
+    "updated_at": "2026-04-27T16:21:10.120Z",
+    "name": "Ceramic Whisper Gift",
+    "slug": "ceramic-whisper-gift",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_12_47_PM.png",
+    "category": 7,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 29,
+  "fields": {
+    "created_at": "2026-04-27T16:21:30.538Z",
+    "updated_at": "2026-04-27T16:21:30.538Z",
+    "name": "Candle Bloom Set",
+    "slug": "candle-bloom-set",
+    "description": "ست هدیه‌ای لطیف با شمع و جزئیات گل‌دار؛ مناسب برای تولد، قدردانی یا یک سورپرایز گرم و صمیمی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_12_57_PM.png",
+    "category": 7,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 30,
+  "fields": {
+    "created_at": "2026-04-27T16:21:42.668Z",
+    "updated_at": "2026-04-27T16:21:42.668Z",
+    "name": "Soft Moment Set",
+    "slug": "soft-moment-set",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_01_PM.png",
+    "category": 7,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 31,
+  "fields": {
+    "created_at": "2026-04-27T16:21:54.020Z",
+    "updated_at": "2026-04-27T16:21:54.020Z",
+    "name": "Moonlit Candle Box",
+    "slug": "moonlit-candle-box",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_28_PM.png",
+    "category": 7,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 32,
+  "fields": {
+    "created_at": "2026-04-27T16:22:00.547Z",
+    "updated_at": "2026-04-27T16:22:00.547Z",
+    "name": "Handmade Grace Set",
+    "slug": "handmade-grace-set",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_28_PM_UIMGTcL.png",
+    "category": 7,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 33,
+  "fields": {
+    "created_at": "2026-04-27T16:22:09.021Z",
+    "updated_at": "2026-04-27T16:22:09.021Z",
+    "name": "Ivory Home Gift",
+    "slug": "ivory-home-gift",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_16_PM.png",
+    "category": 7,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 34,
+  "fields": {
+    "created_at": "2026-04-27T16:22:16.198Z",
+    "updated_at": "2026-04-27T16:22:16.198Z",
+    "name": "Scented Memory Box",
+    "slug": "scented-memory-box",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_13_10_PM.png",
+    "category": 7,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 35,
+  "fields": {
+    "created_at": "2026-04-27T16:22:26.972Z",
+    "updated_at": "2026-04-27T16:22:26.972Z",
+    "name": "Artful Touch Gift",
+    "slug": "artful-touch-gift",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_12_52_PM.png",
+    "category": 7,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 36,
+  "fields": {
+    "created_at": "2026-04-27T16:23:37.590Z",
+    "updated_at": "2026-04-27T16:23:37.590Z",
+    "name": "Sweet Cookie Box",
+    "slug": "sweet-cookie-box",
+    "description": "",
+    "pricing_type": "fixed",
+    "price": "850000",
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_19_PM.png",
+    "category": 6,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 37,
+  "fields": {
+    "created_at": "2026-04-27T16:24:10.758Z",
+    "updated_at": "2026-04-27T16:24:10.758Z",
+    "name": "Golden Bite Cookies",
+    "slug": "golden-bite-cookies",
+    "description": "کوکی‌هایی گرم و خوش‌عطر با حال‌وهوای شیرین و خانگی؛ مناسب برای سورپرایزهای کوچک و لحظه‌های دلنشین.",
+    "pricing_type": "fixed",
+    "price": "985000",
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_22_PM.png",
+    "category": 6,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      4
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 38,
+  "fields": {
+    "created_at": "2026-04-27T16:24:27.705Z",
+    "updated_at": "2026-04-27T16:24:27.705Z",
+    "name": "Birthday Cookie Set",
+    "slug": "birthday-cookie-set",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_25_PM.png",
+    "category": 6,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 39,
+  "fields": {
+    "created_at": "2026-04-27T16:24:34.963Z",
+    "updated_at": "2026-04-27T16:24:34.963Z",
+    "name": "Cozy Crumb Box",
+    "slug": "cozy-crumb-box",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_28_PM.png",
+    "category": 5,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 40,
+  "fields": {
+    "created_at": "2026-04-27T16:24:43.882Z",
+    "updated_at": "2026-04-27T16:24:43.882Z",
+    "name": "Little Joy Cookies",
+    "slug": "little-joy-cookies",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_32_PM.png",
+    "category": 5,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 41,
+  "fields": {
+    "created_at": "2026-04-27T16:25:23.628Z",
+    "updated_at": "2026-04-27T16:25:23.628Z",
+    "name": "Golden Wish Cake",
+    "slug": "golden-wish-cake",
+    "description": "کیک تولدی شیک و گرم با حس جشن و آرزوهای خوب؛ مناسب برای تولدهای خاص و هدیه‌ای شیرین و ماندگار.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_04_47_PM.png",
+    "category": 5,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 42,
+  "fields": {
+    "created_at": "2026-04-27T16:25:43.314Z",
+    "updated_at": "2026-04-27T16:25:43.314Z",
+    "name": "Blush Birthday Cake",
+    "slug": "blush-birthday-cake",
+    "description": "کیکی لطیف با حال‌وهوای صورتی و ظریف؛ مناسب برای تولدهای عاشقانه، دخترانه یا سورپرایزهای احساسی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_35_PM.png",
+    "category": 5,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 43,
+  "fields": {
+    "created_at": "2026-04-27T16:25:58.915Z",
+    "updated_at": "2026-04-27T16:25:58.915Z",
+    "name": "Sweet Moment Cake",
+    "slug": "sweet-moment-cake",
+    "description": "کیک تولدی ساده، خوش‌فرم و دوست‌داشتنی برای ساختن یک لحظه‌ی شیرین؛ مناسب برای جشن‌های صمیمی و خانوادگی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_39_PM.png",
+    "category": 5,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 44,
+  "fields": {
+    "created_at": "2026-04-27T16:26:10.535Z",
+    "updated_at": "2026-04-27T16:26:10.535Z",
+    "name": "Royal Celebration Cake",
+    "slug": "royal-celebration-cake",
+    "description": "کیکی مجلل و چشمگیر برای تولدهای ویژه؛ مناسب برای کسانی که هدیه‌ای لوکس، متفاوت و رسمی‌تر می‌خواهند.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_43_PM.png",
+    "category": 5,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 45,
+  "fields": {
+    "created_at": "2026-04-27T16:26:25.848Z",
+    "updated_at": "2026-04-27T16:26:25.848Z",
+    "name": "Happy Bloom Cake",
+    "slug": "happy-bloom-cake",
+    "description": "کیک تولدی شاد با حس گل، رنگ و جشن؛ مناسب برای تبریک‌های پرانرژی و تولدهایی که باید حال‌وهوای روشن داشته باشند.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_47_PM.png",
+    "category": 5,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 46,
+  "fields": {
+    "created_at": "2026-04-27T16:26:42.715Z",
+    "updated_at": "2026-04-27T16:26:42.715Z",
+    "name": "Velvet Birthday Cake",
+    "slug": "velvet-birthday-cake",
+    "description": "کیکی نرم، شیک و خوش‌سلیقه با حس لطافت و زیبایی؛ مناسب برای تولدهای خاص، عاشقانه یا مینیمال.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_14_52_PM.png",
+    "category": 5,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      1
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 47,
+  "fields": {
+    "created_at": "2026-04-27T16:27:44.365Z",
+    "updated_at": "2026-04-27T16:27:44.365Z",
+    "name": "White Peace Stand",
+    "slug": "white-peace-stand",
+    "description": "استندی آرام و باوقار با ترکیب گل‌های روشن؛ مناسب برای ابراز همدردی محترمانه و انتقال حس آرامش در لحظه‌های سخت.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_15_00_PM.png",
+    "category": 3,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 48,
+  "fields": {
+    "created_at": "2026-04-27T16:28:04.215Z",
+    "updated_at": "2026-04-27T16:28:04.215Z",
+    "name": "Eternal Grace Stand",
+    "slug": "eternal-grace-stand",
+    "description": "چیدمانی شیک و سنگین با حال‌وهوای رسمی؛ مناسب برای مراسم ترحیم، یادبود و ادای احترام به عزیز از دست‌رفته.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_15_03_PM.png",
+    "category": 3,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 49,
+  "fields": {
+    "created_at": "2026-04-27T16:28:18.568Z",
+    "updated_at": "2026-04-27T16:28:18.568Z",
+    "name": "Silent Sympathy Stand",
+    "slug": "silent-sympathy-stand",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_15_06_PM.png",
+    "category": 3,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": true,
+    "sort_order": 0,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 50,
+  "fields": {
+    "created_at": "2026-04-27T16:28:37.451Z",
+    "updated_at": "2026-04-27T16:28:37.451Z",
+    "name": "Pure Memory Stand",
+    "slug": "pure-memory-stand",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_15_10_PM.png",
+    "category": 3,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 51,
+  "fields": {
+    "created_at": "2026-04-27T16:28:54.086Z",
+    "updated_at": "2026-04-27T16:28:54.086Z",
+    "name": "Heavenly Bloom Stand",
+    "slug": "heavenly-bloom-stand",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_07_15_13_PM.png",
+    "category": 3,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      2
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 52,
+  "fields": {
+    "created_at": "2026-04-27T16:37:45.908Z",
+    "updated_at": "2026-04-27T16:37:45.908Z",
+    "name": "Garden Charm Basket",
+    "slug": "garden-charm-basket",
+    "description": "سبد گلی شاد و صمیمی با حال‌وهوای باغی؛ مناسب برای تولد، تبریک یا هدیه‌ای گرم و دوست‌داشتنی.",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_46_12_PM.png",
+    "category": 2,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": [
+      5
+    ]
+  }
+},
+{
+  "model": "main.product",
+  "pk": 53,
+  "fields": {
+    "created_at": "2026-04-27T16:38:05.253Z",
+    "updated_at": "2026-04-27T16:38:05.253Z",
+    "name": "Blush Harmony Basket",
+    "slug": "blush-harmony-basket",
+    "description": "ترکیبی لطیف از گل‌های روشن و صورتی در یک سبد شیک؛ مناسب برای عاشقانه، قدردانی یا سورپرایزهای احساسی.",
+    "pricing_type": "fixed",
+    "price": "650000",
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_46_21_PM.png",
+    "category": 2,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 54,
+  "fields": {
+    "created_at": "2026-04-27T16:38:18.133Z",
+    "updated_at": "2026-04-27T16:42:41.497Z",
+    "name": "Pure Grace Basket",
+    "slug": "pure-grace-basket",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_46_12_PM_kxHS6nL.png",
+    "category": 2,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+},
+{
+  "model": "main.product",
+  "pk": 55,
+  "fields": {
+    "created_at": "2026-04-27T16:38:30.901Z",
+    "updated_at": "2026-04-27T16:38:30.901Z",
+    "name": "Royal Petal Basket",
+    "slug": "royal-petal-basket",
+    "description": "",
+    "pricing_type": "inquiry",
+    "price": null,
+    "cover_image": "products/covers/ChatGPT_Image_Apr_26_2026_06_47_09_PM.png",
+    "category": 2,
+    "is_active": true,
+    "publish_status": "published",
+    "stock_status": "in_stock",
+    "featured": false,
+    "sort_order": 0,
+    "tags": []
+  }
+}
+]

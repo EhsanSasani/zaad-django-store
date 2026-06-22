@@ -1,62 +1,74 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-local-landing{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block hero-local">
-  <h1>{{ landing_title }}</h1>
-  <p class="intro-text">{{ landing_subtitle }}</p>
+<section class="container section-block page-intro">
+  <p class="intro-text intro-text--en">{{ landing_subtitle }}</p>
+
   <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="hero">رزرو و هماهنگی</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="hero">واتساپ برای سفارش</a>
+    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="hero">Call</a>
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="hero">Telegram</a>
   </div>
 </section>
 
 <section class="container section-block">
-  <h2>بازه ارسال و پوشش</h2>
+  <div class="section-head">
+    <h2>Delivery & Coverage</h2>
+  </div>
+
   <div class="meta-row">
-    <span>ارسال فوری در محدوده‌های اصلی مشهد</span>
+    <span>Same-day coordination in key Mashhad areas</span>
     <span>{{ site_opening_hours_text }}</span>
     <span>{{ site_response_time_text }}</span>
   </div>
 </section>
 
-<section class="container section-block">
-  <h2>انتخاب‌های پیشنهادی امروز</h2>
-  {% include "partials/product_grid.html" with products=curated_items %}
+{% if curated_items %}
+<section class="container section-block featured-products-section">
+  <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
+    <div>
+      <h2 class="section-title-en">Our Selection</h2>
+    </div>
+    <a href="{% url 'flowers' %}" class="section-link">View All</a>
+  </div>
+
+  {% include "partials/featured_products_slider.html" with products=curated_items %}
 </section>
+{% endif %}
 
 <section class="container section-block">
-  <h2>چرا زاد؟</h2>
+  <div class="section-head">
+    <h2>Why zad?</h2>
+  </div>
+
   <div class="list-grid">
-    {% for item in why_zaad %}
+    {% for item in why_zad %}
       <article class="list-card"><p>{{ item }}</p></article>
     {% endfor %}
   </div>
 </section>
 
 <section class="container section-block">
-  <h2>مناسبت‌ها</h2>
+  <div class="section-head">
+    <h2>Occasions</h2>
+  </div>
+
   <div class="inline-links">
     {% for occasion in occasion_links %}
       <a href="{{ occasion.url }}">{{ occasion.label }}</a>
     {% endfor %}
   </div>
 </section>
+{% endblock %}
 
-
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="درخواست سفارش / مشاوره" cta_position="inline" %}
-</section>
-
-<section class="container section-block close-cta">
-  <h2>برای هماهنگی نهایی آماده‌ایم</h2>
-  <p>{{ site_opening_hours_text }} | {{ site_response_time_text }}</p>
-  <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="footer">تماس فوری</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="footer">مشاوره در واتساپ</a>
-  </div>
-</section>
+{% block extra_js %}
+  <script src="{% static 'main/js/featured-products-slider.js' %}?v=10000"></script>
 {% endblock %}

@@ -1,0 +1,47 @@
+<div class="zad-product-modal" data-product-modal hidden>
+  <div class="zad-product-modal__overlay" data-product-modal-close></div>
+
+  <div class="zad-product-modal__dialog" role="dialog" aria-modal="true">
+    <button type="button" class="zad-product-modal__close" data-product-modal-close>
+      ×
+    </button>
+
+    <div class="zad-product-modal__media">
+      <img src="" alt="" data-modal-image>
+    </div>
+
+    <div class="zad-product-modal__content">
+      <span class="zad-product-modal__type" data-modal-type></span>
+
+      <h2 data-modal-title></h2>
+
+      <div class="zad-product-modal__line"></div>
+
+      <p class="zad-product-modal__text">
+        این محصول به صورت اختصاصی و با توجه به موجودی روز طراحی و آماده می‌شود.
+      </p>
+
+      <p class="zad-product-modal__price" data-modal-price></p>
+
+      <div class="zad-product-modal__notice">
+        <strong>استعلام و سفارش اختصاصی</strong>
+        <span>برای قیمت و ثبت سفارش با ما در ارتباط باشید.</span>
+      </div>
+
+      <div class="zad-product-modal__actions">
+        <a href="{% url 'contact' %}" class="zad-product-modal__btn">
+          تماس با ما
+        </a>
+
+        <a
+          href="{{ site_telegram_url|default:'#' }}"
+          target="_blank"
+          rel="noopener"
+          class="zad-product-modal__btn zad-product-modal__btn--ghost"
+        >
+          سفارش از تلگرام
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,93 +1,160 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fa" dir="rtl" data-theme="light">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ meta_title|default:"زاد" }}</title>
-  <meta name="description" content="{{ meta_description|default:'زاد کاتالوگ گل، بیکری و هدیه با ارسال سریع' }}">
-  <link rel="canonical" href="{{ canonical_url }}">
+  <title>{{ meta_title|default:"zad" }}</title>
+  <meta name="description" content="{{ meta_description|default:'zad concept store for flowers, bakery, gifts, and event coordination in Mashhad.' }}">
+  {% if canonical_url %}
+    <link rel="canonical" href="{{ canonical_url }}">
+  {% endif %}
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fa_IR">
-  <meta property="og:title" content="{{ meta_title|default:'زاد' }}">
-  <meta property="og:description" content="{{ meta_description|default:'زاد کاتالوگ گل، بیکری و هدیه با ارسال سریع' }}">
-  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ meta_title|default:'zad' }}">
+  <meta property="og:description" content="{{ meta_description|default:'zad concept store for flowers, bakery, gifts, and event coordination in Mashhad.' }}">
+  {% if canonical_url %}
+    <meta property="og:url" content="{{ canonical_url }}">
+  {% endif %}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
-
-  <script>
-    (function () {
-      var key = "zaad-theme";
-      var root = document.documentElement;
-      var theme = null;
-
-      try {
-        theme = localStorage.getItem(key);
-      } catch (error) {
-        theme = null;
-      }
-
-      if (theme !== "dark" && theme !== "light") {
-        theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      }
-
-      root.setAttribute("data-theme", theme);
-      root.classList.toggle("theme-dark", theme === "dark");
-    })();
-  </script>
-
-  <link rel="stylesheet" href="{% static 'main/css/site.css' %}?v=6">
+  <link rel="stylesheet" href="{% static 'main/css/base.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/layout.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/navbar.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/hero.css' %}?v=2">
+  <link rel="stylesheet" href="{% static 'main/css/components.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/page.css' %}?v=2">
+  {% block page_css %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'main/css/footer.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/responsive.css' %}?v=1">
+  {% if enable_product_modal %}
+    <link rel="stylesheet" href="{% static 'main/css/product-modal.css' %}">
+  {% endif %}
+  <link rel="stylesheet" href="{% static 'main/vendor/bootstrap-icons/bootstrap-icons.min.css' %}">
   {% block extra_head %}{% endblock %}
 
-  <script type="application/ld+json">{{ local_business_jsonld|safe }}</script>
+  {% if local_business_jsonld %}
+    <script type="application/ld+json">{{ local_business_jsonld|safe }}</script>
+  {% endif %}
   {% if breadcrumbs_jsonld %}
     <script type="application/ld+json">{{ breadcrumbs_jsonld|safe }}</script>
   {% endif %}
   {% if faq_jsonld %}
     <script type="application/ld+json">{{ faq_jsonld|safe }}</script>
   {% endif %}
-  {% for schema in extra_jsonld %}
-    <script type="application/ld+json">{{ schema|safe }}</script>
-  {% endfor %}
+  {% if extra_jsonld %}
+    {% for schema in extra_jsonld %}
+      <script type="application/ld+json">{{ schema|safe }}</script>
+    {% endfor %}
+  {% endif %}
 </head>
-<body class="{% block body_class %}{% endblock %}" data-page-type="{{ page_type|default:'home' }}"{% if item_id %} data-item-id="{{ item_id }}"{% endif %}>
+
+<body class="{% block body_class %}{% endblock %}" data-page-type="{{ page_type|default:'default' }}"{% if item_id %} data-item-id="{{ item_id }}"{% endif %}>
+
+    <div class="top-notice-bar">
+    <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" class="top-notice-bar__link">
+      {{ top_notice_text }}
+    </a>
+   </div>
+
   <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="{% url 'index' %}">زاد</a>
+  <div class="container nav-wrap">
+    <a class="brand brand--text" href="{% url 'index' %}" aria-label="zad Home">
+      <span class="brand__name">ZAD</span>
+      <span class="brand__sub">flowerstore</span>
+    </a>
 
-      <nav class="main-nav" aria-label="ناوبری اصلی">
-        <a href="{% url 'index' %}" class="{% if active_nav == 'home' %}is-active{% endif %}">خانه</a>
-        <a href="{% url 'flowers' %}" class="{% if active_nav == 'flowers' %}is-active{% endif %}">گل‌ها</a>
-        <a href="{% url 'bakery' %}" class="{% if active_nav == 'bakery' %}is-active{% endif %}">بیکری</a>
-        <a href="{% url 'gifts' %}" class="{% if active_nav == 'gifts' %}is-active{% endif %}">هدایا</a>
-        <a href="{% url 'events' %}" class="{% if active_nav == 'events' %}is-active{% endif %}">رویدادها</a>
-        <a href="{% url 'mashhad_hub' %}" class="{% if active_nav == 'mashhad' %}is-active{% endif %}">سفارش در مشهد</a>
-      </nav>
+    <nav class="main-nav" aria-label="ناوبری اصلی">
+  <div class="main-nav__center">
 
-      <div class="header-ctas">
-        <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="header">تماس فوری</a>
-        <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="header" aria-label="واتساپ">
-          <span class="wa-icon" aria-hidden="true">&#9679;</span>
-          واتساپ
-        </a>
-        <button type="button" class="btn btn-wa theme-toggle" id="themeToggle" aria-label="تغییر به حالت تیره" aria-pressed="false" title="تغییر به حالت تیره">
-          <span class="theme-icon" aria-hidden="true">
-            <svg class="icon-moon" viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 14.2A9 9 0 1 1 9.8 3a7 7 0 1 0 11.2 11.2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <svg class="icon-sun" viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M12 2.5V5M12 19V21.5M4.93 4.93 6.7 6.7M17.3 17.3l1.77 1.77M2.5 12H5M19 12h2.5M4.93 19.07 6.7 17.3M17.3 6.7l1.77-1.77" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="theme-text">تیره</span>
-        </button>
-      </div>
+    
+
+    <a href="{% url 'index' %}" class="{% if active_nav == 'home' %}is-active{% endif %}">
+      خانه
+    </a>
+
+    <div class="nav-dropdown" data-nav-dropdown>
+  <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger>
+    محصولات
+  </button>
+
+  <div class="nav-dropdown__menu" data-nav-dropdown-menu>
+    <a href="{% url 'flowers' %}">گل</a>
+    <a href="{% url 'bakery' %}">سوییت بار</a>
+    <a href="{% url 'gifts' %}">کانسپت استور</a>
+  </div>
+</div>
+
+    <a href="{% url 'occasions' %}" class="{% if active_nav == 'occasions' %}is-active{% endif %}">
+      مناسبت‌ها
+    </a>
+
+    <a href="{% url 'events' %}" class="{% if active_nav == 'events' %}is-active{% endif %}">
+      ورکشاپ ها
+    </a>
+
+  </div>
+
+  <a href="{% url 'about' %}" class="main-nav__about {% if active_nav == 'about' %}is-active{% endif %}">
+    درباره زاد
+  </a>
+</nav>
+  </div>
+</header>
+
+  {% if not is_home and page_type != "home" and page_type != "flowers_landing" and page_type != "workshops" and page_type != "about" %}
+  <section class="page-hero">
+    <div class="page-hero__media">
+      {% if page_hero_image %}
+        <picture>
+          {% if page_hero_mobile_image %}
+            {% if page_hero_mobile_image|slice:":7" == "/media/" %}
+              <source media="(max-width: 760px)" srcset="{{ page_hero_mobile_image }}">
+            {% else %}
+              <source media="(max-width: 760px)" srcset="{% static page_hero_mobile_image %}">
+            {% endif %}
+          {% endif %}
+
+          {% if page_hero_image|slice:":7" == "/media/" %}
+            <img src="{{ page_hero_image }}" alt="{{ page_hero_title|default:'zad' }}">
+          {% else %}
+            <img src="{% static page_hero_image %}" alt="{{ page_hero_title|default:'zad' }}">
+          {% endif %}
+        </picture>
+      {% else %}
+        <img src="{% static 'main/img/hero-about.jpg' %}" alt="{{ page_hero_title|default:'zad' }}">
+      {% endif %}
     </div>
-  </header>
+
+    <div class="page-hero__overlay"></div>
+
+    {% if page_type == "occasion-detail" or page_type == "flower-occasion" %}
+      <div class="page-hero__content container">
+        {% if page_hero_kicker %}
+          <span class="page-hero__kicker">{{ page_hero_kicker }}</span>
+        {% endif %}
+        <h1>{{ page_hero_title }}</h1>
+        {% if page_hero_text %}
+          <p>{{ page_hero_text }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+  </section>
+  
+
+  {% if page_type != "item" and page_type != "occasions" and page_type != "occasion-detail" and page_type != "flower-occasion" %}
+    <section class="container section-block page-hero-mood">
+      <div class="home-intro__brandline page-hero-mood__brandline">
+        <span class="page-hero-mood__mark">✦</span>
+        <h2 class="home-intro__title hero-brand-text">{{ page_hero_title }}</h2>
+
+        {% if page_hero_text %}
+          <p class="page-hero-mood__text">{{ page_hero_text }}</p>
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
+{% endif %}
 
   {% if messages %}
     <div class="container alerts">
@@ -97,46 +164,72 @@
     </div>
   {% endif %}
 
-  <main>
+  <main class="site-main">
     {% block content %}{% endblock %}
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-top">
-      <section class="footer-brand">
-        <h2>زاد</h2>
-        <p>کاتالوگ گل، بیکری و هدیه با ارسال سریع در مشهد.</p>
-      </section>
+  <footer class="zad-footer">
+  <div class="zad-footer__image" aria-hidden="true"></div>
 
-      <section class="footer-links">
-        <div class="footer-links-grid">
-          <div class="footer-col">
-            <h3>راهنما</h3>
-            <ul class="footer-list">
-              <li><a href="{% url 'visit' %}">بازدید و آدرس</a></li>
-              <li><a href="{% url 'contact' %}">تماس با ما</a></li>
-              <li><a href="{% url 'faq' %}">سوالات متداول</a></li>
-              <li><a href="{{ site_instagram_url }}" target="_blank" rel="noopener">اینستاگرام</a></li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section class="footer-contact">
-        <h3>ارتباط سریع</h3>
-        <p><a href="{{ site_call_href }}">{{ site_phone_display }}</a></p>
-        <p>{{ site_opening_hours_text }}</p>
-      </section>
+  <div class="zad-footer__body">
+    <div class="zad-footer__brand">
+      <h2>ZAD</h2>
+      <p>Flower &amp; Concept Store</p>
+      <span></span>
+      <strong>برای لحظه‌هایی که ارزش ماندن دارند.</strong>
     </div>
 
-    <div class="container footer-bottom">
-      <p class="copy">© ۱۴۰۴ زاد</p>
-      <p class="microcopy">طراحی و توسعه برای زاد</p>
-    </div>
-  </footer>
+    <div class="zad-footer__info">
+      <a href="/contact/" class="zad-footer__item">
+        <i class="bi bi-geo-alt"></i>
+        <strong>آدرس زاد</strong>
+        <span>{{ site_address_text }}</span>
+      </a>
 
-  <script src="{% static 'main/js/theme-toggle.js' %}?v=3"></script>
+      <a href="{{ site_telegram_url }}" class="zad-footer__item" target="_blank" rel="noopener">
+        <i class="bi bi-telegram"></i>
+        <strong>تلگرام</strong>
+        <span>{{ site_telegram_display }}</span>
+      </a>
+
+      <a href="{{ site_call_href }}" class="zad-footer__item">
+        <i class="bi bi-telephone"></i>
+        <strong>تماس با ما</strong>
+        <span>{{ site_phone_display }}</span>
+      </a>
+
+      <a href="{{ site_instagram_url }}" class="zad-footer__item" target="_blank" rel="noopener">
+        <i class="bi bi-instagram"></i>
+        <strong>اینستاگرام</strong>
+        <span>zad_concept</span>
+      </a>
+
+      <a href="/faq/" class="zad-footer__item">
+        <i class="bi bi-question-circle"></i>
+        <strong>سوالات متداول</strong>
+        <span>FAQ</span>
+      </a>
+    </div>
+
+    <div class="zad-footer__bottom">
+      <p>© 2026 ZAD Flower &amp; Concept Store</p>
+
+      <div class="zad-footer__socials">
+        <a href="{{ site_instagram_url }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="{{ site_telegram_url }}" target="_blank" rel="noopener" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
+        <a href="{{ site_call_href }}" aria-label="Phone"><i class="bi bi-telephone"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
   <script src="{% static 'main/js/analytics.js' %}"></script>
-  {% block extra_js %}{% endblock %}
+<script src="{% static 'main/js/navbar.js' %}"></script>
+
+{% block extra_js %}{% endblock %}
+{% if enable_product_modal %}
+  {% include "product_modal.html" %}
+  <script src="{% static 'main/js/product-modal.js' %}"></script>
+{% endif %}
 </body>
 </html>

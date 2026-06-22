@@ -1,57 +1,167 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-item{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/product_detail.css' %}?v=1">
+{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block item-grid">
-  <article class="item-media">
-    {% if product.cover %}
-      <img src="{{ product.cover.url }}" alt="{{ product.name }}" width="720" height="720">
-    {% else %}
-      <div class="placeholder large">بدون تصویر</div>
-    {% endif %}
-  </article>
+<section class="container section-block item-detail item-detail--premium">
+  <div class="item-detail__grid">
+    <article class="item-detail__media">
+      <div class="item-detail__image-frame">
+        {% if product.cover_image %}
+          <img src="{{ product.cover_image.url }}" alt="{{  product.display_name  }}" width="1100" height="1300">
+        {% else %}
+          <div class="item-detail__placeholder">تصویر هنوز اضافه نشده</div>
+        {% endif %}
 
-  <aside class="item-info">
-    <h1>{{ product.name }}</h1>
-    <p class="muted">{{ category_name }}</p>
+        {% if product.stock_status == "out_of_stock" %}
+          <span class="item-detail__floating-badge item-detail__floating-badge--out">ناموجود</span>
+        {% elif product.stock_status == "preorder" %}
+          <span class="item-detail__floating-badge">پیش‌سفارش</span>
+        {% else %}
+          <span class="item-detail__floating-badge">موجود</span>
+        {% endif %}
+      </div>
+
+      {% with gallery=product.gallery_images.all %}
+        {% if gallery %}
+          <div class="item-detail__thumbs" aria-label="Product gallery">
+            {% if product.cover_image %}
+              <span class="item-detail__thumb is-active">
+                <img src="{{ product.cover_image.url }}" alt="{{  product.display_name }}">
+              </span>
+            {% endif %}
+
+            {% for image in gallery|slice:":5" %}
+              <span class="item-detail__thumb">
+                <img src="{{ image.image.url }}" alt="{{ image.alt_text|default:product.display_name }}">
+              </span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+    </article>
+
+    <aside class="item-detail__info">
+      <p class="item-detail__eyebrow">zad {{ section_label|default:"Collection" }}</p>
+
+      <h1>{{  product.display_name  }}</h1>
+
+      <div class="item-detail__chips">
+        {% if product.category %}
+          <span>{{ product.category.name }}</span>
+        {% endif %}
+
+        {% if product.stock_status == "out_of_stock" %}
+          <span class="is-warning">ناموجود</span>
+        {% elif product.stock_status == "preorder" %}
+          <span>پیش‌سفارش</span>
+        {% else %}
+          <span>موجود</span>
+        {% endif %}
+      </div>
+
+      <div class="item-detail__summary">
+        {% if product.description %}
+          <p>{{ product.description }}</p>
+        {% else %}
+          <p>برای هماهنگی موجودی روز، رنگ‌بندی، زمان ارسال و جزئیات سفارش با زاد تماس بگیرید.</p>
+        {% endif %}
+      </div>
+
+      <div class="item-detail__purchase-box">
+  <div>
+    <span class="item-detail__price-label">Price</span>
 
     {% if product.price %}
-      <p class="item-price">{{ product.price }} تومان</p>
+      <p class="item-detail__price">{{ product.display_price }}</p>
     {% else %}
-      <p class="item-price">استعلام قیمت</p>
+      <p class="item-detail__price item-detail__price--inquiry">استعلام قیمت</p>
     {% endif %}
+  </div>
 
-    <p>
-      {% if product.description %}
-        {{ product.description }}
-      {% else %}
-        برای استعلام موجودی روز و زمان تحویل، با تیم زاد تماس بگیرید.
-      {% endif %}
-    </p>
-
-    <div class="cta-row">
-      <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">{{ item_call_text }}</a>
-      <a href="{{ item_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">{{ item_whatsapp_text }}</a>
-    </div>
-
-    <div class="inline-links">
-      <a href="{{ category_url }}">دسته اصلی</a>
-      {% if subcategory_url %}<a href="{{ subcategory_url }}">{{ subcategory_label }}</a>{% endif %}
-      <a href="{{ mashhad_order_url }}">سفارش در مشهد</a>
-    </div>
-  </aside>
-</section>
-
-<section class="container section-block">
-  <h2>آیتم‌های مشابه</h2>
-  {% include "partials/product_grid.html" with products=similar_items %}
-</section>
-
-<div class="sticky-cta">
-  <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="sticky">تماس</a>
-  <a href="{{ item_whatsapp_href }}" class="btn btn-wa" data-cta-position="sticky">واتساپ</a>
+  <p class="item-detail__microcopy">
+    {% if product.price %}
+      برای ثبت نهایی سفارش، موجودی امروز، زمان ارسال و جزئیات شخصی‌سازی را تلفنی هماهنگ کنید.
+    {% else %}
+      برای هماهنگی قیمت روز، موجودی و زمان ارسال با زاد تماس بگیرید.
+    {% endif %}
+  </p>
 </div>
+
+      <div class="cta-row item-detail__cta">
+        {% if product.stock_status == "out_of_stock" %}
+          <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="product-detail">Call</a>
+        {% else %}
+          <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="product-detail">{{ item_call_text|default:"Call" }}</a>
+        {% endif %}
+
+        <a href="{{ item_telegram_href|default:site_telegram_url }}" target="_blank" rel="noopener" class="btn btn-telegram" data-cta-position="product-detail">
+          {{ item_telegram_text|default:"Telegram" }}
+        </a>
+      </div>
+
+      
+
+      {% with tags=product.tags.all %}
+        {% if tags %}
+          <div class="item-detail__tags" aria-label="Product tags">
+            {% for tag in tags %}
+              <span>{{ tag.name }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <div class="inline-links item-detail__links">
+        {% if category_url %}
+          <a href="{{ category_url }}">{{ section_label|default:"Collection" }}</a>
+        {% endif %}
+
+        {% if subcategory_url %}
+          <a href="{{ subcategory_url }}">{{ subcategory_label }}</a>
+        {% endif %}
+
+        <a href="{{ mashhad_order_url }}">Mashhad</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="container section-block item-detail-extra">
+  <article class="item-detail-panel item-detail-panel--before-order">
+    <p class="item-detail-panel__kicker">Before Order</p>
+    <h2>قبل از ثبت سفارش</h2>
+    <p>
+      رنگ گل‌ها، جزئیات چیدمان، بسته‌بندی و بعضی آیتم‌ها ممکن است براساس موجودی تازه همان روز کمی تغییر کند.
+      پیش از ثبت نهایی سفارش، تیم زاد موجودی، زمان ارسال و جزئیات سفارش را با شما هماهنگ می‌کند.
+    </p>
+  </article>
+</section>
+
+{% if similar_items %}
+<section class="container section-block featured-products-section item-detail-related">
+  <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
+    <div>
+      <h2 class="section-title-en">Related</h2>
+    </div>
+    {% if category_url %}
+      <a href="{{ category_url }}" class="section-link">View All</a>
+    {% endif %}
+  </div>
+
+  {% include "partials/featured_products_slider.html" with products=similar_items %}
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'main/js/featured-products-slider.js' %}?v=10000"></script>
 {% endblock %}

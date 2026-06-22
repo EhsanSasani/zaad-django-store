@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body_class %}page-occasions page-catalog-section{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+{% endblock %}
+
+{% block content %}
+<div class="occasions-brand-mark" aria-hidden="true">
+  <span>ZAD</span>
+  <small>OCCASIONS</small>
+</div>
+<section class="occasions-shell">
+  <div class="occasions-container">
+    {% if occasion_cards %}
+      <section class="occasions-grid" aria-label="مناسبت‌های زاد">
+        {% for item in occasion_cards %}
+          <a href="{{ item.url }}" class="occasion-card">
+            <div class="occasion-card__media">
+              {% if item.image|slice:":7" == "/media/" %}
+                <img src="{{ item.image }}" alt="{{ item.label }}" loading="lazy">
+              {% else %}
+                <img src="{% static item.image %}" alt="{{ item.label }}" loading="lazy">
+              {% endif %}
+            </div>
+
+            <div class="occasion-card__shade"></div>
+
+            <div class="occasion-card__content">
+              <span class="occasion-card__en">{{ item.label_en }}</span>
+              <h2>{{ item.label }}</h2>
+              <p>{{ item.intro }}</p>
+            </div>
+          </a>
+        {% endfor %}
+      </section>
+    {% else %}
+      <div class="occasions-empty">
+        هنوز مناسبتی برای نمایش ثبت نشده است.
+      </div>
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}

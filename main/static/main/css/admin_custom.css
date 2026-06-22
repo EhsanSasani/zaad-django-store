@@ -1,31 +1,47 @@
-html[dir="rtl"] body,
-html[dir="rtl"] input,
-html[dir="rtl"] select,
-html[dir="rtl"] textarea,
-html[dir="rtl"] .button,
-html[dir="rtl"] .submit-row input {
-    font-family: "Vazirmatn", "IRANSans", Tahoma, sans-serif;
+/* ZAD admin minimal fixes */
+
+img.zad-admin-preview,
+#changelist img.zad-admin-preview,
+#result_list img.zad-admin-preview,
+td.field-image_preview img.zad-admin-preview,
+.field-image_preview img.zad-admin-preview {
+    width: 96px !important;
+    height: 120px !important;
+    min-width: 96px !important;
+    max-width: 96px !important;
+    min-height: 120px !important;
+    max-height: 120px !important;
+    object-fit: cover !important;
+    display: block !important;
+    border-radius: 14px !important;
 }
 
-html[dir="rtl"] .form-row,
-html[dir="rtl"] .aligned label,
-html[dir="rtl"] .help {
-    text-align: right;
+.change-form img.zad-admin-preview {
+    width: 220px !important;
+    height: 280px !important;
+    min-width: 220px !important;
+    max-width: 220px !important;
+    min-height: 280px !important;
+    max-height: 280px !important;
+    object-fit: cover !important;
+    display: block !important;
+    border-radius: 18px !important;
 }
 
-html[dir="rtl"] .help {
-    color: #4b5563;
+.zad-price {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 30px !important;
+    padding: 5px 12px !important;
+    border-radius: 999px !important;
+    background: rgba(199, 155, 107, 0.12) !important;
+    color: #2d2a27 !important;
+    font-weight: 900 !important;
+    white-space: nowrap !important;
 }
 
-label.required::after,
-th.required::after,
-.required > label::after {
-    content: " *";
-    color: #d63638;
-    font-weight: 700;
-}
-
-html[dir="rtl"] .inline-group .tabular td,
-html[dir="rtl"] .inline-group .tabular th {
-    text-align: right;
+.zad-price--inquiry {
+    background: rgba(47, 73, 109, 0.10) !important;
+    color: #2f496d !important;
 }

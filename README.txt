@@ -1,9 +1,9 @@
-ZAAD – Django Catalog Website
+zad – Django Catalog Website
 =================================
 
 Overview
 --------
-ZAAD is a catalog-based website built with Django.
+zad is a catalog-based website built with Django.
 This version is focused on product presentation and daily admin updates.
 There is no shopping cart, authentication system, or payment integration.
 The admin panel is the primary interface for managing content.
@@ -104,15 +104,29 @@ Required:
 Optional (Branding / Analytics):
 - GOOGLE_ANALYTICS_ID
 - SITE_NAME
-- CONTACT_EMAIL
+- zad_PHONE_DISPLAY
+- zad_PHONE_E164
+- zad_TELEGRAM_URL
+- zad_TELEGRAM_DISPLAY
+- zad_INSTAGRAM_URL
+- zad_ADDRESS_STREET
+- zad_ADDRESS_LOCALITY
+- zad_ADDRESS_REGION
 
 Example .env:
 
 SECRET_KEY=your-secret-key
 DEBUG=True
 ALLOWED_HOSTS=127.0.0.1,localhost
-SITE_NAME=ZAAD
-CONTACT_EMAIL=info@example.com
+SITE_NAME=zad
+zad_PHONE_DISPLAY=09154203569
+zad_PHONE_E164=+989154203569
+zad_TELEGRAM_URL=https://t.me/Flowerhouse_pv
+zad_TELEGRAM_DISPLAY=@Flowerhouse_pv
+zad_INSTAGRAM_URL=https://www.instagram.com/zad_concept/
+zad_ADDRESS_STREET=بلوار وکیل اباد - نبش فارغ التحصیلان 6 - کانسپت زاد
+zad_ADDRESS_LOCALITY=مشهد
+zad_ADDRESS_REGION=خراسان رضوی
 
 
 Static & Media

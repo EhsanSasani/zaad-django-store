@@ -1,1 +1,1 @@
-﻿# --- ثبت فضای نام برای management commandها ---
+# --- ثبت فضای نام برای management commandها ---

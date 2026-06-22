@@ -1,40 +1,59 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block body_class %}page-subcategory{% endblock %}
+{% block body_class %}page-subcategory page-catalog-subcategory{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>{{ subcategory_label }}</h1>
-  <p class="intro-text">{{ subcategory_intro }}</p>
-  <div class="cta-row">
-    <a href="{% url 'flowers' %}" class="btn btn-light">بازگشت به دسته گل‌ها</a>
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">هماهنگی تلفنی</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">واتساپ برای سفارش</a>
+<section class="container section-block catalog-products-section">
+  <div class="section-head section-head--center catalog-detail-head">
+    <div>
+      <h2 class="section-title-en hero-brand-text">
+        {% if collection_title %}
+          {{ collection_title }}
+        {% elif subcategory_label %}
+          {{ subcategory_label }}
+        {% else %}
+          Our Collection
+        {% endif %}
+      </h2>
+    </div>
   </div>
-</section>
 
-<section class="container section-block">
-  <h2>محصولات این زیر‌دسته</h2>
+  {% if filter_links %}
+    <div class="catalog-filter-row" aria-label="Catalog filters">
+      {% for item in filter_links %}
+        <a href="{{ item.url }}" class="catalog-filter-chip {% if item.is_active %}is-active{% endif %}">
+          {{ item.label }}
+        </a>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   {% include "partials/product_grid.html" with products=items %}
 </section>
 
+{% if related_posts %}
 <section class="container section-block">
-  <h2>مطالب مرتبط</h2>
+  <div class="section-head section-head--center">
+    <h2 class="section-title-en">Related Stories</h2>
+  </div>
+
   <div class="list-grid">
     {% for post in related_posts %}
       <article class="list-card">
-        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+        <h3>
+          <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+        </h3>
         <p>{{ post.excerpt|default:post.body|truncatechars:140 }}</p>
       </article>
-    {% empty %}
-      <div class="empty-box">در حال آماده‌سازی مطالب بلاگ هستیم.</div>
     {% endfor %}
   </div>
 </section>
-
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type cta_position="inline" %}
-</section>
+{% endif %}
 {% endblock %}

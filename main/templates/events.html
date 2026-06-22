@@ -1,43 +1,236 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block body_class %}page-events{% endblock %}
+{% block body_class %}page-events page-workshops{% endblock %}
 
 {% block content %}
-{% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>رویدادها و تجربه‌های زاد</h1>
-  <p class="intro-text">برای همکاری‌های رویدادی، ورکشاپ‌ها و برنامه‌های مناسبتی می‌توانید سریع هماهنگ کنید.</p>
-  <div class="cta-row">
-    <a href="{{ site_call_href }}" class="btn btn-call" data-cta-position="inline">رزرو و هماهنگی</a>
-    <a href="{{ site_whatsapp_href }}" class="btn btn-wa" data-cta-position="inline">ارسال عکس و هماهنگی</a>
+<section class="workshops-hero{% if workshops_hero_mobile_image %} workshops-hero--has-mobile{% endif %}" aria-label="ورکشاپ‌های گل‌آرایی زاد">
+  {% if workshops_hero_mobile_image %}
+    {% if workshops_hero_mobile_image|slice:":7" == "/media/" %}
+      <img class="workshops-hero__image workshops-hero__image--mobile" src="{{ workshops_hero_mobile_image }}" alt="{{ workshops_hero_title }}">
+    {% else %}
+      <img class="workshops-hero__image workshops-hero__image--mobile" src="{% static workshops_hero_mobile_image %}" alt="{{ workshops_hero_title }}">
+    {% endif %}
+  {% endif %}
+
+  {% if workshops_hero_image|slice:":7" == "/media/" %}
+    <img class="workshops-hero__image workshops-hero__image--desktop" src="{{ workshops_hero_image }}" alt="{{ workshops_hero_title }}">
+  {% else %}
+  <img
+    class="workshops-hero__image workshops-hero__image--desktop"
+    src="{% static workshops_hero_image %}"
+    alt="{{ workshops_hero_title }}"
+  >
+  {% endif %}
+
+  <div class="workshops-hero__overlay"></div>
+
+  <div class="workshops-hero__content">
+    <p class="workshops-hero__eyebrow">{{ workshops_hero_kicker }}</p>
+
+    <h1>{{ workshops_hero_title }}</h1>
+
+    <p>{{ workshops_hero_text }}</p>
+
+    <div class="workshops-hero__actions">
+      <a href="#workshop-request" class="workshops-btn workshops-btn--light">
+        درخواست هماهنگی ورکشاپ
+      </a>
+
+      <a href="#upcoming-workshops" class="workshops-btn workshops-btn--ghost">
+        مشاهده برنامه‌های آینده
+      </a>
+    </div>
   </div>
 </section>
 
-<section class="container section-block">
-  <div class="list-grid">
-    {% for event in events %}
-      <article class="list-card">
-        <h2>
-          {% if event.slug and not event.is_demo %}
-            <a href="{% url 'event_detail' event.slug %}">{{ event.title }}</a>
-          {% else %}
-            {{ event.title }}
-          {% endif %}
-        </h2>
-        <p>{{ event.description|truncatechars:170 }}</p>
-        <p class="muted">{{ event.start_at|date:"Y/m/d H:i" }} | {{ event.location }}</p>
-        {% if event.slug and not event.is_demo %}
-          <a href="{% url 'event_detail' event.slug %}" class="text-link">جزئیات رویداد</a>
-        {% elif events_are_demo %}
-          <span class="muted">نمونه نمایشی</span>
-        {% endif %}
+<section class="workshops-story section-block">
+  <div class="container workshops-story__grid">
+    <div class="workshops-story__text">
+      <span class="section-kicker">فلسفه ورکشاپ‌های زاد</span>
+
+      <h2>گل‌آرایی، فقط کنار هم چیدن گل‌ها نیست.</h2>
+
+      <p>
+        در ورکشاپ‌های زاد، گل‌ها بهانه‌ای برای مکث، خلق کردن، گفتگو و تجربه‌ی یک فضای گرم و صمیمی هستند؛
+        جایی برای ساختن لحظه‌هایی که آرام و زیبا در ذهن می‌مانند.
+      </p>
+    </div>
+
+    <div class="workshops-story__media">
+      <img
+        src="{% static 'main/img/workshops-story.jpg' %}"
+        alt="تجربه ورکشاپ زاد"
+      >
+    </div>
+  </div>
+</section>
+
+<section class="workshops-types section-block">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="section-kicker">انواع ورکشاپ‌ها</span>
+      <h2>برای هر جمع، یک تجربه متفاوت</h2>
+    </div>
+
+    <div class="workshops-types__grid">
+      <article class="workshop-type-card">
+        <div class="workshop-type-card__media">
+          <img
+            src="{% static 'main/img/workshop-type-public.jpg' %}"
+            alt="ورکشاپ عمومی زاد"
+          >
+        </div>
+
+        <div class="workshop-type-card__body">
+          <span>۰۱</span>
+          <h3>ورکشاپ عمومی</h3>
+          <p>
+            برای علاقه‌مندان به گل‌آرایی، تجربه‌های هنری گروهی و ساختن یک چیدمان اختصاصی.
+          </p>
+        </div>
       </article>
-    {% endfor %}
+
+      <article class="workshop-type-card">
+        <div class="workshop-type-card__media">
+          <img
+            src="{% static 'main/img/workshop-type-private.jpg' %}"
+            alt="ورکشاپ خصوصی زاد"
+          >
+        </div>
+
+        <div class="workshop-type-card__body">
+          <span>۰۲</span>
+          <h3>ورکشاپ خصوصی</h3>
+          <p>
+            برای تولد، دورهمی دوستانه، مناسبت عاشقانه یا تجربه‌ای دونفره و آرام.
+          </p>
+        </div>
+      </article>
+
+      <article class="workshop-type-card">
+        <div class="workshop-type-card__media">
+          <img
+            src="{% static 'main/img/workshop-type-corporate.jpg' %}"
+            alt="ورکشاپ سازمانی زاد"
+          >
+        </div>
+
+        <div class="workshop-type-card__body">
+          <span>۰۳</span>
+          <h3>ورکشاپ سازمانی</h3>
+          <p>
+            برای تیم‌سازی، برندها، کافه‌ها، گالری‌ها و رویدادهای خاص با اجرای اختصاصی.
+          </p>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
-<section class="container section-block">
-  {% include "partials/lead_form.html" with lead_form=lead_form lead_default_type=lead_default_type lead_title="درخواست مشاوره رویداد" cta_position="inline" %}
+<section id="upcoming-workshops" class="container section-block workshops-events-section">
+  <div class="section-head section-head--center">
+    <span class="section-kicker">برنامه‌های پیش‌رو</span>
+    <h2>ورکشاپ‌های آینده زاد</h2>
+  </div>
+
+  {% if events %}
+    <div class="workshops-events-grid">
+      {% for event in events %}
+        <article class="workshop-event-card">
+          {% if event.cover_image %}
+            <a href="{{ event.get_absolute_url }}" class="workshop-event-card__media">
+              <img src="{{ event.cover_image.url }}" alt="{{ event.title }}">
+            </a>
+          {% endif %}
+
+          <div class="workshop-event-card__body">
+            {% if event.start_at %}
+              <p class="workshop-event-card__date">
+                {{ event.start_at|date:"Y/m/d" }}
+              </p>
+            {% endif %}
+
+            <h3>
+              <a href="{{ event.get_absolute_url }}">
+                {{ event.title }}
+              </a>
+            </h3>
+
+            {% if event.description %}
+              <p>
+                {{ event.description|truncatechars:120 }}
+              </p>
+            {% endif %}
+
+            <div class="workshop-event-card__meta">
+              <a href="{{ event.get_absolute_url }}">
+                جزئیات و رزرو
+              </a>
+
+              {% if event.location %}
+                <span>{{ event.location }}</span>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="workshops-empty">
+      <h3>برنامه‌های جدید به‌زودی اعلام می‌شوند.</h3>
+
+      <p>
+        برای هماهنگی ورکشاپ خصوصی یا اطلاع از زمان برگزاری برنامه‌های آینده،
+        با زاد در ارتباط باشید.
+      </p>
+
+      <a href="{% url 'contact' %}" class="workshops-btn workshops-btn--light">
+        هماهنگی با زاد
+      </a>
+    </div>
+  {% endif %}
 </section>
+
+<section class="workshops-benefits section-block">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <span class="section-kicker">در این تجربه چه خواهید داشت؟</span>
+      <h2>همه‌چیز برای یک تجربه کامل آماده است</h2>
+    </div>
+
+    <div class="workshops-benefits__grid">
+      <div>آشنایی با گل‌ها و ترکیب رنگ</div>
+      <div>ساخت یک چیدمان اختصاصی</div>
+      <div>ابزار و متریال آماده</div>
+      <div>فضای مناسب عکاسی</div>
+      <div>پذیرایی سبک</div>
+      <div>همراهی مربی</div>
+    </div>
+  </div>
+</section>
+
+<section id="workshop-request" class="workshops-cta">
+  <img
+    class="workshops-cta__image"
+    src="{% static 'main/img/workshops-cta.jpg' %}"
+    alt="هماهنگی ورکشاپ زاد"
+  >
+
+  <div class="workshops-cta__overlay"></div>
+
+  <div class="container workshops-cta__inner">
+    <h2>می‌خواهید ورکشاپ اختصاصی خودتان را با زاد برگزار کنید؟</h2>
+
+    <p>
+      برای هماهنگی زمان، مکان و جزئیات برگزاری، با ما در ارتباط باشید.
+    </p>
+
+    <a href="{% url 'contact' %}" class="workshops-btn workshops-btn--light">
+      هماهنگی از طریق تماس
+    </a>
+  </div>
+</section>
+
 {% endblock %}

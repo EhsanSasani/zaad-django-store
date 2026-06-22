@@ -1,28 +1,61 @@
-<div class="zaad-grid">
-  {% for product in products %}
-    <article class="zaad-tile">
-      <a href="{{ product.get_absolute_url }}" class="zaad-tile__link">
-        <div class="zaad-tile__media">
-          {% if product.cover %}
-            <img class="zaad-tile__img" src="{{ product.cover.url }}" alt="{{ product.name }} &#1576;&#1585;&#1575;&#1740; &#1587;&#1601;&#1575;&#1585;&#1588;" loading="lazy" width="480" height="480">
+{% load static %}
+
+<div class="product-grid">
+  {% if products %}
+    {% for product in products %}
+      <a
+        href="{{ product.get_absolute_url }}"
+        class="product-card {% if product.stock_status == 'out_of_stock' %}product-card--out{% endif %}"
+        data-zad-modal-card
+        data-product-type="{{ product.category.slug|default:'collection' }}"
+        data-product-code="{{ product.product_code }}"
+        data-product-name="{{ product.name|default:'' }}"
+        data-product-price="{% if product.price %}{{ product.display_price }}{% else %}استعلام قیمت{% endif %}"
+      >
+        <div class="product-card__image-wrap">
+          {% if product.cover_image %}
+            <img
+              src="{{ product.cover_image.url }}"
+              alt="{{ product.display_name }}"
+              class="product-card__image"
+              loading="lazy"
+              data-product-image
+            >
           {% else %}
-            <div class="placeholder zaad-tile__placeholder">&#1576;&#1583;&#1608;&#1606; &#1578;&#1589;&#1608;&#1740;&#1585;</div>
+            <img
+              src="{% static 'main/img/cat-flowers.jpg' %}"
+              alt="{{ product.display_name }}"
+              class="product-card__image"
+              loading="lazy"
+              data-product-image
+            >
+          {% endif %}
+
+          {% if product.stock_status == "out_of_stock" %}
+            <span class="product-stock-badge product-stock-badge--out">ناموجود</span>
+          {% elif product.stock_status == "preorder" %}
+            <span class="product-stock-badge product-stock-badge--preorder">پیش‌سفارش</span>
           {% endif %}
         </div>
-        <div class="zaad-tile__body">
-          <h3 class="zaad-tile__title">{{ product.name }}</h3>
-          <p class="zaad-tile__meta">
-            {% if product.category %}{{ product.category.name }}{% else %}&#1605;&#1581;&#1589;&#1608;&#1604; &#1608;&#1740;&#1688;&#1607;{% endif %}
-          </p>
-          {% if product.price %}
-            <strong class="zaad-tile__price">{{ product.price }} &#1578;&#1608;&#1605;&#1575;&#1606;</strong>
+
+        <div class="product-card__body">
+          {% if product.name %}
+            <h3 class="product-card__title">{{ product.name }}</h3>
           {% else %}
-            <strong class="zaad-tile__price">&#1575;&#1587;&#1578;&#1593;&#1604;&#1575;&#1605; &#1602;&#1740;&#1605;&#1578;</strong>
+            <h3 class="product-card__title">{{ product.product_code }}</h3>
           {% endif %}
+
+          <p class="product-card__price {% if not product.price %}product-card__price--muted{% endif %}">
+            {% if product.price %}
+              {{ product.display_price }}
+            {% else %}
+              استعلام قیمت
+            {% endif %}
+          </p>
         </div>
       </a>
-    </article>
-  {% empty %}
-    <div class="empty-box">&#1570;&#1740;&#1578;&#1605;&#1740; &#1576;&#1585;&#1575;&#1740; &#1606;&#1605;&#1575;&#1740;&#1588; &#1579;&#1576;&#1578; &#1606;&#1588;&#1583;&#1607; &#1575;&#1587;&#1578;.</div>
-  {% endfor %}
+    {% endfor %}
+  {% else %}
+    <div class="empty-box">فعلاً محصولی برای نمایش وجود ندارد.</div>
+  {% endif %}
 </div>

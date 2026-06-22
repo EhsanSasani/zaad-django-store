@@ -1,25 +1,52 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block body_class %}page-blog-detail{% endblock %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/catalog-polish.css' %}?v=1">
+{% endblock %}
 
 {% block content %}
 {% include "partials/breadcrumbs.html" %}
 
-<section class="container section-block">
-  <h1>{{ post.title }}</h1>
+<article class="container section-block blog-detail">
   {% if post.cover_image %}
-    <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" width="1200" height="630" class="cover-image">
+    <img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="cover-image">
   {% endif %}
-  <p class="intro-text">{{ post.excerpt }}</p>
-  <div class="post-body">{{ post.body|linebreaks }}</div>
-</section>
 
-<section class="container section-block">
-  <h2>لینک‌های مرتبط</h2>
-  <div class="inline-links">
-    <a href="{{ recommended_category.url }}">{{ recommended_category.label }}</a>
-    <a href="{{ recommended_subcategory.url }}">{{ recommended_subcategory.label }}</a>
+  <div class="blog-detail__body">
+    {{ post.body|linebreaks }}
   </div>
-  {% include "partials/product_grid.html" with products=recommended_items %}
+</article>
+
+{% if related_links %}
+<section class="container section-block">
+  <div class="section-head">
+    <h2>Related Paths</h2>
+  </div>
+
+  <div class="inline-links">
+    {% for item in related_links %}
+      <a href="{{ item.url }}">{{ item.label }}</a>
+    {% endfor %}
+  </div>
 </section>
+{% endif %}
+
+{% if related_products %}
+<section class="container section-block featured-products-section">
+  <div class="section-head featured-products-section__head featured-products-section__head--center catalog-section-head">
+    <div>
+      <h2 class="section-title-en">Related Pieces</h2>
+    </div>
+  </div>
+
+  {% include "partials/featured_products_slider.html" with products=related_products %}
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'main/js/featured-products-slider.js' %}?v=10000"></script>
 {% endblock %}

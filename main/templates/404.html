@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_css %}
+  <link rel="stylesheet" href="{% static 'main/css/error-404.css' %}?v=1">
+{% endblock %}
+
+{% block body_class %}page-not-found{% endblock %}
+
+{% block content %}
+  <section class="error-404" aria-label="صفحه پیدا نشد">
+    <a class="error-404__link" href="{% url 'index' %}" aria-label="بازگشت به صفحه اصلی">
+      <img
+        class="error-404__image"
+        src="{% static 'main/img/404-zad.png' %}"
+        alt="خطای ۴۰۴؛ صفحه مورد نظر پیدا نشد. بازگشت به صفحه اصلی"
+        width="1254"
+        height="1254"
+      >
+    </a>
+  </section>
+{% endblock %}
