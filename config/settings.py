@@ -25,8 +25,16 @@ else:
     else:
         DEBUG = ENV == "dev"
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-insecure-key-change-me")
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "*").split(",") if h.strip()]
-
+ALLOWED_HOSTS = [
+    h.strip()
+    for h in os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+    if h.strip()
+]
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if origin.strip()
+]
 # --- تعریف اپ‌ها و میان‌افزارها ---
 INSTALLED_APPS = [
     "jazzmin",
@@ -94,26 +102,13 @@ else:
     }
 
 # --- ذخیره‌سازی فایل‌ها و مدیا (لوکال/S3) ---
-if ENV == "prod":
-    INSTALLED_APPS += ["storages"]
-    STORAGES = {
-        "default": {"BACKEND": "storages.backends.s3.S3Storage"},
-        "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
-    }
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
-    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-    AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL")
-    AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "")
-    AWS_S3_ADDRESSING_STYLE = os.getenv("AWS_S3_ADDRESSING_STYLE", "path")
-    AWS_DEFAULT_ACL = None
-    AWS_QUERYSTRING_AUTH = False
-
-    MEDIA_URL = os.getenv("MEDIA_URL", "/media/")
-else:
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+}
 
 # --- اعتبارسنجی رمز عبور ---
 AUTH_PASSWORD_VALIDATORS = [
@@ -133,7 +128,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # --- اطلاعات پایه کسب‌وکار برای SEO/CTA ---
-zad_SITE_URL = os.getenv("zad_SITE_URL", "https://zad.ir")
+zad_SITE_URL = os.getenv("zad_SITE_URL", "https://zadconcept.ir")
 zad_PHONE_DISPLAY = os.getenv("zad_PHONE_DISPLAY", "09154203569")
 zad_PHONE_E164 = os.getenv("zad_PHONE_E164", "+989154203569")
 zad_TELEGRAM_URL = os.getenv("zad_TELEGRAM_URL", "https://t.me/Flowerhouse_pv")
