@@ -16,7 +16,6 @@ from .models import (
     Event,
     FLOWER_CATEGORY_SLUGS,
     FLOWER_OCCASION_TAG_SLUGS,
-    FLOWER_WEDDING_CATEGORY_SLUGS,
     Flower,
     HomeHeroSlide,
     NewsPost,
@@ -717,10 +716,15 @@ def _published_products_for_section(section):
 
 
 def _active_categories_for_section(section):
-    return Category.objects.filter(
+    queryset = Category.objects.filter(
         section=section,
         is_active=True,
-    ).order_by("sort_order", "name")
+    )
+
+    if section == Category.Section.FLOWERS:
+        queryset = queryset.exclude(slug="wedding")
+
+    return queryset.order_by("sort_order", "name")
 
 
 def _category_content(category):
@@ -1200,6 +1204,7 @@ FLOWER_OCCASION_SLUGS = [
     "condolence",
     "proposal",
     "engagement",
+    "wedding",
     "no-occasion",
 ]
 
@@ -1229,6 +1234,7 @@ OCCASION_FALLBACK_IMAGES = {
     "condolence": "main/img/occasions/condolence.jpg",
     "proposal": "main/img/occasions/special.jpg",
     "engagement": "main/img/occasions/special.jpg",
+    "wedding": "main/img/occasions/special.jpg",
     "no-occasion": "main/img/occasions/special.jpg",
 }
 
@@ -1426,10 +1432,17 @@ def _section_all_products(request, section):
     )
 
     categories = list(_active_categories_for_section(section))
+
+    if section == Category.Section.FLOWERS:
+        products_qs = products_qs.exclude(category__slug="wedding")
+
     selected_category = None
     selected_slug = request.GET.get("category") or ""
 
     if selected_slug:
+        if section == Category.Section.FLOWERS and selected_slug == "wedding":
+            return redirect("occasion_detail", slug="wedding", permanent=True)
+
         selected_category = get_object_or_404(
             Category,
             section=section,
@@ -1606,6 +1619,9 @@ def _section_subcategory(request, section, subcategory_slug):
 
 def flower_subcategory(request, subcategory_slug):
     canonical_slug = CATEGORY_SLUG_ALIASES.get(subcategory_slug, subcategory_slug)
+
+    if canonical_slug == "wedding":
+        return redirect("occasion_detail", slug="wedding", permanent=True)
 
     if canonical_slug != subcategory_slug:
         return redirect("flower_subcategory", subcategory_slug=canonical_slug)
@@ -1901,16 +1917,6 @@ def flower_detail_redirect(request, pk: int):
 def occasions(request):
     occasion_tags = _active_occasion_tags(limit=12)
     occasion_cards = [_occasion_card(tag) for tag in occasion_tags]
-    occasion_cards.append(
-    {
-        "slug": "wedding",
-        "label": "عروسی",
-        "label_en": "Wedding",
-        "url": reverse("flower_subcategory", args=["wedding"]),
-        "image": "main/img/occasions/special.jpg",
-        "intro": "برای روزهای سپید.",
-    }
-)
     breadcrumbs = _with_home(
         [
             {
@@ -2522,14 +2528,7 @@ def blog_detail(request, slug):
         .order_by("-featured", "sort_order", "-created_at")[:3]
     )
 
-    flower_category = (
-        Category.objects.filter(
-            section=Category.Section.FLOWERS,
-            is_active=True,
-        )
-        .order_by("sort_order", "name")
-        .first()
-    )
+    flower_category = _active_categories_for_section(Category.Section.FLOWERS).first()
 
     recommended_subcategory = None
 

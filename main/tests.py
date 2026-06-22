@@ -227,6 +227,49 @@ class MainViewsTests(TestCase):
             )["is_active"]
         )
 
+    def test_wedding_is_an_occasion_and_uses_the_shared_occasion_page(self):
+        wedding_category = Category.objects.create(
+            name="Wedding",
+            slug="wedding",
+            section=Category.Section.FLOWERS,
+        )
+        wedding_tag, _ = Tag.objects.update_or_create(
+            slug="wedding",
+            defaults={
+                "name": "عروسی",
+                "is_occasion": True,
+                "is_active": True,
+                "sort_order": 85,
+            },
+        )
+        wedding_product = Product.objects.create(
+            name="Wedding Arrangement",
+            publish_status=Product.PublishStatus.PUBLISHED,
+            category=wedding_category,
+        )
+        wedding_product.tags.add(wedding_tag)
+
+        occasions_response = self.client.get(reverse("occasions"))
+        wedding_response = self.client.get(reverse("occasion_detail", args=["wedding"]))
+
+        self.assertContains(
+            occasions_response,
+            f'href="{reverse("occasion_detail", args=["wedding"])}"',
+        )
+        self.assertTemplateUsed(wedding_response, "occasion_detail.html")
+        self.assertEqual(wedding_response.context["active_nav"], "occasions")
+        self.assertContains(wedding_response, wedding_product.name)
+
+    def test_legacy_wedding_flower_url_redirects_to_the_occasion(self):
+        response = self.client.get(reverse("flower_subcategory", args=["wedding"]))
+
+        self.assertRedirects(
+            response,
+            reverse("occasion_detail", args=["wedding"]),
+            status_code=301,
+            fetch_redirect_response=False,
+        )
+
     def test_events_page_shows_only_published(self):
         response = self.client.get(reverse("events"))
         self.assertEqual(response.status_code, 200)

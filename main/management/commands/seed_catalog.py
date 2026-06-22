@@ -31,15 +31,10 @@ class Command(BaseCommand):
             "legacy_names": ["استند"],
         },
         {
-            "name": "ماشین عروس",
+            "name": "عروسی",
             "slug": "wedding",
             "sort_order": 50,
             "legacy_slugs": ["wedding-decoration"],
-        },
-        {
-            "name": "دسته گل عروس",
-            "slug": "wedding",
-            "sort_order": 60,
         },
         {
             "name": "جار گل",
@@ -139,6 +134,11 @@ class Command(BaseCommand):
             "sort_order": 80,
         },
         {
+            "name": "عروسی",
+            "slug": "wedding",
+            "sort_order": 85,
+        },
+        {
             "name": "بدون مناسبت",
             "slug": "no-occasion",
             "sort_order": 90,
@@ -188,6 +188,13 @@ class Command(BaseCommand):
                 legacy_slugs=item.get("legacy_slugs", []),
                 legacy_names=item.get("legacy_names", []),
             )
+
+        wedding_tag = Tag.objects.get(slug="wedding")
+        wedding_products = Product.objects.filter(
+            category__section=Category.Section.FLOWERS,
+            category__slug="wedding",
+        ).exclude(tags=wedding_tag)
+        wedding_tag.products.add(*wedding_products)
 
         self.stdout.write(self.style.SUCCESS("کاتالوگ زاد با موفقیت همگام‌سازی شد."))
 

@@ -32,6 +32,7 @@ FLOWER_OCCASION_TAG_SLUGS = (
     "condolence",
     "proposal",
     "engagement",
+    "wedding",
     "no-occasion",
 )
 

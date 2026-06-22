@@ -79,6 +79,9 @@ class Command(BaseCommand):
                     if code in TAG_CODE_MAP
                 ]
 
+                if category_slug == "wedding":
+                    tag_slugs.append("wedding")
+
                 tags = list(Tag.objects.filter(slug__in=tag_slugs, is_active=True))
 
                 product = Product.objects.create(
