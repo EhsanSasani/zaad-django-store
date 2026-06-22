@@ -283,9 +283,7 @@
   .blog-list-intro,
   .blog-detail,
   .contact-help .lead-box,
-  .visit-help .lead-box,
-  .contact-help-link,
-  .visit-help-link {
+  .contact-help-link {
     max-width: 100%;
   }
 

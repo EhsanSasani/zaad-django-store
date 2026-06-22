@@ -1,0 +1,783 @@
+/* =========================================================
+   ZAD About — page-scoped editorial redesign
+   ========================================================= */
+
+.page-about {
+  --about-ink: #162131;
+  --about-ink-soft: #263447;
+  --about-cream: #f5efe6;
+  --about-paper: #fbf8f3;
+  --about-warm: #b8906d;
+  --about-muted: #70675f;
+  --about-line: rgba(53, 42, 33, 0.14);
+  background: var(--about-paper);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+.page-about .site-main {
+  padding-top: 0;
+  overflow: clip;
+}
+
+.page-about .about-page {
+  background: var(--about-paper);
+  color: #2f2b27;
+}
+
+.page-about .about-page img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-about .about-section {
+  padding-block: clamp(88px, 9vw, 144px);
+}
+
+.page-about .about-eyebrow {
+  margin: 0 0 18px;
+  color: var(--about-warm);
+  font-family: var(--font-ui-en);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.32em;
+  direction: ltr;
+  text-transform: uppercase;
+}
+
+.page-about .about-eyebrow--light {
+  color: rgba(244, 224, 198, 0.9);
+}
+
+.page-about .about-hero {
+  position: relative;
+  display: grid;
+  min-height: min(860px, calc(100svh - 40px));
+  overflow: hidden;
+  place-items: stretch;
+  background: var(--about-ink);
+  isolation: isolate;
+}
+
+.page-about .about-hero__media,
+.page-about .about-hero__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.page-about .about-hero__media img {
+  object-position: center 54%;
+  transform: scale(1.015);
+}
+
+.page-about .about-hero__overlay {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(15, 25, 38, 0.16) 0%, rgba(15, 25, 38, 0.38) 48%, rgba(15, 25, 38, 0.88) 100%),
+    linear-gradient(180deg, rgba(10, 17, 27, 0.06) 34%, rgba(10, 17, 27, 0.55) 100%);
+}
+
+.page-about .about-hero__inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-block: 112px 130px;
+  color: #fff;
+}
+
+.page-about .about-hero__inner h1 {
+  max-width: 760px;
+  margin: 0;
+  color: #fff;
+  font-family: var(--font-fa);
+  font-size: clamp(3.25rem, 6.4vw, 6.7rem);
+  font-weight: 600;
+  line-height: 1.27;
+  letter-spacing: -0.042em;
+  text-wrap: balance;
+}
+
+.page-about .about-hero__lead {
+  max-width: 640px;
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(1rem, 1.25vw, 1.18rem);
+  font-weight: 400;
+  line-height: 2.1;
+  letter-spacing: -0.012em;
+  text-wrap: pretty;
+}
+
+.page-about .about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.page-about .about-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 24px;
+  border: 1px solid transparent;
+  color: inherit;
+  font-family: var(--font-fa);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.5;
+  transition: transform 0.24s ease, background 0.24s ease, border-color 0.24s ease, color 0.24s ease;
+}
+
+.page-about .about-button:hover,
+.page-about .about-button:focus-visible {
+  transform: translateY(-2px);
+}
+
+.page-about .about-button--cream {
+  background: var(--about-cream);
+  color: var(--about-ink);
+}
+
+.page-about .about-button--glass {
+  border-color: rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  backdrop-filter: blur(10px);
+}
+
+.page-about .about-hero__signature {
+  position: absolute;
+  bottom: 34px;
+  left: 4.5%;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  gap: 13px;
+  color: rgba(255, 255, 255, 0.72);
+  direction: ltr;
+}
+
+.page-about .about-hero__signature span {
+  font-family: var(--font-ui-en);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+}
+
+.page-about .about-hero__signature strong {
+  font-family: var(--font-brand-en);
+  font-size: 2.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.page-about .about-manifesto {
+  background: var(--about-paper);
+}
+
+.page-about .about-manifesto__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  gap: clamp(48px, 7vw, 104px);
+  align-items: center;
+  direction: ltr;
+}
+
+.page-about .about-manifesto__media {
+  position: relative;
+  height: clamp(620px, 65vw, 820px);
+  margin: 0;
+  overflow: hidden;
+  background: #ded6ca;
+  direction: rtl;
+}
+
+.page-about .about-manifesto__media img {
+  object-position: center center;
+  transition: transform 0.8s ease;
+}
+
+.page-about .about-manifesto__media:hover img {
+  transform: scale(1.018);
+}
+
+.page-about .about-manifesto__media figcaption,
+.page-about .about-workshops__figure figcaption {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  padding: 8px 12px;
+  background: rgba(19, 29, 43, 0.78);
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.6;
+  backdrop-filter: blur(8px);
+}
+
+.page-about .about-manifesto__copy {
+  max-width: 660px;
+  direction: rtl;
+}
+
+.page-about .about-manifesto__copy h2,
+.page-about .about-section-head h2,
+.page-about .about-principles__intro h2,
+.page-about .about-workshops__copy h2,
+.page-about .about-closing h2 {
+  margin: 0;
+  font-family: var(--font-fa);
+  font-weight: 600;
+  letter-spacing: -0.032em;
+  text-wrap: balance;
+}
+
+.page-about .about-manifesto__copy h2 {
+  max-width: 580px;
+  color: var(--about-ink);
+  font-size: clamp(2.45rem, 4.35vw, 4.7rem);
+  line-height: 1.42;
+}
+
+.page-about .about-manifesto__copy > p:not(.about-eyebrow) {
+  max-width: 620px;
+  margin-top: 20px;
+  color: var(--about-muted);
+  font-size: clamp(0.97rem, 1.05vw, 1.06rem);
+  font-weight: 400;
+  line-height: 2.22;
+  letter-spacing: -0.008em;
+  text-wrap: pretty;
+}
+
+.page-about .about-manifesto__copy blockquote {
+  position: relative;
+  margin: 34px 0 0;
+  padding: 25px 28px 25px 54px;
+  border-right: 2px solid var(--about-warm);
+  background: #f2ebe1;
+  color: var(--about-ink-soft);
+}
+
+.page-about .about-manifesto__copy blockquote span {
+  position: absolute;
+  top: 8px;
+  left: 18px;
+  color: rgba(184, 144, 109, 0.5);
+  font-family: Georgia, serif;
+  font-size: 3.4rem;
+  line-height: 1;
+}
+
+.page-about .about-manifesto__copy blockquote p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 2;
+}
+
+.page-about .about-worlds {
+  border-top: 1px solid var(--about-line);
+  background: #f2ece3;
+}
+
+.page-about .about-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.64fr);
+  gap: 52px;
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.page-about .about-section-head h2 {
+  color: var(--about-ink);
+  font-size: clamp(2.25rem, 4vw, 4.2rem);
+  line-height: 1.4;
+}
+
+.page-about .about-section-head > p {
+  color: var(--about-muted);
+  font-size: 0.98rem;
+  line-height: 2.12;
+  text-wrap: pretty;
+}
+
+.page-about .about-worlds__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+  direction: ltr;
+}
+
+.page-about .about-world-card {
+  position: relative;
+  grid-column: span 3;
+  height: clamp(520px, 52vw, 680px);
+  overflow: hidden;
+  background: var(--about-ink);
+  direction: rtl;
+  isolation: isolate;
+}
+
+.page-about .about-world-card--feature {
+  grid-column: span 6;
+}
+
+.page-about .about-world-card img {
+  transition: transform 0.7s ease, filter 0.7s ease;
+}
+
+.page-about .about-world-card:hover img {
+  transform: scale(1.025);
+  filter: saturate(0.94);
+}
+
+.page-about .about-world-card__shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(12, 19, 29, 0.03) 36%, rgba(12, 19, 29, 0.84) 100%);
+}
+
+.page-about .about-world-card__content {
+  position: absolute;
+  right: 26px;
+  bottom: 26px;
+  left: 26px;
+  z-index: 2;
+  color: #fff;
+}
+
+.page-about .about-world-card__content span {
+  display: block;
+  margin-bottom: 10px;
+  color: rgba(247, 225, 197, 0.82);
+  font-family: var(--font-ui-en);
+  font-size: 0.6rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.22em;
+  direction: ltr;
+  text-align: right;
+}
+
+.page-about .about-world-card__content h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1.65rem, 2.3vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.025em;
+}
+
+.page-about .about-world-card__content p {
+  max-width: 42ch;
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.86rem;
+  line-height: 1.95;
+  text-wrap: pretty;
+}
+
+.page-about .about-principles {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(184, 144, 109, 0.13), transparent 30%),
+    var(--about-ink);
+  color: #fff;
+}
+
+.page-about .about-principles__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(56px, 8vw, 120px);
+  align-items: start;
+}
+
+.page-about .about-principles__intro {
+  position: sticky;
+  top: calc(var(--header-height) + 28px);
+}
+
+.page-about .about-principles__intro h2 {
+  max-width: 600px;
+  color: #fff;
+  font-size: clamp(2.4rem, 4.2vw, 4.4rem);
+  line-height: 1.45;
+}
+
+.page-about .about-principles__intro > p:not(.about-eyebrow) {
+  max-width: 560px;
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.98rem;
+  line-height: 2.12;
+}
+
+.page-about .about-principles__list {
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.page-about .about-principles__list article {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 22px;
+  padding: 32px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.page-about .about-principles__list article > span {
+  color: var(--about-warm);
+  font-family: var(--font-ui-en);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.page-about .about-principles__list h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.32rem;
+  font-weight: 600;
+  line-height: 1.65;
+  letter-spacing: -0.02em;
+}
+
+.page-about .about-principles__list p {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.92rem;
+  line-height: 2;
+}
+
+.page-about .about-workshops {
+  background: var(--about-paper);
+}
+
+.page-about .about-workshops__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) repeat(2, minmax(0, 1fr));
+  grid-template-areas: "talk making copy";
+  gap: 18px;
+  align-items: stretch;
+  direction: ltr;
+}
+
+.page-about .about-workshops__copy {
+  grid-area: copy;
+  align-self: center;
+  padding: clamp(14px, 3vw, 44px);
+  direction: rtl;
+}
+
+.page-about .about-workshops__copy h2 {
+  color: var(--about-ink);
+  font-size: clamp(2.25rem, 4vw, 4.25rem);
+  line-height: 1.43;
+}
+
+.page-about .about-workshops__copy > p:not(.about-eyebrow) {
+  margin-top: 20px;
+  color: var(--about-muted);
+  font-size: 0.97rem;
+  line-height: 2.15;
+  text-wrap: pretty;
+}
+
+.page-about .about-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(22, 33, 49, 0.32);
+  color: var(--about-ink);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.page-about .about-text-link span {
+  color: var(--about-warm);
+  font-size: 1.05rem;
+  transition: transform 0.2s ease;
+}
+
+.page-about .about-text-link:hover span {
+  transform: translate(-2px, 2px);
+}
+
+.page-about .about-workshops__figure {
+  position: relative;
+  height: clamp(600px, 62vw, 790px);
+  margin: 0;
+  overflow: hidden;
+  background: #ded6ca;
+  direction: rtl;
+}
+
+.page-about .about-workshops__figure--making {
+  grid-area: making;
+}
+
+.page-about .about-workshops__figure--talk {
+  grid-area: talk;
+}
+
+.page-about .about-workshops__figure img {
+  transition: transform 0.8s ease;
+}
+
+.page-about .about-workshops__figure:hover img {
+  transform: scale(1.02);
+}
+
+.page-about .about-closing {
+  padding-block: clamp(92px, 10vw, 152px);
+  border-top: 1px solid var(--about-line);
+  background: var(--about-cream);
+}
+
+.page-about .about-closing__inner {
+  max-width: 900px;
+  text-align: center;
+}
+
+.page-about .about-closing h2 {
+  color: var(--about-ink);
+  font-size: clamp(2.5rem, 4.6vw, 4.8rem);
+  line-height: 1.42;
+}
+
+.page-about .about-closing__inner > p:not(.about-eyebrow) {
+  max-width: 680px;
+  margin: 20px auto 0;
+  color: var(--about-muted);
+  font-size: 1rem;
+  line-height: 2.12;
+  text-wrap: pretty;
+}
+
+.page-about .about-actions--dark {
+  justify-content: center;
+}
+
+.page-about .about-button--navy {
+  background: var(--about-ink);
+  color: #fff;
+}
+
+.page-about .about-button--line {
+  border-color: rgba(22, 33, 49, 0.28);
+  color: var(--about-ink);
+}
+
+@media (max-width: 1100px) {
+  .page-about .about-world-card,
+  .page-about .about-world-card--feature {
+    grid-column: span 6;
+  }
+
+  .page-about .about-world-card--feature {
+    grid-column: 1 / -1;
+    height: 620px;
+  }
+
+  .page-about .about-workshops__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "copy copy"
+      "talk making";
+  }
+
+  .page-about .about-workshops__copy {
+    max-width: 780px;
+    padding: 0 0 36px;
+  }
+
+  .page-about .about-workshops__figure {
+    height: 680px;
+  }
+}
+
+@media (max-width: 820px) {
+  .page-about .about-hero {
+    min-height: 760px;
+  }
+
+  .page-about .about-hero__media img {
+    object-position: 52% center;
+  }
+
+  .page-about .about-hero__overlay {
+    background:
+      linear-gradient(180deg, rgba(12, 20, 31, 0.16) 12%, rgba(12, 20, 31, 0.8) 76%, rgba(12, 20, 31, 0.94) 100%);
+  }
+
+  .page-about .about-hero__inner {
+    justify-content: flex-end;
+    padding-bottom: 108px;
+  }
+
+  .page-about .about-manifesto__grid,
+  .page-about .about-section-head,
+  .page-about .about-principles__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-about .about-manifesto__media {
+    height: 680px;
+  }
+
+  .page-about .about-manifesto__copy {
+    max-width: 100%;
+  }
+
+  .page-about .about-section-head {
+    gap: 18px;
+  }
+
+  .page-about .about-section-head > p {
+    max-width: 620px;
+  }
+
+  .page-about .about-principles__intro {
+    position: static;
+  }
+}
+
+@media (max-width: 620px) {
+  .page-about .about-section {
+    padding-block: 76px;
+  }
+
+  .page-about .about-hero {
+    min-height: 700px;
+  }
+
+  .page-about .about-hero__inner {
+    padding-block: 90px 98px;
+  }
+
+  .page-about .about-hero__inner h1 {
+    font-size: clamp(2.35rem, 11.5vw, 3.45rem);
+    line-height: 1.38;
+    letter-spacing: -0.032em;
+  }
+
+  .page-about .about-hero__lead {
+    margin-top: 18px;
+    font-size: 0.94rem;
+    line-height: 2;
+  }
+
+  .page-about .about-actions,
+  .page-about .about-button {
+    width: 100%;
+  }
+
+  .page-about .about-hero__signature {
+    right: 4%;
+    bottom: 26px;
+    left: auto;
+  }
+
+  .page-about .about-manifesto__grid {
+    gap: 42px;
+  }
+
+  .page-about .about-manifesto__media {
+    height: 560px;
+  }
+
+  .page-about .about-manifesto__copy h2,
+  .page-about .about-section-head h2,
+  .page-about .about-principles__intro h2,
+  .page-about .about-workshops__copy h2,
+  .page-about .about-closing h2 {
+    font-size: clamp(1.9rem, 9vw, 2.65rem);
+    line-height: 1.52;
+    letter-spacing: -0.024em;
+  }
+
+  .page-about .about-manifesto__copy > p:not(.about-eyebrow),
+  .page-about .about-workshops__copy > p:not(.about-eyebrow),
+  .page-about .about-principles__intro > p:not(.about-eyebrow),
+  .page-about .about-closing__inner > p:not(.about-eyebrow) {
+    font-size: 0.92rem;
+    line-height: 2.08;
+  }
+
+  .page-about .about-manifesto__copy blockquote {
+    padding: 22px 20px;
+  }
+
+  .page-about .about-manifesto__copy blockquote span {
+    display: none;
+  }
+
+  .page-about .about-worlds__grid {
+    gap: 12px;
+  }
+
+  .page-about .about-world-card,
+  .page-about .about-world-card--feature {
+    grid-column: 1 / -1;
+    height: 560px;
+  }
+
+  .page-about .about-world-card__content {
+    right: 20px;
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .page-about .about-world-card__content h3 {
+    font-size: 1.65rem;
+  }
+
+  .page-about .about-principles__grid {
+    gap: 46px;
+  }
+
+  .page-about .about-principles__list article {
+    grid-template-columns: 38px minmax(0, 1fr);
+    gap: 14px;
+    padding: 26px 0;
+  }
+
+  .page-about .about-principles__list h3 {
+    font-size: 1.16rem;
+  }
+
+  .page-about .about-workshops__grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "making"
+      "talk";
+    gap: 12px;
+  }
+
+  .page-about .about-workshops__copy {
+    padding-bottom: 28px;
+  }
+
+  .page-about .about-workshops__figure {
+    height: 590px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-about .about-page *,
+  .page-about .about-page *::before,
+  .page-about .about-page *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}

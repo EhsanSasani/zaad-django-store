@@ -45,6 +45,48 @@
   display: none !important;
 }
 
+.hero-slide__content--cms {
+  position: absolute;
+  right: 0;
+  bottom: clamp(72px, 10vh, 120px);
+  left: 0;
+  z-index: 2;
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--white);
+  text-align: right;
+}
+
+.hero-slide__kicker {
+  margin-bottom: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.hero-slide__title {
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(2.4rem, 5vw, 5.5rem);
+  line-height: 1.25;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.hero-slide__description {
+  max-width: 620px;
+  margin: 14px 0 0;
+  font-size: clamp(1rem, 1.4vw, 1.3rem);
+  line-height: 1.9;
+}
+
+.hero-slide__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
 .hero-slider__nav {
   position: absolute;
   top: 50%;

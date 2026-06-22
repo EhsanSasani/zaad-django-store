@@ -61,6 +61,20 @@
   transform: scale(1.02);
 }
 
+.flowers-hero__image--mobile {
+  display: none !important;
+}
+
+@media (max-width: 760px) {
+  .flowers-hero__media .flowers-hero__image--mobile {
+    display: block !important;
+  }
+
+  .flowers-hero__media.has-mobile-image .flowers-hero__image--desktop {
+    display: none;
+  }
+}
+
 .flowers-hero__overlay {
   z-index: -1;
   background:

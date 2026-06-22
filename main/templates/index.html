@@ -15,23 +15,35 @@
       <div class="hero-slide hero-slide--{{ forloop.counter }} {% if forloop.first %}is-active{% endif %}">
 
         <picture>
-          {% if forloop.counter == 1 %}
-            <source media="(max-width:760px)" srcset="{% static 'main/img/hero-mobile-1.jpg' %}">
-          {% elif forloop.counter == 2 %}
-            <source media="(max-width:760px)" srcset="{% static 'main/img/hero-mobile-2.jpg' %}">
-          {% elif forloop.counter == 3 %}
-            <source media="(max-width:760px)" srcset="{% static 'main/img/hero-mobile-3.jpg' %}">
+          {% if slide.mobile_image_url %}
+            <source media="(max-width:760px)" srcset="{{ slide.mobile_image_url }}">
           {% endif %}
 
-          {% if slide.image_url %}
-            <img src="{{ slide.image_url }}" alt="{{ slide.title|default:'ZAD' }}">
-          {% else %}
-            <img src="{{ slide.image.url }}" alt="{{ slide.title|default:'ZAD' }}">
-          {% endif %}
+          <img src="{{ slide.image_url }}" alt="{{ slide.title|default:'ZAD' }}">
         </picture>
 
         <div class="hero-slide__overlay"></div>
-        <div class="hero-slide__content hero-slide__content--left-bottom container"></div>
+        {% if slide.show_content %}
+          <div class="hero-slide__content hero-slide__content--cms container">
+            {% if slide.kicker %}
+              <span class="hero-slide__kicker">{{ slide.kicker }}</span>
+            {% endif %}
+            <h2 class="hero-slide__title">{{ slide.title }}</h2>
+            {% if slide.description %}
+              <p class="hero-slide__description">{{ slide.description }}</p>
+            {% endif %}
+            {% if slide.primary_button_text and slide.primary_button_url or slide.secondary_button_text and slide.secondary_button_url %}
+              <div class="hero-slide__actions">
+                {% if slide.primary_button_text and slide.primary_button_url %}
+                  <a href="{{ slide.primary_button_url }}" class="btn btn-call">{{ slide.primary_button_text }}</a>
+                {% endif %}
+                {% if slide.secondary_button_text and slide.secondary_button_url %}
+                  <a href="{{ slide.secondary_button_url }}" class="btn btn-telegram">{{ slide.secondary_button_text }}</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
       </div>
 
     {% empty %}

@@ -21,9 +21,9 @@
   <link rel="stylesheet" href="{% static 'main/css/base.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/layout.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/navbar.css' %}?v=1">
-  <link rel="stylesheet" href="{% static 'main/css/hero.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/hero.css' %}?v=2">
   <link rel="stylesheet" href="{% static 'main/css/components.css' %}?v=1">
-  <link rel="stylesheet" href="{% static 'main/css/page.css' %}?v=1">
+  <link rel="stylesheet" href="{% static 'main/css/page.css' %}?v=2">
   {% block page_css %}{% endblock %}
   <link rel="stylesheet" href="{% static 'main/css/footer.css' %}?v=1">
   <link rel="stylesheet" href="{% static 'main/css/responsive.css' %}?v=1">
@@ -102,25 +102,47 @@
   </div>
 </header>
 
-  {% if not is_home and page_type != "home" and page_type != "flowers_landing" and page_type != "workshops" %}
+  {% if not is_home and page_type != "home" and page_type != "flowers_landing" and page_type != "workshops" and page_type != "about" %}
   <section class="page-hero">
     <div class="page-hero__media">
       {% if page_hero_image %}
-        {% if page_hero_image|slice:":7" == "/media/" %}
-          <img src="{{ page_hero_image }}" alt="{{ page_hero_title|default:'zad' }}">
-        {% else %}
-          <img src="{% static page_hero_image %}" alt="{{ page_hero_title|default:'zad' }}">
-        {% endif %}
+        <picture>
+          {% if page_hero_mobile_image %}
+            {% if page_hero_mobile_image|slice:":7" == "/media/" %}
+              <source media="(max-width: 760px)" srcset="{{ page_hero_mobile_image }}">
+            {% else %}
+              <source media="(max-width: 760px)" srcset="{% static page_hero_mobile_image %}">
+            {% endif %}
+          {% endif %}
+
+          {% if page_hero_image|slice:":7" == "/media/" %}
+            <img src="{{ page_hero_image }}" alt="{{ page_hero_title|default:'zad' }}">
+          {% else %}
+            <img src="{% static page_hero_image %}" alt="{{ page_hero_title|default:'zad' }}">
+          {% endif %}
+        </picture>
       {% else %}
         <img src="{% static 'main/img/hero-about.jpg' %}" alt="{{ page_hero_title|default:'zad' }}">
       {% endif %}
     </div>
 
     <div class="page-hero__overlay"></div>
+
+    {% if page_type == "occasion-detail" or page_type == "flower-occasion" %}
+      <div class="page-hero__content container">
+        {% if page_hero_kicker %}
+          <span class="page-hero__kicker">{{ page_hero_kicker }}</span>
+        {% endif %}
+        <h1>{{ page_hero_title }}</h1>
+        {% if page_hero_text %}
+          <p>{{ page_hero_text }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
   </section>
   
 
-  {% if page_type != "item" and page_type != "occasions" %}
+  {% if page_type != "item" and page_type != "occasions" and page_type != "occasion-detail" and page_type != "flower-occasion" %}
     <section class="container section-block page-hero-mood">
       <div class="home-intro__brandline page-hero-mood__brandline">
         <span class="page-hero-mood__mark">✦</span>

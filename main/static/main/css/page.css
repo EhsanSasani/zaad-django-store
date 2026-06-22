@@ -49,15 +49,13 @@
   margin-bottom: 14px;
 }
 
-/* contact / visit / faq */
-.contact-help .lead-box,
-.visit-help .lead-box {
+/* contact / faq */
+.contact-help .lead-box {
   max-width: 920px;
   margin-inline: auto;
 }
 
 .contact-help-link,
-.visit-help-link,
 .faq-page-cta,
 .blog-detail,
 .blog-detail__related-links,
@@ -66,7 +64,6 @@
 }
 
 .contact-help-link .intro-text,
-.visit-help-link .intro-text,
 .faq-page-cta .intro-text {
   margin-bottom: 14px;
 }
@@ -1481,6 +1478,10 @@ body:not(.page-home) .section-block:first-of-type {
   line-height: 1.9;
 }
 
+.page-about .about-hero__media picture {
+  display: contents;
+}
+
 .page-contact .contact-form-section {
   margin-top: 44px;
   padding-top: 0;
@@ -1551,6 +1552,20 @@ body:not(.page-home) .section-block:first-of-type {
   object-fit: cover;
   object-position: center center;
   transform: scale(1.015);
+}
+
+.workshops-hero__image--mobile {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .workshops-hero__image--mobile {
+    display: block;
+  }
+
+  .workshops-hero--has-mobile .workshops-hero__image--desktop {
+    display: none;
+  }
 }
 
 .workshops-hero__overlay {
@@ -2003,5 +2018,230 @@ body:not(.page-home) .section-block:first-of-type {
 
   .workshops-cta__inner {
     padding: 62px 0;
+  }
+}
+
+/* =========================================================
+   Events typography polish — scoped to /events only
+   ========================================================= */
+
+.page-events {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+.page-events .workshops-hero__eyebrow {
+  font-family: var(--font-ui-en);
+  font-size: clamp(0.66rem, 0.72vw, 0.76rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.38em;
+  direction: ltr;
+}
+
+.page-events .workshops-hero h1 {
+  font-family: var(--font-fa);
+  font-size: clamp(3.35rem, 6.25vw, 6.75rem);
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.page-events .workshops-hero__content > p:not(.workshops-hero__eyebrow) {
+  font-size: clamp(1rem, 1.25vw, 1.24rem);
+  font-weight: 400;
+  line-height: 2.05;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+.page-events .workshops-btn {
+  font-family: var(--font-fa);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.012em;
+}
+
+.page-events .section-kicker {
+  font-family: var(--font-fa);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.75;
+  letter-spacing: 0.018em;
+}
+
+.page-events .section-head h2,
+.page-events .workshops-story__text h2,
+.page-events .workshops-cta h2 {
+  font-family: var(--font-fa);
+  font-weight: 600;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+
+.page-events .section-head h2 {
+  font-size: clamp(2rem, 3.3vw, 3.15rem);
+  line-height: 1.5;
+}
+
+.page-events .workshops-story__text h2 {
+  font-size: clamp(2.15rem, 3.55vw, 3.45rem);
+  line-height: 1.52;
+}
+
+.page-events .workshops-story__text p {
+  font-size: clamp(0.96rem, 1.05vw, 1.04rem);
+  font-weight: 400;
+  line-height: 2.22;
+  letter-spacing: -0.009em;
+  text-wrap: pretty;
+}
+
+.page-events .workshop-type-card__body span {
+  font-family: var(--font-fa);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-events .workshop-type-card__body h3,
+.page-events .workshop-event-card h3,
+.page-events .workshops-empty h3 {
+  font-family: var(--font-fa);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+.page-events .workshop-type-card__body h3 {
+  font-size: 1.2rem;
+  line-height: 1.65;
+}
+
+.page-events .workshop-type-card__body p {
+  font-size: 0.92rem;
+  font-weight: 400;
+  line-height: 2.08;
+  letter-spacing: -0.006em;
+  text-wrap: pretty;
+}
+
+.page-events .workshop-event-card__date {
+  font-family: var(--font-ui-en), var(--font-fa);
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.075em;
+  direction: ltr;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-events .workshop-event-card h3 {
+  font-size: 1.12rem;
+  line-height: 1.72;
+}
+
+.page-events .workshop-event-card__body > p:not(.workshop-event-card__date) {
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 2.02;
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+
+.page-events .workshop-event-card__meta {
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.page-events .workshop-event-card__meta a {
+  font-weight: 600;
+}
+
+.page-events .workshops-empty h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  line-height: 1.65;
+}
+
+.page-events .workshops-empty p {
+  font-size: 0.96rem;
+  font-weight: 400;
+  line-height: 2.1;
+  text-wrap: pretty;
+}
+
+.page-events .workshops-benefits__grid div {
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.85;
+  letter-spacing: -0.008em;
+  text-wrap: balance;
+}
+
+.page-events .workshops-cta h2 {
+  font-size: clamp(2rem, 3.45vw, 3.35rem);
+  line-height: 1.52;
+}
+
+.page-events .workshops-cta p {
+  font-size: clamp(0.94rem, 1.05vw, 1.02rem);
+  font-weight: 400;
+  line-height: 2.05;
+  letter-spacing: -0.008em;
+  text-wrap: balance;
+}
+
+@media (max-width: 640px) {
+  .page-events .workshops-hero__eyebrow {
+    font-size: 0.62rem;
+    letter-spacing: 0.32em;
+  }
+
+  .page-events .workshops-hero h1 {
+    font-size: clamp(2.4rem, 11.6vw, 3.5rem);
+    line-height: 1.36;
+    letter-spacing: -0.03em;
+  }
+
+  .page-events .workshops-hero__content > p:not(.workshops-hero__eyebrow) {
+    font-size: 0.94rem;
+    line-height: 2;
+  }
+
+  .page-events .workshops-btn {
+    font-size: 0.86rem;
+  }
+
+  .page-events .section-kicker {
+    font-size: 0.76rem;
+  }
+
+  .page-events .section-head h2,
+  .page-events .workshops-story__text h2,
+  .page-events .workshops-cta h2 {
+    font-size: clamp(1.7rem, 7.5vw, 2.2rem);
+    line-height: 1.58;
+    letter-spacing: -0.022em;
+  }
+
+  .page-events .workshops-story__text p {
+    font-size: 0.93rem;
+    line-height: 2.15;
+  }
+
+  .page-events .workshop-type-card__body h3,
+  .page-events .workshop-event-card h3 {
+    font-size: 1.08rem;
+  }
+
+  .page-events .workshop-type-card__body p,
+  .page-events .workshop-event-card__body > p:not(.workshop-event-card__date) {
+    font-size: 0.88rem;
+    line-height: 2;
   }
 }

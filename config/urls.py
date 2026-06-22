@@ -7,6 +7,8 @@ from django.urls import include, path
 
 from main.sitemaps import sitemaps
 
+handler404 = "main.views.custom_404"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),

@@ -231,12 +231,6 @@ PAGE_HERO_CONTENT = {
         "text": "For availability, timing and order details.",
         "image": "main/img/hero-contact.jpg",
     },
-    "visit": {
-        "kicker": "Visit zad",
-        "title": "Come Closer",
-        "text": "See the details and choose with more ease.",
-        "image": "main/img/hero-visit.jpg",
-    },
     "events": {
         "kicker": "zad Events",
         "title": "Gathered With Feeling",
@@ -559,7 +553,23 @@ def _get_active_home_hero_slides():
     )
 
     if slides:
-        return slides
+        return [
+            {
+                "title": slide.title,
+                "kicker": slide.kicker,
+                "description": slide.description,
+                "image_url": slide.image.url,
+                "mobile_image_url": (
+                    slide.mobile_image.url if slide.mobile_image else ""
+                ),
+                "primary_button_text": slide.primary_button_text,
+                "primary_button_url": slide.primary_button_url,
+                "secondary_button_text": slide.secondary_button_text,
+                "secondary_button_url": slide.secondary_button_url,
+                "show_content": True,
+            }
+            for slide in slides
+        ]
 
     return [
         {
@@ -567,35 +577,41 @@ def _get_active_home_hero_slides():
             "kicker": "zad Concept Store",
             "description": "Premium flowers, bakery, and gifts with fast coordination in Mashhad.",
             "image_url": settings.STATIC_URL + "main/img/hero-1.jpg",
+            "mobile_image_url": settings.STATIC_URL + "main/img/hero-mobile-1.jpg",
             "primary_button_text": "Call Now",
             "primary_button_url": "",
             "secondary_button_text": "تلگرام",
             "secondary_button_url": "",
+            "show_content": False,
         },
         {
             "title": "Styled Details for Special Moments",
             "kicker": "Minimal & Premium",
             "description": "A polished zad experience across flowers, bakery, and gifts.",
             "image_url": settings.STATIC_URL + "main/img/hero-2.jpg",
+            "mobile_image_url": settings.STATIC_URL + "main/img/hero-mobile-2.jpg",
             "primary_button_text": "",
             "primary_button_url": "",
             "secondary_button_text": "",
             "secondary_button_url": "",
+            "show_content": False,
         },
         {
             "title": "Fast Coordination in Mashhad",
             "kicker": "zad Mashhad",
             "description": "Quick coordination for urgent orders and daily selections.",
             "image_url": settings.STATIC_URL + "main/img/hero-3.jpg",
+            "mobile_image_url": settings.STATIC_URL + "main/img/hero-mobile-3.jpg",
             "primary_button_text": "",
             "primary_button_url": "",
             "secondary_button_text": "",
             "secondary_button_url": "",
+            "show_content": False,
         },
     ]
 
 
-def _get_site_hero(target_page, target_slug=""):
+def _get_site_hero(target_page, target_slug="", *, allow_fallback=True):
     hero = (
         SiteHero.objects.filter(
             is_active=True,
@@ -612,9 +628,12 @@ def _get_site_hero(target_page, target_slug=""):
             "page_hero_title": hero.title,
             "page_hero_text": hero.description,
             "page_hero_image": hero.image.url if hero.image else "main/img/hero-2.jpg",
+            "page_hero_mobile_image": (
+                hero.mobile_image.url if hero.mobile_image else ""
+            ),
         }
 
-    if target_slug:
+    if target_slug and allow_fallback:
         fallback = (
             SiteHero.objects.filter(
                 is_active=True,
@@ -631,6 +650,9 @@ def _get_site_hero(target_page, target_slug=""):
                 "page_hero_title": fallback.title,
                 "page_hero_text": fallback.description,
                 "page_hero_image": fallback.image.url if fallback.image else "main/img/hero-2.jpg",
+                "page_hero_mobile_image": (
+                    fallback.mobile_image.url if fallback.mobile_image else ""
+                ),
             }
 
     return None
@@ -735,56 +757,65 @@ OCCASION_CARD_CONTENT = {
         "title": "تولد",
         "hero_title": "گل تولد",
         "intro": "برای شادی‌های روشن.",
+        "hero_text": "برای لحظه‌ای که باید با گل، رنگ و یک یاد شیرین ماندگار شود.",
         "image": "main/img/occasions/birthday.jpg",
     },
     "romantic": {
         "title": "عاشقانه",
         "hero_title": "گل عاشقانه",
         "intro": "برای لحظه‌های نزدیک.",
+        "hero_text": "برای گفتن دوستت دارم؛ آرام‌تر و زیباتر از هر کلمه.",
         "image": "main/img/occasions/romantic.jpg",
     },
     "congratulation": {
         "title": "تبریک",
         "hero_title": "گل تبریک",
         "intro": "برای خبرهای خوب.",
+        "hero_text": "برای جشن گرفتن خبرهای خوب و شروع‌های روشن.",
         "image": "main/img/occasions/special.jpg",
     },
     "apology": {
         "title": "معذرت‌خواهی",
         "hero_title": "گل معذرت‌خواهی",
         "intro": "برای دلجویی آرام.",
+        "hero_text": "برای وقتی که یک انتخاب صمیمی، آغاز دوباره‌ی گفت‌وگوست.",
         "image": "main/img/occasions/special.jpg",
     },
     "condolence": {
         "title": "ترحیم",
         "hero_title": "گل ترحیم",
         "intro": "برای همراهی محترمانه.",
+        "hero_text": "برای ابراز همدلی؛ باوقار، آرام و محترمانه.",
         "image": "main/img/occasions/condolence.jpg",
     },
     "proposal": {
         "title": "خواستگاری",
         "hero_title": "گل خواستگاری",
         "intro": "برای شروعی رسمی.",
+        "hero_text": "برای شروعی به‌یادماندنی، با جزئیاتی ظریف و باشکوه.",
         "image": "main/img/occasions/special.jpg",
     },
     "engagement": {
         "title": "بله‌برون",
         "hero_title": "گل بله‌برون",
         "intro": "برای پیمان‌های شیرین.",
+        "hero_text": "برای جشنی صمیمی و شیرین در آغاز یک همراهی.",
         "image": "main/img/occasions/special.jpg",
     },
     "no-occasion": {
         "title": "بدون مناسبت",
         "hero_title": "گل بدون مناسبت",
         "intro": "برای بی‌دلیل دوست داشتن.",
+        "hero_text": "برای همان روزهای معمولی که با یک یاد کوچک، خاص می‌شوند.",
         "image": "main/img/occasions/special.jpg",
     },
     "wedding": {
-    "title": "عروسی",
-    "hero_title": "گل عروسی",
-    "intro": "برای روزهای سپید.",
-    "image": "main/img/occasions/special.jpg",
-},
+        "title": "عروسی",
+        "hero_title": "گل عروسی",
+        "intro": "برای روزهای سپید.",
+        "hero_text": "برای روزی سپید، لطیف و به‌یادماندنی.",
+        "image": "main/img/occasions/special.jpg",
+    },
 }
 OCCASION_EN_LABELS = {
     "birthday": "Birthday",
@@ -797,6 +828,32 @@ OCCASION_EN_LABELS = {
     "no-occasion": "Just Because",
     "wedding": "Wedding",
 }
+
+OCCASION_DETAIL_HERO_IMAGE = "main/img/occasion-detail-hero-v1.webp"
+OCCASION_DETAIL_HERO_MOBILE_IMAGE = "main/img/occasion-detail-hero-mobile-v1.webp"
+
+
+def _occasion_detail_hero(occasion, *, title=None):
+    content = OCCASION_CARD_CONTENT.get(occasion.slug, {})
+    english_label = OCCASION_EN_LABELS.get(
+        occasion.slug,
+        occasion.slug.replace("-", " ").title(),
+    )
+
+    return {
+        "page_hero_kicker": f"ZAD OCCASIONS · {english_label}",
+        "page_hero_title": title or content.get("title") or occasion.name,
+        "page_hero_text": (
+            occasion.description
+            or content.get("hero_text")
+            or content.get("intro")
+            or "انتخاب‌هایی هماهنگ برای این لحظه."
+        ),
+        "page_hero_image": OCCASION_DETAIL_HERO_IMAGE,
+        "page_hero_mobile_image": OCCASION_DETAIL_HERO_MOBILE_IMAGE,
+    }
+
+
 def _section_all_url(section):
     route_name = SECTION_ALL_ROUTE_NAMES.get(section)
 
@@ -890,7 +947,14 @@ def _featured_selection(queryset, limit=10):
     return featured + fallback
 
 
-def _filter_links_for_categories(base_url, categories, selected_slug=None):
+def _filter_links_for_categories(
+    base_url,
+    categories,
+    selected_slug=None,
+    *,
+    selected_section=None,
+    include_section=False,
+):
     links = [
         {
             "label": "All",
@@ -900,11 +964,19 @@ def _filter_links_for_categories(base_url, categories, selected_slug=None):
     ]
 
     for category in categories:
+        url = f"{base_url}?category={category.slug}"
+
+        if include_section:
+            url += f"&section={category.section}"
+
         links.append(
             {
                 "label": category.name,
-                "url": f"{base_url}?category={category.slug}",
-                "is_active": selected_slug == category.slug,
+                "url": url,
+                "is_active": (
+                    selected_slug == category.slug
+                    and (not include_section or selected_section == category.section)
+                ),
             }
         )
 
@@ -1283,16 +1355,36 @@ def _collection_landing_page(request, section, *, excluded_category_slugs=()):
         faq_items=config.get("faq") or None,
         enable_product_modal=True,
     )
-    context.update(_hero_from_key(section))
+    page_hero = _get_site_hero(section)
+    context.update(page_hero or _hero_from_key(section))
     context.update(
         {
             "section": section,
             "catalog_products": products,
             "catalog_filter_categories": filter_categories,
-            "landing_hero_eyebrow": landing["hero_eyebrow"],
-            "landing_hero_title": landing["hero_title"],
-            "landing_hero_text": landing["hero_text"],
-            "landing_hero_image": landing["hero_image"],
+            "landing_hero_eyebrow": (
+                page_hero["page_hero_kicker"]
+                if page_hero
+                else landing["hero_eyebrow"]
+            ),
+            "landing_hero_title": (
+                page_hero["page_hero_title"]
+                if page_hero
+                else landing["hero_title"]
+            ),
+            "landing_hero_text": (
+                page_hero["page_hero_text"]
+                if page_hero
+                else landing["hero_text"]
+            ),
+            "landing_hero_image": (
+                page_hero["page_hero_image"]
+                if page_hero
+                else landing["hero_image"]
+            ),
+            "landing_hero_mobile_image": (
+                page_hero["page_hero_mobile_image"] if page_hero else ""
+            ),
             "landing_fallback_image": landing["fallback_image"],
             "landing_empty_text": landing["empty_text"],
             "landing_why_items": landing["why_items"],
@@ -1614,19 +1706,22 @@ def flower_occasion(request, slug):
         enable_product_modal=True,
     )
 
-    context.update(
-        _hero_from_key(
-            "flowers",
-            title=title,
-            text=occasion.description or card.get("intro", "A soft zad selection for this mood."),
-            image=card.get("image", "main/img/flowers-hero.jpg"),
-        )
-    )
+    hero_data = _occasion_detail_hero(occasion, title=title)
 
-    db_hero = _get_site_hero("occasions", occasion.slug)
+    db_hero = _get_site_hero("occasions", occasion.slug, allow_fallback=False)
 
     if db_hero:
-        context.update(db_hero)
+        hero_data.update(db_hero)
+
+    # Occasion detail pages always share the same responsive art direction.
+    # Tag-specific CMS copy can still override the fallback title and text.
+    hero_data.update(
+        {
+            "page_hero_image": OCCASION_DETAIL_HERO_IMAGE,
+            "page_hero_mobile_image": OCCASION_DETAIL_HERO_MOBILE_IMAGE,
+        }
+    )
+    context.update(hero_data)
 
     base_url = reverse("flower_occasion", args=[occasion.slug])
 
@@ -1861,13 +1956,43 @@ def occasion_detail(request, slug):
 
     card = OCCASION_CARD_CONTENT.get(occasion.slug, {})
 
-    products = list(
+    base_products_qs = (
         _published_products()
         .filter(tags=occasion)
         .select_related("category")
         .prefetch_related("tags")
-        .order_by("category__section", "-featured", "sort_order", "-created_at")[:48]
+        .order_by("category__section", "-featured", "sort_order", "-created_at")
     )
+
+    available_category_ids = list(
+        base_products_qs.values_list("category_id", flat=True).distinct()
+    )
+    available_categories = list(
+        Category.objects.filter(
+            pk__in=available_category_ids,
+            is_active=True,
+        ).order_by("section", "sort_order", "name")
+    )
+
+    selected_slug = request.GET.get("category") or ""
+    selected_section = request.GET.get("section") or ""
+    selected_category = None
+    products_qs = base_products_qs
+
+    if selected_slug:
+        category_lookup = {
+            "slug": selected_slug,
+            "is_active": True,
+            "pk__in": available_category_ids,
+        }
+
+        if selected_section:
+            category_lookup["section"] = selected_section
+
+        selected_category = get_object_or_404(Category, **category_lookup)
+        products_qs = products_qs.filter(category=selected_category)
+
+    products = list(products_qs[:48])
 
     suggested_sections = []
 
@@ -1914,25 +2039,34 @@ def occasion_detail(request, slug):
         enable_product_modal=True,
     )
 
-    db_hero = _get_site_hero("occasions", occasion.slug)
+    hero_data = _occasion_detail_hero(occasion)
+    db_hero = _get_site_hero("occasions", occasion.slug, allow_fallback=False)
 
     if db_hero:
-        context.update(db_hero)
-    else:
-        
-        context.update(
-            {
-                "page_hero_kicker": "zad Occasion",
-                "page_hero_title": occasion.name,
-                "page_hero_text": occasion.description or card.get("intro", "Curated selections for this mood."),
-                "page_hero_image": card.get("image", "main/img/hero-occasions.jpg"),
-            }
-        )
+        hero_data.update(db_hero)
+
+    # Keep the visual fixed across every occasion tag while allowing each tag
+    # (or its CMS hero record) to provide its own title and description.
+    hero_data.update(
+        {
+            "page_hero_image": OCCASION_DETAIL_HERO_IMAGE,
+            "page_hero_mobile_image": OCCASION_DETAIL_HERO_MOBILE_IMAGE,
+        }
+    )
+    context.update(hero_data)
 
     context.update(
         {
             "occasion": occasion,
             "products": products,
+            "filter_links": _filter_links_for_categories(
+                reverse("occasion_detail", args=[occasion.slug]),
+                available_categories,
+                selected_slug=selected_slug,
+                selected_section=selected_section,
+                include_section=True,
+            ),
+            "selected_category": selected_category,
             "suggested_sections": suggested_sections,
             "is_flower_occasion": False,
             "flower_occasion_url": reverse("flower_occasion", args=[occasion.slug]),
@@ -1962,8 +2096,31 @@ def events(request):
         breadcrumbs=breadcrumbs,
     )
 
+    page_hero = _get_site_hero("events")
+
     context.update(
         {
+            "workshops_hero_kicker": (
+                page_hero["page_hero_kicker"] if page_hero else "ZAD WORKSHOPS"
+            ),
+            "workshops_hero_title": (
+                page_hero["page_hero_title"]
+                if page_hero
+                else "ورکشاپ‌های گل‌آرایی زاد"
+            ),
+            "workshops_hero_text": (
+                page_hero["page_hero_text"]
+                if page_hero
+                else "تجربه‌ای آرام، زیبا و الهام‌بخش برای ساختن لحظه‌هایی که در ذهن می‌مانند."
+            ),
+            "workshops_hero_image": (
+                page_hero["page_hero_image"]
+                if page_hero
+                else "main/img/workshops-hero.jpg"
+            ),
+            "workshops_hero_mobile_image": (
+                page_hero["page_hero_mobile_image"] if page_hero else ""
+            ),
             "events": published_events,
             "lead_form": LeadRequestForm(
                 initial_lead_type="event",
@@ -2212,36 +2369,6 @@ def mashhad_flower_delivery(request):
 # Static content pages
 # =========================
 
-def visit(request):
-    breadcrumbs = _with_home([{"name": "Visit zad", "url": None}])
-
-    context = _default_context(
-        request,
-        page_type="contact",
-        active_nav="",
-        meta_title="Visit zad | Mashhad",
-        meta_description="Address, opening hours, and visit coordination for zad in Mashhad.",
-        breadcrumbs=breadcrumbs,
-        faq_items=VISIT_FAQ,
-    )
-
-    hero_data = _hero_from_key("visit")
-    db_hero = _get_site_hero("visit")
-
-    if db_hero:
-        hero_data = db_hero
-
-    context.update(hero_data)
-    context.update(
-        {
-            "lead_form": LeadRequestForm(initial_lead_type="flower"),
-            "lead_default_type": "flower",
-        }
-    )
-
-    return render(request, "Visit.html", context)
-
-
 def contact(request):
     breadcrumbs = _with_home([{"name": "Contact", "url": None}])
 
@@ -2304,8 +2431,8 @@ def about(request):
         request,
         page_type="about",
         active_nav="about",
-        meta_title="About zad",
-        meta_description="A closer look at zad, the store experience, order preparation, and brand details.",
+        meta_title="درباره زاد | گل، سوئیت‌بار و ورکشاپ در مشهد",
+        meta_description="با فضای واقعی زاد، گل‌ها، سوئیت‌بار و ورکشاپ‌های خلاقانه زاد در مشهد آشنا شوید.",
         breadcrumbs=breadcrumbs,
     )
 
@@ -2316,6 +2443,33 @@ def about(request):
         hero_data = db_hero
 
     context.update(hero_data)
+    context.update(
+        {
+            "about_hero_kicker": (
+                db_hero["page_hero_kicker"]
+                if db_hero
+                else "ZAD CONCEPT STORE · MASHHAD"
+            ),
+            "about_hero_title": (
+                db_hero["page_hero_title"]
+                if db_hero
+                else "زاد؛ جایی برای گل، طعم، هدیه و تجربه."
+            ),
+            "about_hero_text": (
+                db_hero["page_hero_text"]
+                if db_hero
+                else "یک فضای واقعی برای انتخاب‌های دقیق؛ از گل‌های روز و سوئیت‌بار تا ورکشاپ‌هایی که آدم‌ها را دور یک میز جمع می‌کنند."
+            ),
+            "about_hero_image": (
+                db_hero["page_hero_image"]
+                if db_hero
+                else "main/img/about/zad-floral-wall-v1.webp"
+            ),
+            "about_hero_mobile_image": (
+                db_hero["page_hero_mobile_image"] if db_hero else ""
+            ),
+        }
+    )
 
     return render(request, "about.html", context)
 
@@ -2487,3 +2641,14 @@ def robots_txt(request):
         "\n".join(lines),
         content_type="text/plain; charset=utf-8",
     )
+
+
+def custom_404(request, exception):
+    """Render the site's branded not-found page with the shared base layout."""
+    context = {
+        "meta_title": "صفحه پیدا نشد | ZAD",
+        "meta_description": "صفحه مورد نظر پیدا نشد.",
+        "page_type": "error-404",
+        "is_home": True,
+    }
+    return render(request, "404.html", context, status=404)

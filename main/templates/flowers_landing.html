@@ -4,18 +4,25 @@
 {% block body_class %}page-flowers-landing page-{{ section }}-landing{% endblock %}
 
 {% block extra_head %}
-  <link rel="stylesheet" href="{% static 'main/css/flowers-landing.css' %}?v=3">
+  <link rel="stylesheet" href="{% static 'main/css/flowers-landing.css' %}?v=4">
 {% endblock %}
 
 {% block content %}
 <main class="flowers-shell">
 
   <section class="flowers-hero" id="{{ section }}-top">
-  <div class="flowers-hero__media" aria-hidden="true">
+  <div class="flowers-hero__media{% if landing_hero_mobile_image %} has-mobile-image{% endif %}" aria-hidden="true">
+    {% if landing_hero_mobile_image %}
+      {% if landing_hero_mobile_image|slice:":7" == "/media/" %}
+        <img class="flowers-hero__image flowers-hero__image--mobile" src="{{ landing_hero_mobile_image }}" alt="">
+      {% else %}
+        <img class="flowers-hero__image flowers-hero__image--mobile" src="{% static landing_hero_mobile_image %}" alt="">
+      {% endif %}
+    {% endif %}
     {% if landing_hero_image|slice:":7" == "/media/" %}
-      <img src="{{ landing_hero_image }}" alt="">
+      <img class="flowers-hero__image flowers-hero__image--desktop" src="{{ landing_hero_image }}" alt="">
     {% else %}
-      <img src="{% static landing_hero_image %}" alt="">
+      <img class="flowers-hero__image flowers-hero__image--desktop" src="{% static landing_hero_image %}" alt="">
     {% endif %}
   </div>
 

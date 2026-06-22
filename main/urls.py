@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import RedirectView
 
 from . import views
 
@@ -33,7 +34,6 @@ urlpatterns = [
     path("mashhad/flower-delivery/", views.mashhad_flower_delivery, name="mashhad_flower_delivery"),
 
     # Static pages
-    path("visit/", views.visit, name="visit"),
     path("contact/", views.contact, name="contact"),
     path("faq/", views.faq, name="faq"),
     path("about/", views.about, name="about"),
@@ -56,5 +56,12 @@ urlpatterns = [
     path("occasions/<slug:slug>/", views.occasion_detail, name="occasion_detail"),
 
     # Legacy
-    path("Visit", views.visit, name="Visit"),
+    path(
+        "visit/",
+        RedirectView.as_view(pattern_name="contact", permanent=True),
+    ),
+    path(
+        "Visit",
+        RedirectView.as_view(pattern_name="contact", permanent=True),
+    ),
 ]
